@@ -1,0 +1,2 @@
+# diems
+This is the place where all source code of diems site are placed for the sake of downloading and customizing the code. Started as a mini project - practical work of the Deogiri Institute of Engineering and Management Studies (Aurangabad), as per Dr. Babasaheb Ambedkar Technological University (Lonere) curriculum. Link: https://dbatu.ac.in/wp-content/uploads/2021/07/Revised-Computer-Engg-Syllabus-wef-2021.pdf
