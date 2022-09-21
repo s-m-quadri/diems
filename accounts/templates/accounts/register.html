@@ -1,0 +1,40 @@
+{% extends 'accounts/layout.html' %}
+
+{% block title %}Register{% endblock %}
+{% block body %}
+{% if message %}
+<h1>Messages</h1>
+<li>{{ message }}</li>
+{% endif %}
+<h1>Register</h1>
+<form action="{% url 'accounts:register' %}" method="post">
+    {% csrf_token %}
+    <div>
+        <label for="username">Username</label>
+        <input type="text" name="username" placeholder="e.g. XYZ" id="username">
+    </div>
+    <div>
+        <label for="email">Email</label>
+        <input type="email" name="email" placeholder="example@gmail.com" id="email">
+    </div>
+    <div>
+        <label for="password">Password</label>
+        <input type="password" name="password" id="password">
+    </div>
+    <div>
+        <label for="confirmation">Password (again!)</label>
+        <input type="password" name="confirmation" id="confirmation">
+    </div>
+    <div>
+        <label>Your Position in the institute</label>
+        <input type="radio" name="position" value="student" id="radio_student">
+        <label for="radio_student">As a Student</label>
+        <input type="radio" name="position" value="teacher" id="radio_teacher">
+        <label for="radio_teacher">As a Teacher</label>
+    </div>
+
+    <div>
+        <input type="submit" value="Register" id="register">
+    </div>
+</form>
+{% endblock %}

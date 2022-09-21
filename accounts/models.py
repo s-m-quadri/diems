@@ -1,26 +1,60 @@
 from django.db import models
+from django.contrib.auth.models import User
+
+"""
+INSTITUTION
+    1. Responsible for Departments
+
+DEPARTMENTS
+    1. Responsible for Pages
+    2. Responsible for Teachers
+    3. Responsible for Students
+"""
 
 
-class Persons(models.Model):
+class Institution(models.Model):
     Name = models.CharField(max_length=64)
-    Email = models.EmailField(max_length=64, unique=True)
-    Phone_Number = models.CharField(max_length=16)
-    Password = models.CharField(max_length=256)
-    Last_Login = models.DateTimeField(auto_now=True)
+    Description = models.CharField(max_length=512)
+    Admin = models.OneToOneField(User, on_delete=models.CASCADE)
+
+    def __str__(self) -> str:
+        return f"{self.Name} (managed by {self.Admin})"
 
 
-class Courses(models.Model):
+class Department(models.Model):
     Name = models.CharField(max_length=64)
-    Duration = models.IntegerField()
-    Teachers = models.ManyToManyField(
-        to=Persons, related_name="Mentor_of_course", blank=True)
-    Students = models.ManyToManyField(
-        to=Persons, related_name="Enroll_in_course", blank=True)
+    Institute = models.ForeignKey(to=Institution, on_delete=models.CASCADE)
+    Head = models.ForeignKey(User, on_delete=models.CASCADE)
+    is_verified = models.BooleanField(default=False)
+
+    def __str__(self) -> str:
+        return f"{self.Name} (managed by {self.Head}) - under {self.Institute}"
 
 
-class Departments(models.Model):
+class Page(models.Model):
     Name = models.CharField(max_length=64)
-    Head = models.ForeignKey(
-        to=Persons, on_delete=models.CASCADE, related_name="Under_Department")
-    Courses = models.ManyToManyField(
-        to=Courses, related_name="Under_Department", blank=True)
+    Department = models.ManyToManyField(
+        to=Department, related_name="Offered_Course")
+    is_verified = models.BooleanField(default=False)
+
+    def __str__(self) -> str:
+        return "{} by ... {}".format(self.Name, ", ".join([x.__str__() for x in self.Department.all()]))
+
+
+class Teacher(models.Model):
+    Person = models.OneToOneField(User, on_delete=models.CASCADE)
+    Department = models.ManyToManyField(to=Department, related_name="Mentor")
+    is_verified = models.BooleanField(default=False)
+
+    def __str__(self) -> str:
+        return f"{self.Person.username} - under {self.Department}"
+
+
+class Student(models.Model):
+    Person = models.OneToOneField(User, on_delete=models.CASCADE)
+    Department = models.ForeignKey(
+        to=Department, on_delete=models.CASCADE, related_name="Student")
+    is_verified = models.BooleanField(default=False)
+
+    def __str__(self) -> str:
+        return f"{self.Person.username} - under {self.Department}"

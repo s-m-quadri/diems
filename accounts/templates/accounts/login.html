@@ -1,0 +1,16 @@
+{% extends 'accounts/layout.html' %}
+
+{% block title %}Login{% endblock %}
+{% block body %}
+{% if message %}
+<h1>Messages</h1>
+<li>{{ message }}</li>
+{% endif %}
+<h1>Login</h1>
+<form action="{% url 'accounts:login' %}" method="post">
+    {% csrf_token %}
+    <input type="text" name="username">
+    <input type="password" name="password">
+    <input type="submit" value="Login">
+</form>
+{% endblock %}
