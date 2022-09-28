@@ -18,7 +18,7 @@ class Institution(models.Model):
     Admin = models.OneToOneField(User, on_delete=models.CASCADE)
 
     def __str__(self) -> str:
-        return f"{self.Name} (managed by {self.Admin})"
+        return f"{self.Name}"
 
 
 class Department(models.Model):
@@ -28,7 +28,7 @@ class Department(models.Model):
     is_verified = models.BooleanField(default=False)
 
     def __str__(self) -> str:
-        return f"{self.Name} (managed by {self.Head}) - under {self.Institute}"
+        return f"{self.Name}"
 
 
 class Page(models.Model):
@@ -38,7 +38,7 @@ class Page(models.Model):
     is_verified = models.BooleanField(default=False)
 
     def __str__(self) -> str:
-        return "{} by ... {}".format(self.Name, ", ".join([x.__str__() for x in self.Department.all()]))
+        return f"{self.Name}"
 
 
 class Teacher(models.Model):
@@ -47,7 +47,7 @@ class Teacher(models.Model):
     is_verified = models.BooleanField(default=False)
 
     def __str__(self) -> str:
-        return f"{self.Person.username} - under {self.Department}"
+        return f"{self.Person.username}"
 
 
 class Student(models.Model):
@@ -57,4 +57,4 @@ class Student(models.Model):
     is_verified = models.BooleanField(default=False)
 
     def __str__(self) -> str:
-        return f"{self.Person.username} - under {self.Department}"
+        return f"{self.Person.username}"

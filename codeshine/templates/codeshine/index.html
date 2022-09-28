@@ -3,6 +3,13 @@
 {% block title %}Details{% endblock %}
 {% block body %}
 {% if massage %}
-<h1>{{ massage }}</h1>
+<h1>Massage</h1>
+<li>{{ massage }}</li>
+{% endif %}
+{% if pages %}
+<h1>Pages</h1>
+{% for page in pages %}
+<li>{{ page.Name }}</li>
+{% endfor %}
 {% endif %}
 {% endblock %}

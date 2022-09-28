@@ -136,5 +136,8 @@ GitHub.sublime-settings
 !.vscode/extensions.json 
 .history
 
-# Migrations
+# [Custum] Migrations
 migrations/
+
+# [Custum] Storage File
+Assignments
