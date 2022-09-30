@@ -1,8 +1,18 @@
-{% extends 'accounts/layout.html' %}
+{% extends 'home/layout.html' %}
 
 {% block title %}Details{% endblock %}
 {% block body %}
+
 {% if message %}
-<h1>{{ message }}</h1>
+<h1>Massages</h1>
+<li>{{ message }}</li>
 {% endif %}
+
+<h1>Useful Links</h1>
+{% if logged_in %}
+{{ username }}(<a href="{% url 'accounts:index' %}">info</a>) - <a href="{% url 'accounts:logout' %}">Logout</a>
+{% else %}
+<a href="{% url 'accounts:register' %}">Register</a> - <a href="{% url 'accounts:login' %}">Login</a>
+{% endif %}
+
 {% endblock %}

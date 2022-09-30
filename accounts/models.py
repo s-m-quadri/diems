@@ -23,6 +23,7 @@ class Institution(models.Model):
 
 class Department(models.Model):
     Name = models.CharField(max_length=64)
+    Code = models.CharField(max_length=8, unique=True)
     Institute = models.ForeignKey(to=Institution, on_delete=models.CASCADE)
     Head = models.ForeignKey(User, on_delete=models.CASCADE)
     is_verified = models.BooleanField(default=False)
@@ -43,7 +44,8 @@ class Page(models.Model):
 
 class Teacher(models.Model):
     Person = models.OneToOneField(User, on_delete=models.CASCADE)
-    Department = models.ManyToManyField(to=Department, related_name="Mentor")
+    Department = models.ForeignKey(
+        to=Department, on_delete=models.CASCADE, related_name="Mentor")
     is_verified = models.BooleanField(default=False)
 
     def __str__(self) -> str:

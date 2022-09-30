@@ -1,0 +1,31 @@
+{% extends 'home/layout.html' %}
+
+{% block title %}Details{% endblock %}
+{% block body %}
+
+<h1>Welcome {{ name }} ({{ account_type }}),</h1>
+<h3>To Deogiri Institute of Engineering and Management Studies, Aurangabad!</h3>
+
+{% if account %}
+    <h1>Account status</h1>
+    <li>Name: {{ account.Person.username }}</li>
+    <li>Department: {{ account.Department }}</li>
+    <a href="{% url 'accounts:logout' %}">Logout</a>
+
+    {% if pages %}
+        <h1>Pages</h1>
+        {% for page in pages %}
+            <li>{{ page.Name }}</li>
+        {% endfor %}
+    {% endif %}
+
+{% else %}
+    <h1>Useful Links</h1>
+    <a href="{% url 'accounts:login' %}">Enter</a>
+    <a href="{% url 'accounts:register' %}">Register</a>
+{% endif %}
+
+
+
+
+{% endblock %}
