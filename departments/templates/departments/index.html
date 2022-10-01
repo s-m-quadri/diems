@@ -1,0 +1,15 @@
+{% extends 'home/layout.html' %}
+
+{% block title %}
+  Details
+{% endblock %}
+{% block body %}
+  {% if title %}
+    <h1>{{ title }}</h1>
+  {% endif %}
+  {% if pages %}
+    {% for page in pages %}
+      <li>{{ page.Name }}</li>
+    {% endfor %}
+  {% endif %}
+{% endblock %}

@@ -1,3 +1,4 @@
+import code
 from tokenize import Name
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout, authenticate
@@ -6,6 +7,7 @@ from django.urls import reverse
 from django.db import IntegrityError
 
 from .models import *
+
 
 def index(request):
     if request.user.is_authenticated:
@@ -18,6 +20,7 @@ def index(request):
         "logged_in": request.user.is_authenticated,
         "username": request.user.username,
     })
+
 
 def login_view(request):
     if request.method == "POST":
@@ -45,34 +48,38 @@ def logout_view(request):
 
 def register_view(request):
     if request.method == "POST":
-        username = request.POST["username"]
-        email = request.POST["email"]
 
         # Ensure password matches confirmation
-        password = request.POST["password"]
-        confirmation = request.POST["confirmation"]
-        if password != confirmation:
+        if request.POST["password"] != request.POST["confirmation"]:
             return render(request, "accounts/register.html", {
                 "message": "Passwords must match."
             })
 
-        # Attempt to create new user
         try:
+            # Collect Requirements
+            department = Department.objects.get(
+                Code=request.POST["department"])
+            username = request.POST["username"]
+            email = request.POST["email"]
+            password = request.POST["password"]
+
+            # Attempt to create new user
             user = User.objects.create_user(username, email, password)
+            user.Department = department
+            user.is_student = True if request.POST["position"] == "student" else False
+            user.is_teacher = True if request.POST["position"] == "teacher" else False
             user.save()
-            if request.POST["position"] == "student":
-                new_student = Student(Person=user, is_verified=False, Department=Department.objects.get(Code=request.POST["department"]))
-                new_student.save()
-            if request.POST["position"] == "teacher":
-                new_teacher = Teacher(Person=user, is_verified=False, Department=Department.objects.get(Code=request.POST["department"]))
-                new_teacher.save()
-        except IntegrityError:
+
+        except Exception as massage:
             return render(request, "accounts/register.html", {
-                "message": "Something went wrong, please contact support team."
+                "message": "Something went wrong, please contact support team regarding exception '{}'".format(massage),
+                "departments": [x for x in Department.objects.all()],
             })
+
         login(request, user)
         return HttpResponseRedirect(reverse("home:index"))
+
     else:
         return render(request, "accounts/register.html", context={
-            "departments": [x for x in Department.objects.all()]
+            "departments": [x for x in Department.objects.all()],
         })

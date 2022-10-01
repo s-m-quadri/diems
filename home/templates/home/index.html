@@ -3,13 +3,13 @@
 {% block title %}Details{% endblock %}
 {% block body %}
 
-<h1>Welcome {{ name }} ({{ account_type }}),</h1>
-<h3>To Deogiri Institute of Engineering and Management Studies, Aurangabad!</h3>
+<h1>Welcome {{ name }},<br> At Deogiri Institute of Engineering and Management Studies, Aurangabad!</h1>
 
-{% if account %}
+{% if account_type != "AnonymousUser" %}
     <h1>Account status</h1>
-    <li>Name: {{ account.Person.username }}</li>
-    <li>Department: {{ account.Department }}</li>
+    <li>Name: {{ name }}</li>
+    <li>Department: {{ department }}</li>
+    <li>Account Type: {{ account_type }}</li>
     <a href="{% url 'accounts:logout' %}">Logout</a>
 
     {% if pages %}
