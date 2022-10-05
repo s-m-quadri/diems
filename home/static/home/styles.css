@@ -1,18 +1,98 @@
-table, td{
+html {
+    --primary-color: rgb(48 112 129);
+    --secondary-color: rgb(224 255 136);
+    --border-width: 3px;
+    --border-radius: 10px;
+    background-image: url(https://d1hbpr09pwz0sk.cloudfront.net/logo_url/deogiri-institute-of-engineering-and-management-studies-7a4aae5c);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-blend-mode: screen;
+    background-size: cover;
+    min-height: 100vh;
+}
+
+body {
+    margin: auto;
+    margin-top: 20px;
+    background-color: white;
+    mix-blend-mode: hard-light;
+    max-width: 60%;
+    padding: 20px;
+    border-radius: var(--border-radius);
+    border: var(--border-width) var(--primary-color) solid;
+}
+
+h1 {
+    padding: 10px;
+    margin: 0px;
+    margin-bottom: 20px;
+    margin-top: 30px;
+    text-align: center;
+    mix-blend-mode: darken;
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+    border-radius: var(--border-radius);
+}
+
+input,
+button,
+select {
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+    padding: 10px;
+    margin: 5px;
+    border-radius: var(--border-radius);
+    border: var(--primary-color) solid 1px;
+    outline: none;
+    max-width: 100%;
+    font-size: medium;
+}
+
+button,
+input[type="submit"] {
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+    outline: none;
+    width: 100%;
+    border: none;
+}
+
+button:hover,
+input[type="submit"]:hover {
+    font-weight: 900;
+    border: 2px var(--secondary-color);
+    cursor: pointer;
+    animation: pulse ease-in-out 1s;
+}
+
+@keyframes pulse {
+    0% {
+        background-color: var(--primary-color);
+    }
+
+    50% {
+        background-color: var(--secondary-color);
+
+    }
+
+    100% {
+        background-color: var(--primary-color);
+    }
+}
+
+table,
+td {
     padding: 20px;
     margin: 20px;
     border: 1px solid black;
     border-collapse: collapse;
 }
 
-h1{
-    padding: 10px;
-    margin: 0px;
-    margin-bottom: 20px;
-    margin-top: 30px;
-    text-align: center;
-    background-color: rgb(0, 219, 219);
-    color: white;
-    border-radius: 10px;
+.formWrapper {
+    margin: auto;
+    max-width: 75%;
 }
 
+.fieldWrapper {
+    width: 100%;
+}

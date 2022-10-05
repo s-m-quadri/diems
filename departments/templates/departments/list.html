@@ -1,0 +1,20 @@
+{% extends 'home/layout.html' %}
+
+{% block title %}
+  Department
+{% endblock %}
+{% block body %}
+  {% if title %}
+    <h1>{{ title }}</h1>
+  {% endif %}
+  {% if departments %}
+    {% for department in departments %}
+      <h2>[<a href="{% url 'departments:index' department.Code %}">{{ department.Code|upper }}</a>]: {{ department.Name }} Department</h2>
+    {% endfor %}
+  {% else %}
+    <li>No Departments</li>
+  {% endif %}
+  {% if request.user.is_superuser %}
+    <h2><a href="{% url 'departments:add_department' %}">+ Add Department</a></h2>
+  {% endif %}
+{% endblock %}

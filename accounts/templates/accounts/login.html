@@ -9,14 +9,14 @@
 <h1>Login</h1>
 <form action="{% url 'accounts:login' %}" method="post">
     {% csrf_token %}
-    <div>
-        <label for="username">Username</label>
-        <input type="text" name="username" id="username" autofocus autocomplete="off" placeholder="e.g. zaid">
+    {% for field in form %}
+    <div class="fieldWrapper">
+        {{ field.errors }}
+        {{ field.label_tag }} {{ field }}
     </div>
+    {% endfor %}
     <div>
-        <label for="password">Password</label>
-        <input type="password" name="password" id="password">
+        <input type="submit" value="Authenticate me">
     </div>
-    <input type="submit" value="Authenticate me">
 </form>
 {% endblock %}

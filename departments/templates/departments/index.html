@@ -1,15 +1,22 @@
 {% extends 'home/layout.html' %}
 
 {% block title %}
-  Details
+  Department
 {% endblock %}
 {% block body %}
   {% if title %}
     <h1>{{ title }}</h1>
   {% endif %}
+
   {% if pages %}
     {% for page in pages %}
-      <li>{{ page.Name }}</li>
+      <h2>[{{ page.Code|upper }}]: {{ page.Name }} Page</h2>
     {% endfor %}
+  {% else %}
+    <li>No Pages</li>
+  {% endif %}
+  
+  {% if request.user.is_superuser or request.user.is_teacher %}
+    <h2><a href="{% url 'departments:add_page' code %}">+ Add Pages</a></h2>
   {% endif %}
 {% endblock %}

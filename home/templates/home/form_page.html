@@ -1,0 +1,24 @@
+{% extends 'home/layout.html' %}
+
+{% block title %}{{ title }}{% endblock %}
+{% block body %}
+{% if message %}
+<h1>Messages</h1>
+<li>{{ message }}</li>
+{% endif %}
+<h1>{{ title }}</h1>
+<div class="formWrapper">
+    <form action="{{ to }}" method="post">
+        {% csrf_token %}
+        {% for field in form %}
+        <div class="fieldWrapper">
+            {{ field.errors }}
+            {{ field.label_tag }} {{ field }}
+        </div>
+        {% endfor %}
+        <div>
+            <input type="submit" value="{{ action }}">
+        </div>
+    </form>
+</div>
+{% endblock %}

@@ -2,14 +2,47 @@
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'home/styles.css' %}">
     <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'home/styles.css' %}">
 </head>
+
 <body>
+    <p>
+        <a href="{% url 'home:index' %}">Home</a> |
+        
+        {% if request.user.is_superuser %}
+        Welcome, Respected {{ request.user.username|capfirst }} Sir/Madam 
+        (<a href="{% url 'accounts:logout' %}">Logout</a> | Superuser) | Go to
+        <a href="{% url 'departments:list_department' %}">
+            Manage Departments
+        </a>
+        
+        {% elif request.user.is_authenticated and request.user.is_student %}
+        Welcome, Dear {{ request.user.username|capfirst }}
+        (<a href="{% url 'accounts:logout' %}">Logout</a>) | Go to
+        <a href="{% url 'departments:index' request.user.Department.Code %}">
+            {{ request.user.Department.Name }} Department
+        </a>
+        
+        {% elif request.user.is_authenticated and request.user.is_teacher %}
+        Welcome, Respected {{ request.user.username|capfirst }} Sir/Madam
+        (<a href="{% url 'accounts:logout' %}">Logout</a>) | Go to
+        <a href="{% url 'departments:index' request.user.Department.Code %}">
+            {{ request.user.Department.Name }} Department
+        </a>
+        
+        {% else %}
+        <a href="{% url 'accounts:login' %}">Enter</a> |
+        <a href="{% url 'accounts:register' %}">Register</a>
+        {% endif %}
+    </p>
+
     {% block body %}{% endblock %}
 </body>
+
 </html>

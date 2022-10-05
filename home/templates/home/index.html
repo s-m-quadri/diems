@@ -3,28 +3,7 @@
 {% block title %}Details{% endblock %}
 {% block body %}
 
-<h1>Welcome {{ name }},<br> At Deogiri Institute of Engineering and Management Studies, Aurangabad!</h1>
-
-{% if account_type != "AnonymousUser" %}
-    <h1>Account status</h1>
-    <li>Name: {{ name }}</li>
-    <li>Department: {{ department }}</li>
-    <li>Account Type: {{ account_type }}</li>
-    <a href="{% url 'accounts:logout' %}">Logout</a>
-
-    {% if pages %}
-        <h1>Pages</h1>
-        {% for page in pages %}
-            <li>{{ page.Name }}</li>
-        {% endfor %}
-    {% endif %}
-
-{% else %}
-    <h1>Useful Links</h1>
-    <a href="{% url 'accounts:login' %}">Enter</a>
-    <a href="{% url 'accounts:register' %}">Register</a>
-{% endif %}
-
+<h1>Welcome to Deogiri Institute of Engineering and Management Studies, Aurangabad!</h1>
 
 
 
