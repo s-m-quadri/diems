@@ -3,8 +3,11 @@ from django.contrib.auth import login, logout, authenticate
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django import forms
+from django.core.mail import send_mail
+
 
 from .models import Department, User
+
 
 class LoginForm(forms.Form):
     username = forms.CharField(
@@ -14,13 +17,8 @@ class LoginForm(forms.Form):
 
 
 class RegistrationForm(forms.Form):
-    # Data for fields
     PositionChoices = [("student", "As a Student"),
                        ("teacher", "As a Teacher")]
-    try:
-        DepartmentChoices = [(x.Code, x.Name) for x in Department.objects.all()]
-    except:
-        DepartmentChoices = []
 
     username = forms.CharField(
         label="Username", max_length=100, min_length=1, strip=True, required=True)
@@ -32,8 +30,7 @@ class RegistrationForm(forms.Form):
         label="Email", max_length=100, min_length=1, strip=True, required=True)
     position = forms.ChoiceField(
         label="Position", choices=PositionChoices, required=True)
-    department = forms.ChoiceField(
-        label="Department", choices=DepartmentChoices, required=True)
+    department = forms.ModelChoiceField(queryset=Department.objects.all(), empty_label="None", required=True)
 
 
 def index(request):
@@ -80,6 +77,14 @@ def login_view(request):
 
     # Log the user in
     login(request, user)
+    # email = request.user.email
+    # send_mail(
+    #     subject='Subject here',
+    #     message='Here is the message.',
+    #     from_email='webmaster@localhost',
+    #     recipient_list=[email],
+    #     fail_silently=False
+    # )
     return HttpResponseRedirect(reverse("home:index"))
 
 
@@ -127,11 +132,10 @@ def register_view(request):
         username = data["username"]
         email = data["email"].lower()
         password = data["password"]
-        department = Department.objects.get(Code=data["department"])
 
         # Make space for the user
         user = User.objects.create_user(username, email, password)
-        user.Department = department
+        user.Department = data["department"]
         user.is_student = True if data["position"] == "student" else False
         user.is_teacher = True if data["position"] == "teacher" else False
         user.save()

@@ -16,7 +16,7 @@
     <li>No Pages</li>
   {% endif %}
   
-  {% if request.user.is_superuser or request.user.is_teacher %}
+  {% if request.user.is_teacher %}
     <h2><a href="{% url 'departments:add_page' code %}">+ Add Pages</a></h2>
   {% endif %}
 {% endblock %}

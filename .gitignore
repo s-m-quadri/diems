@@ -141,3 +141,6 @@ migrations/
 
 # [Custum] Storage File
 Assignments
+
+# [Custum] Secret Key
+secret_key.txt

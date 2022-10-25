@@ -16,18 +16,11 @@ class AddDepartmentForm(forms.Form):
 
 
 class AddPageForm(forms.Form):
-    # Data for fields
-    try:
-        DepartmentChoices = [(x.Code, f"{x.Code} - {x.Name}") for x in Department.objects.all()]
-    except:
-        DepartmentChoices = []
-
     Name = forms.CharField(
         label="Name", max_length=64, min_length=1, strip=True, required=True)
     Code = forms.CharField(
         label="Code (unique)", max_length=32, min_length=1, strip=True, required=True)
-    Department = forms.ChoiceField(
-        label="Department", choices=DepartmentChoices, required=True)
+
 
 
 def index(request, code):
@@ -85,6 +78,9 @@ def add_department(request):
         # Make space for the new department
         new_department = Department(Name=department_name, Code=department_code)
         new_department.save()
+        new_page = Page(Name="Admin", Code=f"{department_name}-ADMIN",
+                            Department=new_department)
+        new_page.save()
 
     except Exception as massage:
         return render(request, "home/form_page.html", {
@@ -100,6 +96,7 @@ def add_department(request):
 
 
 def add_page(request, code):
+
     if not request.user.is_teacher:
         return HttpResponseRedirect(reverse("departments:index", kwargs={"code": code})) 
 
@@ -109,7 +106,7 @@ def add_page(request, code):
             "title": "Create Page",
             "to": reverse("departments:add_page", kwargs={"code": code}),
             "action": "Create it",
-            "form": AddPageForm(initial={"Department": code}),
+            "form": AddPageForm(),
         })
 
     # Ensure fields are valid
@@ -127,14 +124,13 @@ def add_page(request, code):
     # Attempt to create new page
     try:
         # Collect Requirements
-        page_name = data["Name"].title()
-        page_code = f'{data["Department"]}-{data["Code"].lower()}'
-        page_department = Department.objects.get(Code=data["Department"])
-
-        # Make space for the new page
-        new_page = Page(Name=page_name, Code=page_code,
-                        Department=page_department)
-        new_page.save()
+        if request.user.is_teacher:
+            page_name = data["Name"].title()
+            page_code = f'{request.user.Department.Code}-{data["Code"].lower()}'
+            page_department = request.user.Department
+            new_page = Page(Name=page_name, Code=page_code,
+                            Department=page_department)
+            new_page.save()
 
     except Exception as massage:
         return render(request, "home/form_page.html", {
