@@ -8,9 +8,15 @@
     <h1>{{ title }}</h1>
   {% endif %}
 
+
+
   {% if pages %}
     {% for page in pages %}
-      <h2>[{{ page.Code|upper }}]: {{ page.Name }} Page</h2>
+      <h2>[{{ page.Code|upper }}]: {{ page.Name }} Page 
+      {% if request.user.is_teacher %}
+        <a href="{% url 'codeshine:post' page.Code %}">Add Post</a>
+      {% endif %}
+      </h2>
     {% endfor %}
   {% else %}
     <li>No Pages</li>

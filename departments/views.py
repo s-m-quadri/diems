@@ -78,7 +78,7 @@ def add_department(request):
         # Make space for the new department
         new_department = Department(Name=department_name, Code=department_code)
         new_department.save()
-        new_page = Page(Name="Admin", Code=f"{department_name}-ADMIN",
+        new_page = Page(Name="Admin", Code=f"{department_code}-admin",
                             Department=new_department)
         new_page.save()
 

@@ -3,7 +3,6 @@ from django.contrib.auth import login, logout, authenticate
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django import forms
-from django.core.mail import send_mail
 
 
 from .models import Department, User

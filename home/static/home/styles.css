@@ -1,8 +1,9 @@
 html {
     --primary-color: rgb(48 112 129);
     --secondary-color: rgb(224 255 136);
+    --link-color: rgb(82, 150, 252);
     --border-width: 3px;
-    --border-radius: 10px;
+    --border-radius: 5px;
     background-image: url(https://d1hbpr09pwz0sk.cloudfront.net/logo_url/deogiri-institute-of-engineering-and-management-studies-7a4aae5c);
     background-repeat: no-repeat;
     background-attachment: fixed;
@@ -10,52 +11,144 @@ html {
     background-size: cover;
     background-position: center;
     min-height: 100vh;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 body {
+    display: flex;
+    flex-direction: column;
+    margin: 0px;
+}
+
+.head-container,
+.container {
+    display: flex;
+    flex-direction: column;
     margin: auto;
-    margin-top: 20px;
-    background-color: white;
+    border: var(--border-width) var(--primary-color) solid;
+}
+
+.head-container {
+    justify-content: center;
+    align-items: center;
+    background-color: var(--primary-color);
     mix-blend-mode: hard-light;
-    max-width: 60%;
+    margin: 0px;
+    height: 30vh;
+}
+
+.head-container h1 {
+    text-align: center;
+    color: var(--secondary-color);
+    margin: 0px;
+    font-size: 7vh;
+}
+
+.head-container h2 {
+    text-align: center;
+    color: var(--secondary-color);
+    margin: 0px;
+    padding: 0px;
+    font-size: 4vh;
+}
+
+.head-container h3 {
+    text-align: center;
+    color: white;
+    margin: 0px;
+    padding: 0px;
+    font-weight: normal;
+    font-size: 3vh;
+}
+
+.head-container p,
+.head-container a {
+    margin: 0px;
+    color: white;
+    font-size: 4vh;
+}
+
+.head-container a:hover {
+    color: var(--link-color);
+}
+
+.footer-container {
+    margin-top: 0vh;
+}
+
+.container {
+    margin-top: 7vh;
+    margin-bottom: 7vh;
     padding: 20px;
     border-radius: var(--border-radius);
-    border: var(--border-width) var(--primary-color) solid;
+    background-color: white;
+    opacity: 80%;
+    width: 65%;
 }
 
 h1 {
     padding: 10px;
     margin: 0px;
-    margin-bottom: 20px;
-    margin-top: 30px;
-    text-align: center;
-    mix-blend-mode: darken;
-    background-color: var(--primary-color);
-    color: var(--secondary-color);
-    border-radius: var(--border-radius);
+    margin-bottom: 10px;
+    margin-top: 10px;
+    color: var(--primary-color);
+    font-weight: normal;
+    font-size: 7vh;
 }
 
-input,
+h2 {
+    padding: 10px;
+    margin: 0px;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    color: var(--primary-color);
+    font-weight: normal;
+    font-size: 5vh;
+}
+
+p {
+    padding: 10px;
+    margin: 0px;
+    margin-bottom: 2px;
+    margin-top: 2px;
+    font-weight: normal;
+    font-size: 3vh;
+}
+
+ul,
+ol {
+    padding: 10px;
+    margin: 0px;
+    margin-bottom: 2px;
+    margin-top: 2px;
+    padding-left: 3vw;
+}
+
+li {
+    font-weight: normal;
+    font-size: 3vh;
+}
+
+/* input,
 button,
 select {
     background-color: var(--secondary-color);
     color: var(--primary-color);
-    padding: 10px;
-    margin: 5px;
-    border-radius: var(--border-radius);
-    border: var(--primary-color) solid 1px;
-    outline: none;
-    max-width: 100%;
-    font-size: medium;
-}
+   
+} */
 
 button,
 input[type="submit"] {
+    display: block;
     background-color: var(--primary-color);
     color: var(--secondary-color);
     outline: none;
-    width: 100%;
+    width: -webkit-fill-available;
     border: none;
+    padding: 10px;
+    font-size: medium;
+    margin: 5px;
+    border-radius: var(--border-radius);
 }
 
 button:hover,
@@ -90,10 +183,62 @@ td {
 }
 
 .formWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
     margin: auto;
-    max-width: 75%;
+    width: 75%;
 }
 
 .fieldWrapper {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: nowrap;
+    flex-direction: column;
     width: 100%;
+}
+
+.fieldWrapper label {
+    display: flex;
+    margin-top: 2%;
+    width: 100%;
+}
+
+.fieldWrapper input,
+.fieldWrapper button,
+.fieldWrapper select {
+    display: flex;
+    /* background-color: var(--secondary-color); */
+    color: var(--primary-color);
+    padding: 10px;
+    border-radius: var(--border-radius);
+    border: none;
+    border-bottom: var(--primary-color) solid 3px;
+    outline: none;
+    width: -webkit-fill-available;
+    font-size: medium;
+    font-weight: normal;
+    margin: 5px;
+}
+
+.fieldWrapper input:focus,
+.fieldWrapper button:focus,
+.fieldWrapper select:focus {
+    background-color: var(--secondary-color);
+    font-weight: bold;
+}
+
+.fieldWrapper input:hover,
+.fieldWrapper button:hover,
+.fieldWrapper select:hover {
+    background-color: var(--secondary-color);
+
+}
+
+
+.submitWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: baseline;
+    margin-top: 2%;
 }

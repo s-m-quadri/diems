@@ -12,37 +12,51 @@
 </head>
 
 <body>
-    <p>
-        <a href="{% url 'home:index' %}">Home</a> |
-        
-        {% if request.user.is_superuser %}
-        Welcome, Respected {{ request.user.username|capfirst }} Sir/Madam 
-        (<a href="{% url 'accounts:logout' %}">Logout</a> | Superuser) | Go to
-        <a href="{% url 'departments:list_department' %}">
-            Manage Departments
-        </a>
-        
-        {% elif request.user.is_authenticated and request.user.is_student %}
-        Welcome, Dear {{ request.user.username|capfirst }}
-        (<a href="{% url 'accounts:logout' %}">Logout</a>) | Go to
-        <a href="{% url 'departments:index' request.user.Department.Code %}">
-            {{ request.user.Department.Name }} Department
-        </a>
-        
-        {% elif request.user.is_authenticated and request.user.is_teacher %}
-        Welcome, Respected {{ request.user.username|capfirst }} Sir/Madam
-        (<a href="{% url 'accounts:logout' %}">Logout</a>) | Go to
-        <a href="{% url 'departments:index' request.user.Department.Code %}">
-            {{ request.user.Department.Name }} Department
-        </a>
-        
-        {% else %}
-        <a href="{% url 'accounts:login' %}">Enter</a> |
-        <a href="{% url 'accounts:register' %}">Register</a>
-        {% endif %}
-    </p>
+    <div class="head-container">
+        <p>
+            <a href="{% url 'home:index' %}">Home</a> |
 
-    {% block body %}{% endblock %}
+            {% if request.user.is_superuser %}
+            Welcome, Respected {{ request.user.username|capfirst }} Sir/Madam
+            (<a href="{% url 'accounts:logout' %}">Logout</a> | Superuser) | Go to
+            <a href="{% url 'departments:list_department' %}">
+                Manage Departments
+            </a>
+
+            {% elif request.user.is_authenticated and request.user.is_student %}
+            Welcome, Dear {{ request.user.username|capfirst }}
+            (<a href="{% url 'accounts:logout' %}">Logout</a>) | Go to
+            <a href="{% url 'departments:index' request.user.Department.Code %}">
+                {{ request.user.Department.Name }} Department
+            </a>
+
+            {% elif request.user.is_authenticated and request.user.is_teacher %}
+            Welcome, Respected {{ request.user.username|capfirst }} Sir/Madam
+            (<a href="{% url 'accounts:logout' %}">Logout</a>) | Go to
+            <a href="{% url 'departments:index' request.user.Department.Code %}">
+                {{ request.user.Department.Name }} Department
+            </a>
+
+            {% else %}
+            <a href="{% url 'accounts:login' %}">Enter</a> |
+            <a href="{% url 'accounts:register' %}">Register</a>
+            {% endif %}
+        </p>
+        <h1>
+            Welcome to Deogiri Institute of Engineering and Management Studies, Aurangabad!
+        </h1>
+    </div>
+    <div class="container">
+        {% block body %}{% endblock %}
+    </div>
+
+    <div class="head-container footer-container">
+        <h3><b>Address | </b> Deogiri Institute of Engineering and Management Studies, Railway Station Road, Aurangabad
+            – 431005</h3>
+        <h3><b>Info line | </b> 0240-2367546, <b>Director | </b> +91-9011078272</h3>
+        <h3><b>Email | </b> admin@dietms.org</h3>
+        <h2>Copyright © 2018 | DIETMS</h2>
+    </div>
 </body>
 
 </html>
