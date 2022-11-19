@@ -8,54 +8,76 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}{% endblock %}</title>
+    <link href='https://fonts.googleapis.com/css?family=Comfortaa' rel='stylesheet'>
     <link rel="stylesheet" href="{% static 'home/styles.css' %}">
 </head>
 
 <body>
-    <div class="head-container">
-        <p>
-            <a href="{% url 'home:index' %}">Home</a> |
+    <div class="side-bar">
+        <div class="side-bar-body">
+            <br>
+            <div class="head">
+                <h1>Deogiri Institute</h1>
+                <h2>of Engineering and Management Studies</h2>
+            </div>
+            <p>Link to <a href="{% url 'home:index' %}">Home Page</a></p>
+            <br>
 
-            {% if request.user.is_superuser %}
-            Welcome, Respected {{ request.user.username|capfirst }} Sir/Madam
-            (<a href="{% url 'accounts:logout' %}">Logout</a> | Superuser) | Go to
-            <a href="{% url 'departments:list_department' %}">
-                Manage Departments
-            </a>
+            <p>
+                {% if request.user.is_superuser %}
+                Welcome, Respected <br>
+                <u>{{ request.user.username|capfirst }}</u> Sir/Madam, you have logged in as a Superuser.
+                You have privileges to <a href="{% url 'departments:list_department' %}">manage</a> all the departments
+                and
+                beyond. After completing the work, kindly inform us through
+                <a href="{% url 'accounts:logout' %}">Logout</a> confirmation. Thanks for visiting.
 
-            {% elif request.user.is_authenticated and request.user.is_student %}
-            Welcome, Dear {{ request.user.username|capfirst }}
-            (<a href="{% url 'accounts:logout' %}">Logout</a>) | Go to
-            <a href="{% url 'departments:index' request.user.Department.Code %}">
-                {{ request.user.Department.Name }} Department
-            </a>
+                {% elif request.user.is_authenticated and request.user.is_student %}
+                Welcome, Dear <br>
+                <u>{{ request.user.username|capfirst }}</u>, you have logged in as a student.
+                As you are a part of <a href="{% url 'departments:index' request.user.Department.Code %}">
+                    {{ request.user.Department.Name }} Department
+                </a>, can access, but be sure to <a href="{% url 'accounts:logout' %}">Logout</a> before leaving us,
+                thus
+                we'll
+                get informed. Thanks for visiting.
 
-            {% elif request.user.is_authenticated and request.user.is_teacher %}
-            Welcome, Respected {{ request.user.username|capfirst }} Sir/Madam
-            (<a href="{% url 'accounts:logout' %}">Logout</a>) | Go to
-            <a href="{% url 'departments:index' request.user.Department.Code %}">
-                {{ request.user.Department.Name }} Department
-            </a>
 
-            {% else %}
-            <a href="{% url 'accounts:login' %}">Enter</a> |
-            <a href="{% url 'accounts:register' %}">Register</a>
-            {% endif %}
-        </p>
-        <h1>
-            Welcome to Deogiri Institute of Engineering and Management Studies, Aurangabad!
-        </h1>
+                {% elif request.user.is_authenticated and request.user.is_teacher %}
+                Welcome, Respected <br>
+                <u>{{ request.user.username|capfirst }}</u> Sir/Madam, you have logged in as a teacher.
+                As you are a part of <a href="{% url 'departments:index' request.user.Department.Code %}">
+                    {{ request.user.Department.Name }} Department
+                </a>, can access, but be sure to <a href="{% url 'accounts:logout' %}">Logout</a> before leaving us,
+                thus
+                we'll
+                get informed. Thanks for visiting.
+
+                {% else %}
+                <a href="{% url 'accounts:login' %}">Enter</a> |
+                <a href="{% url 'accounts:register' %}">Register</a>
+                {% endif %}
+            </p>
+        </div>
+        <div class="side-bar-foot">
+            <h2>Contact Us</h2>
+            <hr>
+            <p><u>Address</u>: Deogiri Institute of Engineering and Management Studies, Railway Station Road, Aurangabad
+                431001, <br> <u>Info line</u>: 0240-2367546, <br>
+                <u>Director</u>: +91-9011078272 <br>
+                <u>Email</u>: admin@dietms.org <br>
+                <br>
+                <h2>Copyright © 2018 dietms.org</h2>
+            </p>
+        </div>
+
     </div>
-    <div class="container">
-        {% block body %}{% endblock %}
-    </div>
-
-    <div class="head-container footer-container">
-        <h3><b>Address | </b> Deogiri Institute of Engineering and Management Studies, Railway Station Road, Aurangabad
-            – 431005</h3>
-        <h3><b>Info line | </b> 0240-2367546, <b>Director | </b> +91-9011078272</h3>
-        <h3><b>Email | </b> admin@dietms.org</h3>
-        <h2>Copyright © 2018 | DIETMS</h2>
+    <div class="main-content">
+        <br>
+        <div class="container">
+            {% block body %}{% endblock %}
+        </div>
+        <br>
     </div>
 </body>
 

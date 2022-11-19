@@ -5,6 +5,7 @@ from . import views
 app_name = "codeshine"
 
 urlpatterns = [
-    path('<str:code>-codeshine/', views.index, name="index"),
-    path('<str:code>-codeshine/post/', views.index, name="post"),
+    path('<str:page_code>/', views.index, name="index"),
+    path('<str:page_code>/post/', views.post_assignment, name="post"),
+    path('<str:page_code>/<str:assignment_code>/submit', views.post_submission, name="submit"),
 ]

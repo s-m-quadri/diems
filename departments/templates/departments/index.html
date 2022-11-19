@@ -8,8 +8,6 @@
     <h1>{{ title }}</h1>
   {% endif %}
 
-
-
   {% if pages %}
     {% for page in pages %}
       <h2>[{{ page.Code|upper }}]: {{ page.Name }} Page 
@@ -17,12 +15,22 @@
         <a href="{% url 'codeshine:post' page.Code %}">Add Post</a>
       {% endif %}
       </h2>
+      {% for assignment in assignments %}
+        {% if assignment.In == page %}
+        <h3>
+          {{ assignment.Title|upper }}
+        </h3>
+        <p>{{ assignment.Description }}</p>
+        {% endif %}
+        {% endfor %}
     {% endfor %}
   {% else %}
     <li>No Pages</li>
   {% endif %}
   
-  {% if request.user.is_teacher %}
-    <h2><a href="{% url 'departments:add_page' code %}">+ Add Pages</a></h2>
+  {% if code %}
+    {% if request.user.is_teacher %}
+      <h2><a href="{% url 'departments:add_page' code %}">+ Add Pages</a></h2>
+    {% endif %}
   {% endif %}
 {% endblock %}

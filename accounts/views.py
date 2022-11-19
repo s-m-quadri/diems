@@ -25,14 +25,14 @@ class RegistrationForm(forms.Form):
         label="Password", widget=forms.PasswordInput(), required=True)
     confirmation = forms.CharField(
         label="Retype Password", widget=forms.PasswordInput(), required=True)
-    email = forms.CharField(
-        label="Email", max_length=100, min_length=1, strip=True, required=True)
+    email = forms.EmailField(
+        label="Email", max_length=100, min_length=1, required=True)
     position = forms.ChoiceField(
         label="Position", choices=PositionChoices, required=True)
     department = forms.ModelChoiceField(queryset=Department.objects.all(), empty_label="None", required=True)
 
 
-def index(request):
+def account_index(request):
     if request.user.is_authenticated:
         return HttpResponseRedirect(reverse("home:index"))
     else:

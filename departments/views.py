@@ -5,30 +5,22 @@ from django.urls import reverse
 from django.http import HttpResponseRedirect
 
 from .models import *
+from home.views import render_form_generic
 from accounts.models import *
-
-
-class AddDepartmentForm(forms.Form):
-    Name = forms.CharField(
-        label="Name", max_length=64, min_length=1, strip=True, required=True)
-    Code = forms.CharField(
-        label="Code (unique)", max_length=16, min_length=1, strip=True, required=True)
-
-
-class AddPageForm(forms.Form):
-    Name = forms.CharField(
-        label="Name", max_length=64, min_length=1, strip=True, required=True)
-    Code = forms.CharField(
-        label="Code (unique)", max_length=32, min_length=1, strip=True, required=True)
-
+from codeshine.models import Assignment
 
 
 def index(request, code):
     try:
         department = Department.objects.get(Code=code)
+        pages = Page.objects.filter(Department=department)
+        assignments = []
+        for page in pages:
+            assignments += [x for x in Assignment.objects.filter(In=page)]
         return render(request, "departments/index.html", {
             "title": f"Welcome to {department.Name} Department",
-            "pages": [x for x in Page.objects.filter(Department=department)],
+            "pages": [x for x in pages],
+            "assignments": assignments,
             "code": code,
         })
     except ObjectDoesNotExist:
@@ -38,6 +30,9 @@ def index(request, code):
 
 
 def list_department(request):
+    if not request.user.is_superuser:
+        return HttpResponseRedirect(reverse("home:index"))
+    
     return render(request, "departments/list.html", {
         "title": "Department Activity Management",
         "departments": [x for x in Department.objects.all()]
@@ -46,100 +41,89 @@ def list_department(request):
 
 def add_department(request):
     if not request.user.is_superuser:
-        return HttpResponseRedirect(reverse("home:index")) 
+        return HttpResponseRedirect(reverse("home:index"))
 
-    # If user don't POST data, provide the form
+    class AddDepartmentForm(forms.Form):
+        Name = forms.CharField(
+            label="Name", max_length=64, min_length=1, strip=True, required=True)
+        Code = forms.CharField(
+            label="Code (unique)", max_length=16, min_length=1, strip=True, required=True)
+
+    form_title = "Create Department"
+    form_to = reverse("departments:add_department")
+    form_action = "Create it"
+
     if not request.method == "POST":
-        return render(request, "home/form_page.html", {
-            "title": "Create Department",
-            "to": reverse("departments:add_department"),
-            "action": "Create it",
-            "form": AddDepartmentForm(),
-        })
+        return render_form_generic(
+            request, form_title, form_to, form_action, AddDepartmentForm())
 
-    # Ensure fields are valid
-    form = AddDepartmentForm(request.POST)
-    if not form.is_valid():
-        return render(request, "home/form_page.html", {
-            "title": "Create Department",
-            "to": reverse("departments:add_department"),
-            "action": "Create it",
-            "message": "Form is not valid, make necessary changes",
-            "form": AddDepartmentForm(request.POST),
-        })
-    data = form.cleaned_data
+    raw_form = AddDepartmentForm(request.POST)
+    if not raw_form.is_valid():
+        return render_form_generic(
+            request, form_title, form_to, form_action,
+            AddDepartmentForm(request.POST),
+            "Form is not valid, make necessary changes")
 
-    # Attempt to create new department
     try:
-        # Collect Requirements
-        department_name = data["Name"].title()
-        department_code = data["Code"].lower()
+        form_data = raw_form.cleaned_data
 
-        # Make space for the new department
+        department_name = form_data["Name"].title()
+        department_code = form_data["Code"].lower()
         new_department = Department(Name=department_name, Code=department_code)
         new_department.save()
-        new_page = Page(Name="Admin", Code=f"{department_code}-admin",
-                            Department=new_department)
+
+        new_page = Page(Name="Admin",
+                        Code=f"{department_code}-admin",
+                        Department=new_department)
         new_page.save()
 
     except Exception as massage:
-        return render(request, "home/form_page.html", {
-            "title": "Create Department",
-            "to": reverse("departments:add_department"),
-            "action": "Create it",
-            "message": "Something went wrong, please contact support team regarding exception '{}'".format(massage),
-            "form": AddDepartmentForm(request.POST),
-        })
+        return render_form_generic(
+            request, form_title, form_to, form_action,
+            AddDepartmentForm(request.POST),
+            "Something went wrong, please contact support team regarding exception '{}'".format(massage))
 
-    # Redirect to the department page
     return HttpResponseRedirect(reverse("departments:index", kwargs={"code": department_code}))
 
 
 def add_page(request, code):
+    class AddPageForm(forms.Form):
+        Name = forms.CharField(
+            label="Name", max_length=64, min_length=1, strip=True, required=True)
+        Code = forms.CharField(
+            label="Code (unique)", max_length=32, min_length=1, strip=True, required=True)
+
+    form_title = "Create Page"
+    form_to = reverse("departments:add_page", kwargs={"code": code})
+    form_action = "Create it"
 
     if not request.user.is_teacher:
-        return HttpResponseRedirect(reverse("departments:index", kwargs={"code": code})) 
+        return HttpResponseRedirect(reverse("departments:index", kwargs={"code": code}))
 
-    # If user don't POST data, provide the form
     if not request.method == "POST":
-        return render(request, "home/form_page.html", {
-            "title": "Create Page",
-            "to": reverse("departments:add_page", kwargs={"code": code}),
-            "action": "Create it",
-            "form": AddPageForm(),
-        })
+        return render_form_generic(
+            request, form_title, form_to, form_action, AddPageForm())
 
-    # Ensure fields are valid
-    form = AddPageForm(request.POST)
-    if not form.is_valid():
-        return render(request, "home/form_page.html", {
-            "title": "Create Page",
-            "to": reverse("departments:add_page", kwargs={"code": code}),
-            "action": "Create it",
-            "message": "Form is not valid, make necessary changes",
-            "form": AddPageForm(request.POST),
-        })
-    data = form.cleaned_data
+    raw_form = AddPageForm(request.POST)
+    if not raw_form.is_valid():
+        return render_form_generic(
+            request, form_title, form_to, form_action,
+            AddPageForm(request.POST),
+            "Form is not valid, make necessary changes")
 
-    # Attempt to create new page
     try:
-        # Collect Requirements
+        form_data = raw_form.cleaned_data
         if request.user.is_teacher:
-            page_name = data["Name"].title()
-            page_code = f'{request.user.Department.Code}-{data["Code"].lower()}'
-            page_department = request.user.Department
-            new_page = Page(Name=page_name, Code=page_code,
-                            Department=page_department)
+            new_page = Page(
+                Name=form_data["Name"].title(),
+                Code=f'{request.user.Department.Code}-{form_data["Code"].lower()}',
+                Department=request.user.Department)
             new_page.save()
 
     except Exception as massage:
-        return render(request, "home/form_page.html", {
-            "title": "Create Page",
-            "to": reverse("departments:add_page", kwargs={"code": code}),
-            "action": "Create it",
-            "message": "Something went wrong, please contact support team regarding exception '{}'".format(massage),
-            "form": AddPageForm(request.POST),
-        })
+        return render_form_generic(
+            request, form_title, form_to, form_action, AddPageForm(
+                request.POST),
+            "Something went wrong, please contact support team regarding exception '{}'".format(massage))
 
-    # Redirect to the department page
     return HttpResponseRedirect(reverse("departments:index", kwargs={"code": code}))
