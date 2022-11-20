@@ -9,7 +9,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}{% endblock %}</title>
     <link href='https://fonts.googleapis.com/css?family=Comfortaa' rel='stylesheet'>
-    <link rel="stylesheet" href="{% static 'home/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'home/diems_styles.css' %}">
+    <script src="https://unpkg.com/stackedit-js@1.0.7/docs/lib/stackedit.min.js"></script>
 </head>
 
 <body>
@@ -20,6 +21,9 @@
                 <h1>Deogiri Institute</h1>
                 <h2>of Engineering and Management Studies</h2>
             </div>
+            <hr>
+            <br>
+
             <p>Link to <a href="{% url 'home:index' %}">Home Page</a></p>
             <br>
 
@@ -58,6 +62,7 @@
                 <a href="{% url 'accounts:register' %}">Register</a>
                 {% endif %}
             </p>
+            <br>
         </div>
         <div class="side-bar-foot">
             <h2>Contact Us</h2>
@@ -67,18 +72,18 @@
                 <u>Director</u>: +91-9011078272 <br>
                 <u>Email</u>: admin@dietms.org <br>
                 <br>
-                <h2>Copyright © 2018 dietms.org</h2>
             </p>
+            <h2>Copyright © 2018 dietms.org</h2>
         </div>
-
     </div>
+
     <div class="main-content">
         <br>
-        <div class="container">
-            {% block body %}{% endblock %}
-        </div>
+        {% block body %}{% endblock %}
         <br>
     </div>
 </body>
+
+<script src="{% static 'home/stackedit_textarea.js' %}"></script>
 
 </html>

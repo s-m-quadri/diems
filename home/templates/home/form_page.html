@@ -2,23 +2,48 @@
 
 {% block title %}{{ title }}{% endblock %}
 {% block body %}
-{% if message %}
-<h1>Messages</h1>
-<li>{{ message }}</li>
+
+{% if error %}
+<div class="container error-container">
+    <h1>Error</h1>
+    <p>{{ error }}</p>
+</div>
+<br>
 {% endif %}
-<h1>{{ title }}</h1>
-<div class="formWrapper">
-    <form action="{{ to }}" method="post">
-        {% csrf_token %}
-        {% for field in form %}
-        <div class="fieldWrapper">
-            {{ field.label_tag }}
-            {{ field }}
-        </div>
-        {% endfor %}
-        <div class="submitWrapper">
-            <input type="submit" value="{{ action }}">
-        </div>
-    </form>
+
+{% if warning %}
+<div class="container warning-container">
+    <h1>Warning</h1>
+    <p>{{ warning }}</p>
+</div>
+<br>
+{% endif %}
+
+{% if message %}
+<div class="container message-container">
+    <h1>Message</h1>
+    <p>{{ message }}</p>
+</div>
+<br>
+{% endif %}
+
+<div class="container">
+    <br>
+    <h1>{{ title }}</h1>
+    <div class="formWrapper">
+        <form action="{{ to }}" method="post">
+            {% csrf_token %}
+            {% for field in form %}
+            <div class="fieldWrapper">
+                {{ field.label_tag }}
+                {{ field }}
+            </div>
+            {% endfor %}
+            <div class="submitWrapper">
+                <input type="submit" value="{{ action }}">
+            </div>
+        </form>
+    </div>
+    <br>
 </div>
 {% endblock %}

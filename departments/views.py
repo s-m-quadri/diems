@@ -62,7 +62,7 @@ def add_department(request):
         return render_form_generic(
             request, form_title, form_to, form_action,
             AddDepartmentForm(request.POST),
-            "Form is not valid, make necessary changes")
+            error="Form is not valid, make necessary changes")
 
     try:
         form_data = raw_form.cleaned_data
@@ -81,7 +81,7 @@ def add_department(request):
         return render_form_generic(
             request, form_title, form_to, form_action,
             AddDepartmentForm(request.POST),
-            "Something went wrong, please contact support team regarding exception '{}'".format(massage))
+            error="Something went wrong, please contact support team regarding exception '{}'".format(massage))
 
     return HttpResponseRedirect(reverse("departments:index", kwargs={"code": department_code}))
 
@@ -109,7 +109,7 @@ def add_page(request, code):
         return render_form_generic(
             request, form_title, form_to, form_action,
             AddPageForm(request.POST),
-            "Form is not valid, make necessary changes")
+            error="Form is not valid, make necessary changes")
 
     try:
         form_data = raw_form.cleaned_data
@@ -124,6 +124,6 @@ def add_page(request, code):
         return render_form_generic(
             request, form_title, form_to, form_action, AddPageForm(
                 request.POST),
-            "Something went wrong, please contact support team regarding exception '{}'".format(massage))
+            error="Something went wrong, please contact support team regarding exception '{}'".format(massage))
 
     return HttpResponseRedirect(reverse("departments:index", kwargs={"code": code}))

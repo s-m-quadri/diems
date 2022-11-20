@@ -6,30 +6,7 @@ from django import forms
 
 
 from .models import Department, User
-
-
-class LoginForm(forms.Form):
-    username = forms.CharField(
-        label="Username", max_length=100, min_length=1, strip=True, required=True)
-    password = forms.CharField(
-        label="Password", widget=forms.PasswordInput(), required=True)
-
-
-class RegistrationForm(forms.Form):
-    PositionChoices = [("student", "As a Student"),
-                       ("teacher", "As a Teacher")]
-
-    username = forms.CharField(
-        label="Username", max_length=100, min_length=1, strip=True, required=True)
-    password = forms.CharField(
-        label="Password", widget=forms.PasswordInput(), required=True)
-    confirmation = forms.CharField(
-        label="Retype Password", widget=forms.PasswordInput(), required=True)
-    email = forms.EmailField(
-        label="Email", max_length=100, min_length=1, required=True)
-    position = forms.ChoiceField(
-        label="Position", choices=PositionChoices, required=True)
-    department = forms.ModelChoiceField(queryset=Department.objects.all(), empty_label="None", required=True)
+from home.views import render_form_generic
 
 
 def account_index(request):
@@ -40,25 +17,28 @@ def account_index(request):
 
 
 def login_view(request):
+    class LoginForm(forms.Form):
+        username = forms.CharField(
+            label="Username", max_length=100, min_length=1, strip=True, required=True)
+        password = forms.CharField(
+            label="Password", widget=forms.PasswordInput(), required=True)
+
+    form_title = "Login"
+    form_to = reverse("accounts:login")
+    form_action = "Authenticate me"
+
     # If user don't POST data, provide the form
     if not request.method == "POST":
-        return render(request, "home/form_page.html", {
-            "title": "Login",
-            "to": reverse("accounts:login"),
-            "action": "Authenticate me",
-            "form": LoginForm,
-        })
+        return render_form_generic(
+            request, form_title, form_to, form_action, LoginForm())
 
     # Ensure fields are valid
     form = LoginForm(request.POST)
     if not form.is_valid():
-        return render(request, "home/form_page.html", {
-            "title": "Login",
-            "to": reverse("accounts:login"),
-            "action": "Now, Authenticate me",
-            "message": "Form is not valid, make necessary changes",
-            "form": LoginForm(request.POST),
-        })
+        return render_form_generic(request, form_title, form_to, form_action,
+                                   LoginForm(request.POST),
+                                   error="Form is not valid, make necessary changes")
+
     data = form.cleaned_data
 
     # Check if authentication successful
@@ -66,24 +46,12 @@ def login_view(request):
     password = data["password"]
     user = authenticate(request, username=username, password=password)
     if user is None:
-        return render(request, "home/form_page.html", {
-            "title": "Login",
-            "to": reverse("accounts:login"),
-            "action": "Now, Authenticate me",
-            "message": "Invalid username and/or password",
-            "form": LoginForm(request.POST),
-        })
+        return render_form_generic(request, form_title, form_to, form_action,
+                                   LoginForm(request.POST),
+                                   error="Invalid username and/or password")
 
     # Log the user in
     login(request, user)
-    # email = request.user.email
-    # send_mail(
-    #     subject='Subject here',
-    #     message='Here is the message.',
-    #     from_email='webmaster@localhost',
-    #     recipient_list=[email],
-    #     fail_silently=False
-    # )
     return HttpResponseRedirect(reverse("home:index"))
 
 
@@ -94,36 +62,45 @@ def logout_view(request):
 
 
 def register_view(request):
+    class RegistrationForm(forms.Form):
+        PositionChoices = [("student", "As a Student"),
+                           ("teacher", "As a Teacher")]
+
+        username = forms.CharField(
+            label="Username", max_length=100, min_length=1, strip=True, required=True)
+        password = forms.CharField(
+            label="Password", widget=forms.PasswordInput(), required=True)
+        confirmation = forms.CharField(
+            label="Retype Password", widget=forms.PasswordInput(), required=True)
+        email = forms.EmailField(
+            label="Email", max_length=100, min_length=1, required=True)
+        position = forms.ChoiceField(
+            label="Position", choices=PositionChoices, required=True)
+        department = forms.ModelChoiceField(
+            queryset=Department.objects.all(), empty_label="None", required=True)
+
+    form_title = "Register"
+    form_to = reverse("accounts:register")
+    form_action = "Register me"
+
     # If user don't POST data, provide the form
     if not request.method == "POST":
-        return render(request, "home/form_page.html", {
-            "title": "Register",
-            "to": reverse("accounts:register"),
-            "action": "Register me",
-            "form": RegistrationForm(),
-        })
+        return render_form_generic(
+            request, form_title, form_to, form_action, RegistrationForm())
 
     # Ensure fields are valid
     form = RegistrationForm(request.POST)
     if not form.is_valid():
-        return render(request, "home/form_page.html", {
-            "title": "Register",
-            "to": reverse("accounts:register"),
-            "action": "Register me",
-            "message": "Form is not valid, make necessary changes",
-            "form": RegistrationForm(request.POST),
-        })
-    data = form.cleaned_data
+        return render_form_generic(request, form_title, form_to, form_action,
+                                   RegistrationForm(request.POST),
+                                   error="Form is not valid, make necessary changes")
 
+    data = form.cleaned_data
     # Ensure password matches confirmation
     if data["password"] != data["confirmation"]:
-        return render(request, "home/form_page.html", {
-            "title": "Register",
-            "to": reverse("accounts:register"),
-            "action": "Register me",
-            "message": "Passwords must match.",
-            "form": RegistrationForm(request.POST),
-        })
+        return render_form_generic(request, form_title, form_to, form_action,
+                                   RegistrationForm(request.POST),
+                                   error="Passwords must match")
 
     # Attempt to create new user
     try:
@@ -140,13 +117,9 @@ def register_view(request):
         user.save()
 
     except Exception as massage:
-        return render(request, "home/form_page.html", {
-            "title": "Register",
-            "to": reverse("accounts:register"),
-            "action": "Register me",
-            "message": "Something went wrong, please contact support team regarding exception '{}'".format(massage),
-            "form": RegistrationForm(request.POST),
-        })
+        return render_form_generic(request, form_title, form_to, form_action,
+                                   RegistrationForm(request.POST),
+                                   error="Something went wrong, please contact support team regarding exception '{}'".format(massage))
 
     # Log the user in
     login(request, user)

@@ -1,0 +1,227 @@
+html {
+  background-image: url(https://d1hbpr09pwz0sk.cloudfront.net/logo_url/deogiri-institute-of-engineering-and-management-studies-7a4aae5c);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: center;
+  font-family: 'Comfortaa';
+  min-height: 100vh;
+  font-size: 18px;
+  overflow-wrap: break-word; }
+  html body {
+    display: flex;
+    flex-direction: row;
+    margin: 0px;
+    height: 100vh;
+    overflow-y: hidden; }
+  html .side-bar {
+    display: flex;
+    flex-direction: column;
+    background-color: #082530;
+    opacity: 95%;
+    flex-basis: 250px;
+    flex-shrink: 0;
+    flex-grow: 0;
+    padding: 20px;
+    color: #98d5ee;
+    overflow-y: scroll;
+    height: auto; }
+    html .side-bar h1 {
+      margin: 0px;
+      padding: 0px;
+      font-size: 54px;
+      font-weight: normal; }
+    html .side-bar h2 {
+      margin: 0px;
+      padding: 0px;
+      font-size: 20px;
+      font-weight: normal;
+      color: #ecf7fc; }
+    html .side-bar a {
+      margin: 0px;
+      color: #98d5ee;
+      text-decoration: none;
+      font-size: 18px; }
+    html .side-bar a:hover {
+      color: #ecf7fc; }
+    html .side-bar p {
+      margin: 0px;
+      padding: 0px;
+      font-size: 18px;
+      color: #ecf7fc;
+      line-height: 21px; }
+    html .side-bar u {
+      color: #98d5ee;
+      text-decoration: none;
+      border-bottom: dotted 1px; }
+    html .side-bar hr {
+      border-color: #98d5ee; }
+    html .side-bar .side-bar-foot {
+      opacity: 50%; }
+  html .main-content {
+    flex-shrink: 1;
+    flex-grow: 1;
+    overflow-y: scroll;
+    height: 100vh;
+    opacity: 100%; }
+    html .main-content .container {
+      display: flex;
+      flex-direction: column;
+      margin: auto;
+      opacity: 90%;
+      width: 90%;
+      padding: 20px;
+      border-radius: 5px;
+      background-color: #ecf7fc; }
+      html .main-content .container .postWrapper {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        padding: 10px;
+        align-items: stretch; }
+      html .main-content .container .post {
+        flex-grow: 0;
+        flex-shrink: 1;
+        flex-basis: 250px;
+        margin: 10px;
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px #1c7ea6 solid;
+        background-color: white; }
+      html .main-content .container a {
+        text-decoration: none;
+        color: #135873; }
+      html .main-content .container a:hover {
+        text-decoration: underline; }
+    html .main-content .warning-container {
+      border: 1px solid #ebd687; }
+      html .main-content .warning-container h1 {
+        color: #ebd687; }
+    html .main-content .error-container {
+      border: 1px solid #eb879c; }
+      html .main-content .error-container h1 {
+        color: #eb879c; }
+    html .main-content .message-container {
+      border: 1px solid #33acdd; }
+      html .main-content .message-container h1,
+      html .main-content .message-container a {
+        color: #33acdd;
+        text-decoration: none; }
+    html .main-content .textarea-container {
+      background-color: #ebd687;
+      border-radius: 5px;
+      border: 1px solid #33acdd;
+      padding: 20px;
+      overflow-wrap: break-word;
+      max-height: 500px;
+      overflow: auto;
+      margin-top: 10px;
+      margin-bottom: 10px; }
+      html .main-content .textarea-container:empty {
+        visibility: hidden;
+        padding: 0px;
+        margin: 0px; }
+    html .main-content h1 {
+      margin-bottom: 10px;
+      margin-top: 10px;
+      color: #082530;
+      font-weight: normal;
+      font-size: 55px; }
+    html .main-content h2 {
+      margin-bottom: 7px;
+      margin-top: 7px;
+      color: #1c7ea6;
+      font-weight: normal;
+      font-size: 40px; }
+    html .main-content h3 {
+      margin-bottom: 7px;
+      margin-top: 7px;
+      color: #33acdd;
+      font-weight: normal;
+      font-size: 30px; }
+    html .main-content p {
+      margin: 0px;
+      margin-bottom: 5px;
+      margin-top: 5px;
+      font-weight: normal;
+      font-size: 18px; }
+    html .main-content ul,
+    html .main-content ol {
+      margin: 0px;
+      padding-left: 20px; }
+    html .main-content button,
+    html .main-content input[type="submit"] {
+      display: block;
+      background-color: #1c7ea6;
+      color: #ecf7fc;
+      outline: none;
+      border: none;
+      padding: 10px;
+      font-size: medium;
+      margin: 5px;
+      border-radius: 5px; }
+    html .main-content button:hover,
+    html .main-content input[type="submit"]:hover {
+      font-weight: 900;
+      cursor: pointer;
+      animation: pulse ease-in-out 1s; }
+@keyframes pulse {
+  0% {
+    background-color: #1c7ea6; }
+  50% {
+    background-color: #ebd687; }
+  100% {
+    background-color: #1c7ea6; } }
+    html .main-content table,
+    html .main-content td {
+      padding: 20px;
+      margin: 20px;
+      border: 1px solid black;
+      border-collapse: collapse; }
+    html .main-content .formWrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      margin: auto;
+      width: 75%; }
+    html .main-content .fieldWrapper {
+      display: flex;
+      align-items: stretch;
+      flex-wrap: nowrap;
+      flex-direction: column;
+      width: 100%; }
+      html .main-content .fieldWrapper label {
+        display: flex;
+        margin-top: 2%;
+        width: 100%; }
+      html .main-content .fieldWrapper input,
+      html .main-content .fieldWrapper button,
+      html .main-content .fieldWrapper select {
+        display: flex;
+        color: #082530;
+        border: none;
+        background-color: #ecf7fc;
+        border-radius: 5px;
+        border-bottom: #1c7ea6 solid 3px;
+        padding: 10px;
+        outline: none;
+        font-size: medium;
+        font-weight: normal;
+        margin: 5px; }
+      html .main-content .fieldWrapper input:focus,
+      html .main-content .fieldWrapper button:focus,
+      html .main-content .fieldWrapper select:focus {
+        background-color: white;
+        font-weight: bold;
+        border-bottom-color: #082530; }
+      html .main-content .fieldWrapper input:hover,
+      html .main-content .fieldWrapper button:hover,
+      html .main-content .fieldWrapper select:hover {
+        background-color: white; }
+    html .main-content .submitWrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      margin-top: 2%; }
+
+/*# sourceMappingURL=diems_styles.css.map */

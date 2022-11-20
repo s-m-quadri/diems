@@ -17,17 +17,13 @@ def index(request, page_code):
 
 def post_assignment(request, page_code):
     if not request.user.is_teacher:
-        return HttpResponseRedirect(reverse("codeshine:index"))
+        return HttpResponseRedirect(reverse("codeshine:index", kwargs={"page_code": page_code}))
 
     class PostAssignmentForm(forms.Form):
         fieldTitle = forms.CharField(
             label="Title", max_length=128, required=True, strip=True)
         fieldDescription = forms.CharField(
             label="Description", max_length=1024, required=False, strip=True)
-        fieldInstructions = forms.CharField(
-            label="Instructions", widget=forms.Textarea, required=False)
-        fieldGettingStarted = forms.CharField(
-            label="Getting Started Template", widget=forms.Textarea, required=False)
         fieldMaxPoints = forms.IntegerField(
             label="Maximum Possible Points", min_value=0, initial=100, required=True)
         fieldPassingPoints = forms.IntegerField(
@@ -40,9 +36,13 @@ def post_assignment(request, page_code):
                            ("No", "No! Don't take any comments"))
         fieldOpenForComment = forms.ChoiceField(
             label="Allow Comments", required=True, choices=comment_choices)
+        fieldInstructions = forms.CharField(
+            label="Instructions", widget=forms.Textarea, required=False)
+        fieldGettingStarted = forms.CharField(
+            label="Getting Started Template", widget=forms.Textarea, required=False)
 
     form_title = "Create Assignment"
-    form_to = reverse("codeshine:post", kwargs={"code": page_code})
+    form_to = reverse("codeshine:post", kwargs={"page_code": page_code})
     form_action = "Post Assignment"
 
     if not request.method == "POST":
@@ -86,12 +86,12 @@ def post_assignment(request, page_code):
             PostAssignmentForm(request.POST),
             "Something went wrong, please contact support team regarding exception '{}'".format(massage))
 
-    return HttpResponseRedirect(reverse("codeshine:index", kwargs={"code": page_code}))
+    return HttpResponseRedirect(reverse("codeshine:index", kwargs={"page_code": page_code}))
 
 
 def post_submission(request, page_code, assignment_code):
     if not request.user.is_teacher:
-        return HttpResponseRedirect(reverse("codeshine:index"))
+        return HttpResponseRedirect(reverse("codeshine:index", kwargs={"page_code": page_code}))
 
     class PostSubmissionForm(forms.Form):
         fieldAssignment = forms.CharField(
@@ -127,4 +127,4 @@ def post_submission(request, page_code, assignment_code):
             PostSubmissionForm(request.POST),
             "Something went wrong, please contact support team regarding exception '{}'".format(massage))
 
-    return HttpResponseRedirect(reverse("codeshine:index", kwargs={"code": page_code}))
+    return HttpResponseRedirect(reverse("codeshine:index", kwargs={"page_code": page_code}))

@@ -1,36 +1,56 @@
 {% extends 'home/layout.html' %}
 
 {% block title %}
-  Department
+Department
 {% endblock %}
 {% block body %}
-  {% if title %}
+<div class="container">
+    {% if title %}
     <h1>{{ title }}</h1>
-  {% endif %}
-
-  {% if pages %}
-    {% for page in pages %}
-      <h2>[{{ page.Code|upper }}]: {{ page.Name }} Page 
-      {% if request.user.is_teacher %}
-        <a href="{% url 'codeshine:post' page.Code %}">Add Post</a>
-      {% endif %}
-      </h2>
-      {% for assignment in assignments %}
-        {% if assignment.In == page %}
-        <h3>
-          {{ assignment.Title|upper }}
-        </h3>
-        <p>{{ assignment.Description }}</p>
-        {% endif %}
-        {% endfor %}
-    {% endfor %}
-  {% else %}
-    <li>No Pages</li>
-  {% endif %}
-  
-  {% if code %}
-    {% if request.user.is_teacher %}
-      <h2><a href="{% url 'departments:add_page' code %}">+ Add Pages</a></h2>
     {% endif %}
-  {% endif %}
+</div>
+<br>
+{% if pages %}
+{% for page in pages %}
+<div class="container">
+    <h2>{{ page.Name }} Page <small>({{ page.Code|lower }})</small>
+    </h2>
+    {% if request.user.is_teacher %}
+        <a href="{% url 'codeshine:post' page.Code %}">Add Post</a>
+    {% endif %}
+
+    {% if assignments %}
+    <div class="postWrapper">
+        {% for assignment in assignments %}
+        {% if assignment.In == page %}
+            <div class="post">
+                <h3>
+                    {{ assignment.Title|upper }}
+                </h3>
+                <p>{{ assignment.Description }}</p>
+            </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+    {% endif %}
+</div>
+<br>
+{% endfor %}
+{% else %}
+<div class="container warning-container">
+    <h1>Warning</h1>
+    <p>No Pages</p>
+</div>
+<br>
+{% endif %}
+
+{% if code %}
+{% if request.user.is_teacher %}
+<div class="container message-container">
+    <h2><a href="{% url 'departments:add_page' code %}">+ Add Pages</a></h2>
+</div>
+<br>
+{% endif %}
+{% endif %}
+
 {% endblock %}
