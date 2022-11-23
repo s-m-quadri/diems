@@ -93,6 +93,10 @@ html {
         color: #135873; }
       html .main-content .container a:hover {
         text-decoration: underline; }
+    html .main-content .normal-container {
+      border: none; }
+      html .main-content .normal-container h1 {
+        color: #082530; }
     html .main-content .warning-container {
       border: 1px solid #ebd687; }
       html .main-content .warning-container h1 {

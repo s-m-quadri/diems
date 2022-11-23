@@ -145,6 +145,14 @@ html {
             }
         }
 
+        .normal-container {
+            border: none;
+
+            h1 {
+                color: $darkestColor;
+            }
+        }
+
         .warning-container {
             border: 1px solid $warningColor;
 

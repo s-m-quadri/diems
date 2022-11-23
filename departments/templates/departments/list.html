@@ -1,20 +1,40 @@
 {% extends 'home/layout.html' %}
 
 {% block title %}
-  Department
+Department
 {% endblock %}
 {% block body %}
-  {% if title %}
-    <h1>{{ title }}</h1>
-  {% endif %}
-  {% if departments %}
-    {% for department in departments %}
-      <h2>[<a href="{% url 'departments:index' department.Code %}">{{ department.Code|upper }}</a>]: {{ department.Name }} Department</h2>
-    {% endfor %}
-  {% else %}
-    <li>No Departments</li>
-  {% endif %}
-  {% if request.user.is_superuser %}
-    <h2><a href="{% url 'departments:add_department' %}">+ Add Department</a></h2>
-  {% endif %}
+<br>
+
+{% if title %}
+<div class="container">
+  <h1>{{ title }}</h1>
+</div>
+<br>
+{% endif %}
+
+{% if departments %}
+<div class="container">
+
+  {% for department in departments %}
+  <h2>[<a href="{% url 'departments:index' department.Code %}">{{ department.Code|upper }}</a>]: {{ department.Name }}
+    Department</h2>
+  {% endfor %}
+</div>
+<br>
+{% else %}
+<div class="container error-container">
+  <li>No Departments</li>
+</div>
+<br>
+{% endif %}
+
+{% if request.user.is_superuser %}
+<div class="container message-container">
+  <h2><a href="{% url 'departments:add_department' %}">+ Add Department</a></h2>
+</div>
+<br>
+{% endif %}
+
+<br>
 {% endblock %}

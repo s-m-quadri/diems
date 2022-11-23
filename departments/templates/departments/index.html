@@ -28,6 +28,7 @@ Department
                     {{ assignment.Title|upper }}
                 </h3>
                 <p>{{ assignment.Description }}</p>
+                <a href="{% url 'codeshine:submit' page.Code assignment.pk %}">Submit</a>
             </div>
             {% endif %}
         {% endfor %}

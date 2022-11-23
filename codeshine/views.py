@@ -14,10 +14,15 @@ def index(request, page_code):
         "massage": "This is codeshine route"
     })
 
+def assignment_index(request, page_code, assignment_code):
+    return render(request, "codeshine/index.html", {
+        "title": f"Assignment - {Assignment.objects.get(pk=assignment_code).Title}",
+        "assignment": Assignment.objects.get(pk=assignment_code)
+    })
 
 def post_assignment(request, page_code):
     if not request.user.is_teacher:
-        return HttpResponseRedirect(reverse("codeshine:index", kwargs={"page_code": page_code}))
+        return HttpResponseRedirect(reverse("departments:index", kwargs={"code": Page.objects.get(Code=page_code).Department.Code}))
 
     class PostAssignmentForm(forms.Form):
         fieldTitle = forms.CharField(
@@ -86,16 +91,16 @@ def post_assignment(request, page_code):
             PostAssignmentForm(request.POST),
             "Something went wrong, please contact support team regarding exception '{}'".format(massage))
 
-    return HttpResponseRedirect(reverse("codeshine:index", kwargs={"page_code": page_code}))
+    return HttpResponseRedirect(reverse("departments:index", kwargs={"code": Page.objects.get(Code=page_code).Department.Code}))
 
 
 def post_submission(request, page_code, assignment_code):
     if not request.user.is_teacher:
-        return HttpResponseRedirect(reverse("codeshine:index", kwargs={"page_code": page_code}))
+        return HttpResponseRedirect(reverse("departments:index", kwargs={"code": Page.objects.get(Code=page_code).Department.Code}))
 
     class PostSubmissionForm(forms.Form):
         fieldAssignment = forms.CharField(
-            label="Solution", widget=forms.Textarea, required=False, initial=Assignment.objects.get(Code=assignment_code).GettingStarted_Template)
+            label="Solution", widget=forms.Textarea, required=False, initial=Assignment.objects.get(pk=assignment_code).GettingStarted_Template)
 
     form_title = "Submit Assignment"
     form_to = reverse("codeshine:submit", kwargs={
@@ -116,7 +121,7 @@ def post_submission(request, page_code, assignment_code):
 
         new_submission = Submission(
             By=request.user,
-            In=Assignment.objects.get(Code=assignment_code),
+            In=Assignment.objects.get(pk=assignment_code),
             Assignment=form_data["fieldAssignment"]
         )
         new_submission.save()
@@ -127,4 +132,4 @@ def post_submission(request, page_code, assignment_code):
             PostSubmissionForm(request.POST),
             "Something went wrong, please contact support team regarding exception '{}'".format(massage))
 
-    return HttpResponseRedirect(reverse("codeshine:index", kwargs={"page_code": page_code}))
+    return HttpResponseRedirect(reverse("departments:index", kwargs={"code": Page.objects.get(Code=page_code).Department.Code}))

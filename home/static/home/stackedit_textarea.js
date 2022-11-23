@@ -11,6 +11,21 @@ textAreas.forEach(element => {
     `;
 });
 
+let toRenderMarkdown = document.querySelectorAll(".render-markdown");
+toRenderMarkdown.forEach(element => {
+    const stackEdit = new Stackedit();
+    stackEdit.openFile({
+        name: "sample",
+        content: {
+            text: element.innerHTML // and the Markdown content.
+        }
+    }, true);
+    stackEdit.on('fileChange', (file) => {
+        element.innerHTML = file.content.html;
+    });
+
+});
+
 function openEditor(textAreaId) {
     element = document.getElementById(textAreaId);
     output = document.getElementById(`div_output_textArea_${textAreaId}`)

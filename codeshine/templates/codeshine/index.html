@@ -1,15 +1,49 @@
 {% extends 'home/layout.html' %}
 
-{% block title %}Details{% endblock %}
+{% block title %}
+CodeShine
+{% endblock %}
 {% block body %}
-{% if massage %}
-<h1>Massage</h1>
-<li>{{ massage }}</li>
+<div class="container">
+    {% if title %}
+    <h1>{{ title }}</h1>
+    {% endif %}
+</div>
+<br>
+{% if assignment %}
+{% if assignment.Description %}
+<div class="container">
+    <h1>Description</h1>
+    <p>{{ assignment.Description }}</p>
+</div>
+<br>
 {% endif %}
-{% if pages %}
-<h1>Pages</h1>
-{% for page in pages %}
-<li>{{ page.Name }}</li>
-{% endfor %}
+
+{% if assignment.Instructions %}
+<div class="container message-container">
+    <h1>Instructions</h1>
+    <div class="normal-container render-markdown">
+        {{ assignment.Instructions }}
+    </div>
+</div>
+<br>
 {% endif %}
+
+{% else %}
+<div class="container warning-container">
+    <h1>Warning</h1>
+    <p>No Pages</p>
+</div>
+<br>
+{% endif %}
+
+{% if code %}
+{% if request.user.is_teacher %}
+<div class="container message-container">
+    <h2><a href="{% url 'departments:add_page' code %}">+ Add Pages</a></h2>
+</div>
+<br>
+{% endif %}
+{% endif %}
+
 {% endblock %}

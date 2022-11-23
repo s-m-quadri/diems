@@ -16,7 +16,7 @@ def index(request, code):
         pages = Page.objects.filter(Department=department)
         assignments = []
         for page in pages:
-            assignments += [x for x in Assignment.objects.filter(In=page)]
+            assignments += [x for x in Assignment.objects.filter(In=page).order_by("-pk")]
         return render(request, "departments/index.html", {
             "title": f"Welcome to {department.Name} Department",
             "pages": [x for x in pages],
