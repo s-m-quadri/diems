@@ -5,9 +5,10 @@ html {
   background-size: cover;
   background-position: center;
   font-family: 'Comfortaa';
-  min-height: 100vh;
   font-size: 18px;
-  overflow-wrap: break-word; }
+  overflow-wrap: break-word;
+  font-weight: normal;
+  min-height: 100vh; }
   html body {
     display: flex;
     flex-direction: row;
@@ -29,12 +30,16 @@ html {
     html .side-bar h1 {
       margin: 0px;
       padding: 0px;
+      font-family: 'Comfortaa';
       font-size: 54px;
+      overflow-wrap: break-word;
       font-weight: normal; }
     html .side-bar h2 {
       margin: 0px;
       padding: 0px;
+      font-family: 'Comfortaa';
       font-size: 20px;
+      overflow-wrap: break-word;
       font-weight: normal;
       color: #ecf7fc; }
     html .side-bar a {
@@ -64,95 +69,41 @@ html {
     overflow-y: scroll;
     height: 100vh;
     opacity: 100%; }
-    html .main-content .container {
-      display: flex;
-      flex-direction: column;
-      margin: auto;
-      opacity: 90%;
-      width: 90%;
-      padding: 20px;
-      border-radius: 5px;
-      background-color: #ecf7fc; }
-      html .main-content .container .postWrapper {
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        padding: 10px;
-        align-items: stretch; }
-      html .main-content .container .post {
-        flex-grow: 0;
-        flex-shrink: 1;
-        flex-basis: 250px;
-        margin: 10px;
-        padding: 10px;
-        border-radius: 5px;
-        border: 1px #1c7ea6 solid;
-        background-color: white; }
-      html .main-content .container a {
-        text-decoration: none;
-        color: #135873; }
-      html .main-content .container a:hover {
-        text-decoration: underline; }
-    html .main-content .normal-container {
-      border: none; }
-      html .main-content .normal-container h1 {
-        color: #082530; }
-    html .main-content .warning-container {
-      border: 1px solid #ebd687; }
-      html .main-content .warning-container h1 {
-        color: #ebd687; }
-    html .main-content .error-container {
-      border: 1px solid #eb879c; }
-      html .main-content .error-container h1 {
-        color: #eb879c; }
-    html .main-content .message-container {
-      border: 1px solid #33acdd; }
-      html .main-content .message-container h1,
-      html .main-content .message-container a {
-        color: #33acdd;
-        text-decoration: none; }
-    html .main-content .textarea-container {
-      background-color: #ebd687;
-      border-radius: 5px;
-      border: 1px solid #33acdd;
-      padding: 20px;
-      overflow-wrap: break-word;
-      max-height: 500px;
-      overflow: auto;
-      margin-top: 10px;
-      margin-bottom: 10px; }
-      html .main-content .textarea-container:empty {
-        visibility: hidden;
-        padding: 0px;
-        margin: 0px; }
     html .main-content h1 {
-      margin-bottom: 10px;
-      margin-top: 10px;
+      margin: 10px 0px;
       color: #082530;
-      font-weight: normal;
-      font-size: 55px; }
+      font-family: 'Comfortaa';
+      font-size: 55px;
+      overflow-wrap: break-word;
+      font-weight: normal; }
     html .main-content h2 {
-      margin-bottom: 7px;
-      margin-top: 7px;
+      margin: 7px 0px;
       color: #1c7ea6;
-      font-weight: normal;
-      font-size: 40px; }
+      font-family: 'Comfortaa';
+      font-size: 40px;
+      overflow-wrap: break-word;
+      font-weight: normal; }
     html .main-content h3 {
-      margin-bottom: 7px;
-      margin-top: 7px;
+      margin: 7px 0px;
       color: #33acdd;
-      font-weight: normal;
-      font-size: 30px; }
+      font-family: 'Comfortaa';
+      font-size: 30px;
+      overflow-wrap: break-word;
+      font-weight: normal; }
     html .main-content p {
-      margin: 0px;
-      margin-bottom: 5px;
-      margin-top: 5px;
-      font-weight: normal;
-      font-size: 18px; }
+      margin: 5px 0px;
+      font-family: 'Comfortaa';
+      font-size: 18px;
+      overflow-wrap: break-word;
+      font-weight: normal; }
     html .main-content ul,
     html .main-content ol {
       margin: 0px;
       padding-left: 20px; }
+    html .main-content img {
+      max-width: 100%; }
+    html .main-content summary {
+      cursor: pointer; }
     html .main-content button,
     html .main-content input[type="submit"] {
       display: block;
@@ -227,5 +178,71 @@ html {
       flex-direction: column;
       align-items: stretch;
       margin-top: 2%; }
+    html .main-content .container {
+      display: flex;
+      flex-direction: column;
+      margin: auto;
+      opacity: 90%;
+      width: 90%;
+      padding: 20px;
+      border-radius: 5px;
+      background-color: #ecf7fc; }
+      html .main-content .container .postWrapper {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        padding: 10px;
+        align-items: stretch; }
+      html .main-content .container .post {
+        flex: 0 1 250px;
+        margin: 10px;
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px #1c7ea6 solid;
+        background-color: white; }
+      html .main-content .container a {
+        text-decoration: none;
+        color: #135873; }
+      html .main-content .container a:hover {
+        text-decoration: underline; }
+    html .main-content .normal-container {
+      border: none; }
+      html .main-content .normal-container h1 {
+        color: #082530; }
+    html .main-content .warning-container {
+      border: 1px solid #ebd687; }
+      html .main-content .warning-container h1 {
+        color: #ebd687; }
+    html .main-content .error-container {
+      border: 1px solid #eb879c; }
+      html .main-content .error-container h1 {
+        color: #eb879c; }
+    html .main-content .message-container {
+      border: 1px solid #33acdd; }
+      html .main-content .message-container h1,
+      html .main-content .message-container a {
+        color: #33acdd;
+        text-decoration: none; }
+    html .main-content .render-markdown {
+      border: 1px solid #33acdd;
+      background-color: white;
+      max-height: 500px;
+      overflow: auto;
+      margin: 10px auto; }
+      html .main-content .render-markdown h1 {
+        color: #082530; }
+    html .main-content .textarea-container {
+      background-color: #ebd687;
+      border-radius: 5px;
+      border: 1px solid #33acdd;
+      padding: 20px;
+      overflow-wrap: break-word;
+      max-height: 500px;
+      overflow: auto;
+      margin: 10px auto; }
+      html .main-content .textarea-container:empty {
+        visibility: hidden;
+        padding: 0px;
+        margin: 0px; }
 
 /*# sourceMappingURL=diems_styles.css.map */

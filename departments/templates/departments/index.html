@@ -16,21 +16,26 @@ Department
     <h2>{{ page.Name }} Page <small>({{ page.Code|lower }})</small>
     </h2>
     {% if request.user.is_teacher %}
-        <a href="{% url 'codeshine:post' page.Code %}">Add Post</a>
+    <a href="{% url 'codeshine:post' page.Code %}">+ Post assignment</a>
     {% endif %}
 
     {% if assignments %}
     <div class="postWrapper">
         {% for assignment in assignments %}
         {% if assignment.In == page %}
-            <div class="post">
-                <h3>
-                    {{ assignment.Title|upper }}
-                </h3>
-                <p>{{ assignment.Description }}</p>
-                <a href="{% url 'codeshine:submit' page.Code assignment.pk %}">Submit</a>
-            </div>
-            {% endif %}
+        <div class="post">
+            <p>By {{ assignment.By.username|capfirst }}</p>
+            <h3>
+                {{ assignment.Title|upper }}
+            </h3>
+            {{ assignment.On }}
+            <p><a href="{% url 'codeshine:assignment_index' page.Code assignment.pk %}">View</a>
+                {% if assignment.Description %}
+                | {{ assignment.Description }}
+                {% endif %}
+            </p>
+        </div>
+        {% endif %}
         {% endfor %}
     </div>
     {% endif %}

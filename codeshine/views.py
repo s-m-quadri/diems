@@ -21,7 +21,7 @@ def assignment_index(request, page_code, assignment_code):
     })
 
 def post_assignment(request, page_code):
-    if not request.user.is_teacher:
+    if not request.user.is_authenticated:
         return HttpResponseRedirect(reverse("departments:index", kwargs={"code": Page.objects.get(Code=page_code).Department.Code}))
 
     class PostAssignmentForm(forms.Form):

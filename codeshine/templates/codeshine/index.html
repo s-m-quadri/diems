@@ -3,47 +3,82 @@
 {% block title %}
 CodeShine
 {% endblock %}
+
 {% block body %}
 <div class="container">
+    <a href="{% url 'departments:index' assignment.In.Department.Code %}"><< Go Back</a>
+
     {% if title %}
     <h1>{{ title }}</h1>
     {% endif %}
-</div>
-<br>
-{% if assignment %}
-{% if assignment.Description %}
-<div class="container">
-    <h1>Description</h1>
+
+    {% if assignment.Description %}
     <p>{{ assignment.Description }}</p>
+    {% endif %}
 </div>
 <br>
-{% endif %}
 
-{% if assignment.Instructions %}
-<div class="container message-container">
-    <h1>Instructions</h1>
-    <div class="normal-container render-markdown">
-        {{ assignment.Instructions }}
-    </div>
+
+
+{% if assignment %}
+<div class="container">
+    <h2>Details</h2>
+    <p>
+        This is an assignment titled <u>{{ title }}</u>,
+        posted by <u>{{ assignment.By.username|capfirst }}</u> Sir/Madam,
+        in page <u>{{ assignment.In.Name }}</u>,
+        on <u>{{ assignment.On }}</u>.
+        Anyone from <u>{{ assignment.In.Department.Name }}</u> department
+        can submit the assignment multiple times and is expected to
+        gain at least <u>{{ assignment.passing_points }} points</u>
+        or at most <u>{{ assignment.max_points }} points</u>.
+    </p>
+    <p>
+        The <u>Instructions</u> and <u>Getting Started Template</u> are follows.
+        When you feel comfortable you can attempt the submit the assignment.
+        Feel free to take your time as instructed.
+    </p>
+    <p>
+        Best of luck!
+    </p>
 </div>
 <br>
-{% endif %}
 
+<div class="container">
+    <h2>Submission</h2>
+    <a href="{% url 'codeshine:submit' assignment.In.Code assignment.pk %}">+ Attempt for submission</a>
+    <br>
+
+    {% if assignment.Instructions %}
+    <details>
+        <summary>Show instructions</summary>
+        <h2>Instructions</h2>
+        <div class="container render-markdown">
+            <textarea class="render-markdown">{{ assignment.Instructions }}</textarea>
+
+        </div>
+    </details>
+    <br>
+    {% endif %}
+
+    {% if assignment.GettingStarted_Template %}
+    <details>
+        <summary>Show template</summary>
+        <h2>Getting Started Template</h2>
+        <div class="container render-markdown">
+            <textarea class="render-markdown">{{ assignment.GettingStarted_Template }}</textarea>
+        </div>
+    </details>
+    {% endif %}
+
+
+</div>
+<br>
 {% else %}
 <div class="container warning-container">
     <h1>Warning</h1>
-    <p>No Pages</p>
+    <p>No Assignment Details Available</p>
 </div>
 <br>
 {% endif %}
-
-{% if code %}
-{% if request.user.is_teacher %}
-<div class="container message-container">
-    <h2><a href="{% url 'departments:add_page' code %}">+ Add Pages</a></h2>
-</div>
-<br>
-{% endif %}
-{% endif %}
-
 {% endblock %}
