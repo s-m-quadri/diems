@@ -100,6 +100,8 @@ html {
     html .main-content ol {
       margin: 0px;
       padding-left: 20px; }
+    html .main-content li {
+      margin: 3px 0px; }
     html .main-content img {
       max-width: 100%; }
     html .main-content summary {
@@ -229,6 +231,8 @@ html {
       max-height: 500px;
       overflow: auto;
       margin: 10px auto; }
+      html .main-content .render-markdown:empty {
+        display: none; }
       html .main-content .render-markdown h1 {
         color: #082530; }
     html .main-content .textarea-container {

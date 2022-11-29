@@ -6,15 +6,16 @@ CodeShine
 
 {% block body %}
 <div class="container">
-    <a href="{% url 'departments:index' assignment.In.Department.Code %}"><< Go Back</a>
+    <a href="{% url 'departments:index' assignment.In.Department.Code %}">
+        << Go Back</a>
 
-    {% if title %}
-    <h1>{{ title }}</h1>
-    {% endif %}
+            {% if title %}
+            <h1>{{ title }}</h1>
+            {% endif %}
 
-    {% if assignment.Description %}
-    <p>{{ assignment.Description }}</p>
-    {% endif %}
+            {% if assignment.Description %}
+            <p>{{ assignment.Description }}</p>
+            {% endif %}
 </div>
 <br>
 
@@ -46,7 +47,9 @@ CodeShine
 
 <div class="container">
     <h2>Submission</h2>
+    {% if assignment.open_for_submission == True %}
     <a href="{% url 'codeshine:submit' assignment.In.Code assignment.pk %}">+ Attempt for submission</a>
+    {% endif %}
     <br>
 
     {% if assignment.Instructions %}
@@ -68,6 +71,24 @@ CodeShine
         <div class="container render-markdown">
             <textarea class="render-markdown">{{ assignment.GettingStarted_Template }}</textarea>
         </div>
+    </details>
+    {% endif %}
+
+    {% if submissions %}
+    <details>
+        <summary>My Submission</summary>
+        <ol>
+        {% for submission in submissions %}
+        <li>
+            <details>
+                <summary>{{ submission.On }}</summary>
+                <div class="container render-markdown">
+                    <textarea class="render-markdown">{{ submission.Assignment }}</textarea>
+                </div>
+            </details>
+        </li>
+        {% endfor %}
+    </ol>
     </details>
     {% endif %}
 

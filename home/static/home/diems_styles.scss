@@ -140,6 +140,10 @@ html {
             margin: 0px;
             padding-left: 20px;
         }
+        
+        li{
+            margin: 3px 0px;
+        }
 
         img {
             max-width: 100%;
@@ -333,6 +337,9 @@ html {
             overflow: auto;
             margin: 10px auto;
 
+            &:empty{
+                display: none;
+            }
             h1 {
                 color: $darkestColor;
             }
