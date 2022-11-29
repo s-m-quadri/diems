@@ -54,7 +54,7 @@ CodeShine
 
     {% if assignment.Instructions %}
     <details>
-        <summary>Show instructions</summary>
+        <summary>instructions</summary>
         <h2>Instructions</h2>
         <div class="container render-markdown">
             <textarea class="render-markdown">{{ assignment.Instructions }}</textarea>
@@ -66,34 +66,72 @@ CodeShine
 
     {% if assignment.GettingStarted_Template %}
     <details>
-        <summary>Show template</summary>
+        <summary>template</summary>
         <h2>Getting Started Template</h2>
         <div class="container render-markdown">
             <textarea class="render-markdown">{{ assignment.GettingStarted_Template }}</textarea>
         </div>
     </details>
+    <br>
     {% endif %}
 
     {% if submissions %}
-    <details>
-        <summary>My Submission</summary>
-        <ol>
-        {% for submission in submissions %}
-        <li>
-            <details>
-                <summary>{{ submission.On }}</summary>
-                <div class="container render-markdown">
-                    <textarea class="render-markdown">{{ submission.Assignment }}</textarea>
-                </div>
-            </details>
-        </li>
-        {% endfor %}
-    </ol>
+    <details open>
+        <summary>my submission(s)</summary>
+        <ol class="ol-attempt">
+            {% for submission in submissions %}
+            <li class="li-attempt">
+                <details>
+                    <summary>{{ submission.On }}</summary>
+                    <div class="container render-markdown">
+                        <textarea class="render-markdown">{{ submission.Assignment }}</textarea>
+                    </div>
+                </details>
+            </li>
+            {% endfor %}
+        </ol>
     </details>
     {% endif %}
-
-
 </div>
+<br>
+
+{% if comments %}
+<div class="container">
+    <h2>Evaluation</h2>
+    <details open>
+        <summary>my evaluation(s)</summary>
+        <ol class="ol-attempt">
+            {% for submission in submissions %}
+            <li class="li-attempt">
+                <details>
+                    <summary>{{ submission.On }}</summary>
+                    {% for comment in comments %}
+                    {% if comment.In == submission and comment.By.is_teacher == True %}
+                    <div class="container comment-container teacher">
+                        <p>By {{ comment.By.username|capfirst }} on {{ comment.On }}</p>
+                        <h1 class="theme">{{ comment.Theme }}</h1>
+                        <textarea class="render-markdown">{{ comment.Comment }}</textarea>
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+                    {% for comment in comments %}
+                    {% if comment.In == submission and comment.By.is_teacher == False %}
+                    <div class="container comment-container">
+                        <p>By {{ comment.By.username|capfirst }} on {{ comment.On }}</p>
+                        <h1 class="theme">{{ comment.Theme }}</h1>
+                        <textarea class="render-markdown">{{ comment.Comment }}</textarea>
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+                </details>
+            </li>
+            {% endfor %}
+        </ol>
+    </details>
+</div>
+<br>
+{% endif %}
+
 <br>
 {% else %}
 <div class="container warning-container">

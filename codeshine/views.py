@@ -16,10 +16,15 @@ def index(request, page_code):
 
 def assignment_index(request, page_code, assignment_code):
     assignment = Assignment.objects.get(pk=assignment_code)
+    submissions = Submission.objects.filter(In=assignment, By=request.user)
+    comments = []
+    for submission in submissions:
+        comments += [x for x in Comment.objects.filter(In=submission)]
     return render(request, "codeshine/index.html", {
         "title": f"Assignment - {Assignment.objects.get(pk=assignment_code).Title}",
         "assignment": assignment,
-        "submissions": Submission.objects.filter(In=assignment, By=request.user),
+        "submissions": submissions,
+        "comments": comments
     })
 
 def post_assignment(request, page_code):

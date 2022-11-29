@@ -19,6 +19,7 @@ $borderRadius: 5px;
     background-attachment: fixed;
     background-size: cover;
     background-position: center;
+    opacity: 80%;
 }
 
 @mixin default_font($SIZE: 18px) {
@@ -29,9 +30,16 @@ $borderRadius: 5px;
 }
 
 html {
-    @include background_html;
     @include default_font;
     min-height: 100vh;
+
+    // filter: sepia() opacity(70%);
+    .background-image {
+        @include background_html;
+        position: absolute;
+        height: 100%;
+        width: 100%;
+    }
 
     body {
         display: flex;
@@ -45,7 +53,7 @@ html {
         display: flex;
         flex-direction: column;
         background-color: $darkestColor;
-        opacity: 95%;
+        opacity: 85%;
         flex-basis: 250px;
         flex-shrink: 0;
         flex-grow: 0;
@@ -57,16 +65,12 @@ html {
         h1 {
             margin: 0px;
             padding: 0px;
-            // font-size: 54px;
-            // font-weight: normal;
             @include default_font(54px);
         }
 
         h2 {
             margin: 0px;
             padding: 0px;
-            // font-size: 20px;
-            // font-weight: normal;
             @include default_font(20px);
             color: $lightestColor;
         }
@@ -140,17 +144,47 @@ html {
             margin: 0px;
             padding-left: 20px;
         }
-        
-        li{
-            margin: 3px 0px;
+
+        li {
+            margin: 10px 0px;
+
         }
 
         img {
             max-width: 100%;
         }
 
-        summary {
-            cursor: pointer;
+        details {
+            summary {
+                cursor: pointer;
+
+                &::marker {
+                    color: $darkerColor;
+                }
+            }
+
+            .ol-attempt {
+                counter-reset: item;
+                list-style-type: none;
+
+                summary::before {
+                    content: 'Attempt ' counter(item, decimal) ' on ' !important;
+                    counter-increment: item;
+                    color: $darkerColor;
+                }
+            }
+
+            &[open] {
+                summary::before {
+                    content: 'Hide ';
+                }
+            }
+
+            &:not([open]) {
+                summary::before {
+                    content: 'Show ';
+                }
+            }
         }
 
         button,
@@ -189,7 +223,8 @@ html {
         }
 
         table,
-        td {
+        td,
+        th {
             padding: 20px;
             margin: 20px;
             border: 1px solid black;
@@ -275,9 +310,6 @@ html {
             }
 
             .post {
-                // flex-grow: 0;
-                // flex-shrink: 1;
-                // flex-basis: 250px;
                 flex: 0 1 250px;
                 margin: 10px;
                 padding: 10px;
@@ -320,6 +352,36 @@ html {
             }
         }
 
+        .comment-container {
+            border-left: 3px solid $normalColor;
+            margin: 10px auto;
+            background-color: white;
+
+            &:empty {
+                display: none;
+            }
+
+            &.teacher {
+                border-left: 3px solid $errorColor;
+
+                h1.theme {
+                    color: $errorColor;
+                }
+
+            }
+
+            h1.theme {
+                color: $normalColor;
+                @include default_font(36px)
+            }
+
+            h1,
+            h2,
+            h3 {
+                @include default_font(18px)
+            }
+        }
+
         .message-container {
             border: 1px solid $normalColor;
 
@@ -328,6 +390,7 @@ html {
                 color: $normalColor;
                 text-decoration: none;
             }
+
         }
 
         .render-markdown {
@@ -337,9 +400,10 @@ html {
             overflow: auto;
             margin: 10px auto;
 
-            &:empty{
+            &:empty {
                 display: none;
             }
+
             h1 {
                 color: $darkestColor;
             }

@@ -1,14 +1,19 @@
 html {
-  background-image: url(https://d1hbpr09pwz0sk.cloudfront.net/logo_url/deogiri-institute-of-engineering-and-management-studies-7a4aae5c);
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-size: cover;
-  background-position: center;
   font-family: 'Comfortaa';
   font-size: 18px;
   overflow-wrap: break-word;
   font-weight: normal;
   min-height: 100vh; }
+  html .background-image {
+    background-image: url(https://d1hbpr09pwz0sk.cloudfront.net/logo_url/deogiri-institute-of-engineering-and-management-studies-7a4aae5c);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center;
+    opacity: 80%;
+    position: absolute;
+    height: 100%;
+    width: 100%; }
   html body {
     display: flex;
     flex-direction: row;
@@ -19,7 +24,7 @@ html {
     display: flex;
     flex-direction: column;
     background-color: #082530;
-    opacity: 95%;
+    opacity: 85%;
     flex-basis: 250px;
     flex-shrink: 0;
     flex-grow: 0;
@@ -101,11 +106,24 @@ html {
       margin: 0px;
       padding-left: 20px; }
     html .main-content li {
-      margin: 3px 0px; }
+      margin: 10px 0px; }
     html .main-content img {
       max-width: 100%; }
-    html .main-content summary {
+    html .main-content details summary {
       cursor: pointer; }
+      html .main-content details summary::marker {
+        color: #1c7ea6; }
+    html .main-content details .ol-attempt {
+      counter-reset: item;
+      list-style-type: none; }
+      html .main-content details .ol-attempt summary::before {
+        content: "Attempt " counter(item,decimal) " on " !important;
+        counter-increment: item;
+        color: #1c7ea6; }
+    html .main-content details[open] summary::before {
+      content: 'Hide '; }
+    html .main-content details:not([open]) summary::before {
+      content: 'Show '; }
     html .main-content button,
     html .main-content input[type="submit"] {
       display: block;
@@ -130,7 +148,8 @@ html {
   100% {
     background-color: #1c7ea6; } }
     html .main-content table,
-    html .main-content td {
+    html .main-content td,
+    html .main-content th {
       padding: 20px;
       margin: 20px;
       border: 1px solid black;
@@ -219,6 +238,29 @@ html {
       border: 1px solid #eb879c; }
       html .main-content .error-container h1 {
         color: #eb879c; }
+    html .main-content .comment-container {
+      border-left: 3px solid #33acdd;
+      margin: 10px auto;
+      background-color: white; }
+      html .main-content .comment-container:empty {
+        display: none; }
+      html .main-content .comment-container.teacher {
+        border-left: 3px solid #eb879c; }
+        html .main-content .comment-container.teacher h1.theme {
+          color: #eb879c; }
+      html .main-content .comment-container h1.theme {
+        color: #33acdd;
+        font-family: 'Comfortaa';
+        font-size: 36px;
+        overflow-wrap: break-word;
+        font-weight: normal; }
+      html .main-content .comment-container h1,
+      html .main-content .comment-container h2,
+      html .main-content .comment-container h3 {
+        font-family: 'Comfortaa';
+        font-size: 18px;
+        overflow-wrap: break-word;
+        font-weight: normal; }
     html .main-content .message-container {
       border: 1px solid #33acdd; }
       html .main-content .message-container h1,
