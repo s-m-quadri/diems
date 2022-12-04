@@ -14,21 +14,27 @@ def index(request, page_code):
         "massage": "This is codeshine route"
     })
 
+
 def assignment_index(request, page_code, assignment_code):
     assignment = Assignment.objects.get(pk=assignment_code)
-    submissions = Submission.objects.filter(In=assignment, By=request.user)
+    my_submissions = Submission.objects.filter(In=assignment, By=request.user)
+    all_submissions = Submission.objects.filter(In=assignment)
     comments = []
-    for submission in submissions:
+    for submission in my_submissions:
         comments += [x for x in Comment.objects.filter(In=submission)]
     return render(request, "codeshine/index.html", {
         "title": f"Assignment - {Assignment.objects.get(pk=assignment_code).Title}",
         "assignment": assignment,
-        "submissions": submissions,
-        "comments": comments
+        "submissions": my_submissions,
+        "comments": comments,
+        "all_submissions": all_submissions,
+        "page_code": page_code,
+        "assignment_code": assignment_code
     })
 
+
 def post_assignment(request, page_code):
-    if not request.user.is_authenticated:
+    if not request.user.is_teacher:
         return HttpResponseRedirect(reverse("departments:index", kwargs={"code": Page.objects.get(Code=page_code).Department.Code}))
 
     class PostAssignmentForm(forms.Form):
@@ -102,7 +108,7 @@ def post_assignment(request, page_code):
 
 
 def post_submission(request, page_code, assignment_code):
-    if not request.user.is_teacher:
+    if not request.user.is_authenticated:
         return HttpResponseRedirect(reverse("departments:index", kwargs={"code": Page.objects.get(Code=page_code).Department.Code}))
 
     class PostSubmissionForm(forms.Form):
@@ -139,4 +145,115 @@ def post_submission(request, page_code, assignment_code):
             PostSubmissionForm(request.POST),
             "Something went wrong, please contact support team regarding exception '{}'".format(massage))
 
-    return HttpResponseRedirect(reverse("departments:index", kwargs={"code": Page.objects.get(Code=page_code).Department.Code}))
+    return HttpResponseRedirect(reverse("codeshine:assignments", kwargs={
+        "page_code": page_code,
+        "assignment_code": assignment_code
+    }))
+
+
+def submissions(request, page_code, assignment_code):
+    assignment = Assignment.objects.get(pk=assignment_code)
+    submissions = Submission.objects.filter(In=assignment)
+    submission_users = []
+    all_submissions = []
+    for submission in submissions:
+        if submission.By not in submission_users:
+            submission_users += [submission.By]
+            all_submissions += [(submission.By,
+                                 [x for x in submissions.filter(By=submission.By)])]
+
+    return render(request, "codeshine/submissions.html", {
+        "title": f"Submissions - {Assignment.objects.get(pk=assignment_code).Title}",
+        "page_code": page_code,
+        "assignment_code": assignment_code,
+        "assignment": assignment,
+        "submission_users": submission_users,
+        "all_submissions": all_submissions,
+    })
+
+
+def submission_index(request, page_code, assignment_code, submission_code):
+    assignment = Assignment.objects.get(pk=assignment_code)
+    submission = Submission.objects.get(pk=submission_code)
+    comments = [x for x in Comment.objects.filter(In=submission)]
+
+    return render(request, "codeshine/submission.html", {
+        "title": f"Submission #{submission.pk}",
+        "page_code": page_code,
+        "assignment_code": assignment_code,
+        "submission_code": submission_code,
+        "assignment": assignment,
+        "submission": submission,
+        "comments": comments,
+    })
+
+
+def post_evaluation(request, page_code, assignment_code, submission_code):
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect(reverse("departments:index", kwargs={"code": Page.objects.get(Code=page_code).Department.Code}))
+
+    class PostEvaluationForm(forms.Form):
+        fieldSubmissionPoints = forms.IntegerField(
+            label="Evaluation Points",
+            min_value=1,
+            max_value=Assignment.objects.get(pk=assignment_code).max_points,
+            initial=Submission.objects.get(pk=submission_code).Points,
+            required=True)
+        fieldRemark = forms.CharField(
+            label="Remark", max_length=1024, required=False,
+            initial=Submission.objects.get(pk=submission_code).Remark)
+
+        ideal_choices = (("No", "Maybe! but not suitable for sharing with others at result declaration"),
+                         ("Yes", "Yes! and should be shared to all at result declaration"))
+        fieldIdeal = forms.ChoiceField(
+            label="Is ideal", initial="No", required=True, choices=ideal_choices)
+        fieldComment = forms.CharField(
+            label="Additional Comment", widget=forms.Textarea, required=False)
+        fieldCommentTheme = forms.CharField(
+            label="Additional Comment Theme", max_length=128, required=False)
+
+    form_title = f"Evaluate {Submission.objects.get(pk=submission_code).By.username}'s Submission"
+    form_to = reverse("codeshine:evaluate", kwargs={
+                      "page_code": page_code,
+                      "assignment_code": assignment_code,
+                      "submission_code": submission_code})
+    form_action = "Finalize this one"
+
+    if not request.method == "POST":
+        return render_form_generic(
+            request, form_title, form_to, form_action, PostEvaluationForm())
+
+    raw_form = PostEvaluationForm(request.POST)
+    if not raw_form.is_valid():
+        return render_form_generic(
+            request, form_title, form_to, form_action, PostEvaluationForm(request.POST))
+
+    try:
+        form_data = raw_form.cleaned_data
+
+        new_evaluation = Submission.objects.get(pk=submission_code)
+        new_evaluation.Points = form_data["fieldSubmissionPoints"]
+        new_evaluation.Remark = form_data["fieldRemark"]
+        new_evaluation.is_ideal = False if form_data["fieldIdeal"] != "Yes" else True
+        new_evaluation.save()
+
+        if form_data["fieldCommentTheme"] or form_data["fieldComment"]:
+            new_comment = Comment(
+                By=request.user,
+                In=Submission.objects.get(pk=submission_code),
+                Theme=form_data["fieldCommentTheme"],
+                Comment=form_data["fieldComment"],
+            )
+            new_comment.save()
+
+    except Exception as massage:
+        return render_form_generic(
+            request, form_title, form_to, form_action,
+            PostEvaluationForm(request.POST),
+            "Something went wrong, please contact support team regarding exception '{}'".format(massage))
+
+    return HttpResponseRedirect(reverse("codeshine:submission", kwargs={
+        "page_code": page_code,
+        "assignment_code": assignment_code,
+        "submission_code": submission_code
+    }))

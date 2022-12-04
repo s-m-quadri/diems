@@ -55,7 +55,7 @@ CodeShine
     {% if assignment.Instructions %}
     <details>
         <summary>instructions</summary>
-        <h2>Instructions</h2>
+        <h3>Instructions</h3>
         <div class="container render-markdown">
             <textarea class="render-markdown">{{ assignment.Instructions }}</textarea>
 
@@ -67,7 +67,7 @@ CodeShine
     {% if assignment.GettingStarted_Template %}
     <details>
         <summary>template</summary>
-        <h2>Getting Started Template</h2>
+        <h3>Getting Started Template</h3>
         <div class="container render-markdown">
             <textarea class="render-markdown">{{ assignment.GettingStarted_Template }}</textarea>
         </div>
@@ -78,56 +78,23 @@ CodeShine
     {% if submissions %}
     <details open>
         <summary>my submission(s)</summary>
-        <ol class="ol-attempt">
-            {% for submission in submissions %}
-            <li class="li-attempt">
-                <details>
-                    <summary>{{ submission.On }}</summary>
-                    <div class="container render-markdown">
-                        <textarea class="render-markdown">{{ submission.Assignment }}</textarea>
-                    </div>
-                </details>
-            </li>
-            {% endfor %}
-        </ol>
+        {% for submission in submissions %}
+        <p>
+            {{ submission.On }} |
+            <a href="{% url 'codeshine:submission' page_code assignment_code submission.pk %}">Show</a>
+        </p>
+        {% endfor %}
     </details>
+    <br>
     {% endif %}
 </div>
 <br>
 
-{% if comments %}
+{% if request.user.is_teacher %}
 <div class="container">
-    <h2>Evaluation</h2>
-    <details open>
-        <summary>my evaluation(s)</summary>
-        <ol class="ol-attempt">
-            {% for submission in submissions %}
-            <li class="li-attempt">
-                <details>
-                    <summary>{{ submission.On }}</summary>
-                    {% for comment in comments %}
-                    {% if comment.In == submission and comment.By.is_teacher == True %}
-                    <div class="container comment-container teacher">
-                        <p>By {{ comment.By.username|capfirst }} on {{ comment.On }}</p>
-                        <h1 class="theme">{{ comment.Theme }}</h1>
-                        <textarea class="render-markdown">{{ comment.Comment }}</textarea>
-                    </div>
-                    {% endif %}
-                    {% endfor %}
-                    {% for comment in comments %}
-                    {% if comment.In == submission and comment.By.is_teacher == False %}
-                    <div class="container comment-container">
-                        <p>By {{ comment.By.username|capfirst }} on {{ comment.On }}</p>
-                        <h1 class="theme">{{ comment.Theme }}</h1>
-                        <textarea class="render-markdown">{{ comment.Comment }}</textarea>
-                    </div>
-                    {% endif %}
-                    {% endfor %}
-                </details>
-            </li>
-            {% endfor %}
-        </ol>
-    </details>
+    <h2>Results</h2>
+    <a href="{% url 'codeshine:submissions' page_code assignment_code %}">> Show All Submissions</a>
+    <br>
 </div>
 <br>
 {% endif %}

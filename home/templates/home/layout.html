@@ -11,6 +11,8 @@
     <link href='https://fonts.googleapis.com/css?family=Comfortaa' rel='stylesheet'>
     <link rel="stylesheet" href="{% static 'home/diems_styles.css' %}">
     <script src="https://unpkg.com/stackedit-js@1.0.7/docs/lib/stackedit.min.js"></script>
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 </head>
 
 <body>
@@ -20,61 +22,83 @@
             <br>
             <div class="head">
                 <h1>Deogiri Institute</h1>
-                <h2>of Engineering and Management Studies</h2>
+                <h2>of Engineering and <br>Management Studies</h2>
             </div>
-            <hr>
-            <br>
-
-            <p>Link to <a href="{% url 'home:index' %}">Home Page</a></p>
-            <br>
-
             <p>
-                {% if request.user.is_superuser %}
-                Welcome, Respected <br>
-                <u>{{ request.user.username|capfirst }}</u> Sir/Madam, you have logged in as a Superuser.
-                You have privileges to <a href="{% url 'departments:list_department' %}">manage</a> all the departments
-                and
-                beyond. After completing the work, kindly inform us through
-                <a href="{% url 'accounts:logout' %}">Logout</a> confirmation. Thanks for visiting.
-
-                {% elif request.user.is_authenticated and request.user.is_student %}
-                Welcome, Dear <br>
-                <u>{{ request.user.username|capfirst }}</u>, you have logged in as a student.
-                As you are a part of <a href="{% url 'departments:index' request.user.Department.Code %}">
-                    {{ request.user.Department.Name }} Department
-                </a>, can access, but be sure to <a href="{% url 'accounts:logout' %}">Logout</a> before leaving us,
-                thus
-                we'll
-                get informed. Thanks for visiting.
-
-
-                {% elif request.user.is_authenticated and request.user.is_teacher %}
-                Welcome, Respected <br>
-                <u>{{ request.user.username|capfirst }}</u> Sir/Madam, you have logged in as a teacher.
-                As you are a part of <a href="{% url 'departments:index' request.user.Department.Code %}">
-                    {{ request.user.Department.Name }} Department
-                </a>, can access, but be sure to <a href="{% url 'accounts:logout' %}">Logout</a> before leaving us,
-                thus
-                we'll
-                get informed. Thanks for visiting.
-
-                {% else %}
-                <a href="{% url 'accounts:login' %}">Enter</a> |
-                <a href="{% url 'accounts:register' %}">Register</a>
-                {% endif %}
+                <span class="inline"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor"
+                        class="bi bi-house-door" viewBox="0 0 16 16">
+                        <path
+                            d="M8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4.5a.5.5 0 0 0 .5-.5v-4h2v4a.5.5 0 0 0 .5.5H14a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146ZM2.5 14V7.707l5.5-5.5 5.5 5.5V14H10v-4a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5v4H2.5Z" />
+                    </svg>
+                    &nbsp<a href="{% url 'home:index' %}">Home Page</a>
+                </span>
             </p>
+            <hr>
+            {% if request.user.is_authenticated %}
+            <p>
+                <span class="inline">
+                    <a href="{% url 'departments:index' request.user.Department.Code %}">
+                        {{ request.user.Department.Name }}
+                    </a>
+                    {% if request.user.is_superuser %}
+                    <a href="{% url 'departments:list_department' %}">manage</a>
+                    {% endif %}
+                </span>
+                <span class="inline">
+                    Welcome&nbsp
+                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor"
+                        class="bi bi-person" viewBox="0 0 16 16">
+                        <path
+                            d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4Zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10Z" />
+                    </svg>
+                    &nbsp{{ request.user.username|capfirst }}
+                </span>
+
+                {% if request.user.is_superuser %}Superuser |{% endif %}
+                {% if request.user.is_teacher %}Teacher |{% endif %}
+                {% if request.user.is_student %}Student |{% endif %}
+                <a href="{% url 'accounts:logout' %}">Logout</a>
+                
+
+
+            </p>
+            {% else %}
+            <a href="{% url 'accounts:login' %}">Enter</a>
+            | <a href="{% url 'accounts:register' %}">Register</a>
+            {% endif %}
             <br>
         </div>
         <div class="side-bar-foot">
-            <h2>Contact Us</h2>
-            <hr>
-            <p><u>Address</u>: Deogiri Institute of Engineering and Management Studies, Railway Station Road, Aurangabad
-                431001, <br> <u>Info line</u>: 0240-2367546, <br>
-                <u>Director</u>: +91-9011078272 <br>
-                <u>Email</u>: admin@dietms.org <br>
-                <br>
-            </p>
-            <h2>Copyright © 2018 dietms.org</h2>
+            <details class="for-mobile-only">
+                <summary>
+                    Contact Us
+                </summary>
+
+                <hr>
+                <p><u>Address</u>: Deogiri Institute of Engineering and Management Studies, Railway Station Road,
+                    Aurangabad
+                    431001, <br> <u>Info line</u>: 0240-2367546, <br>
+                    <u>Director</u>: +91-9011078272 <br>
+                    <u>Email</u>: admin@dietms.org <br>
+                    <br>
+                </p>
+                <h2>Copyright © 2018 dietms.org</h2>
+            </details>
+            <details class="for-laptop-only" open>
+                <summary>
+                    Contact Us
+                </summary>
+
+                <hr>
+                <p><u>Address</u>: Deogiri Institute of Engineering and Management Studies, Railway Station Road,
+                    Aurangabad
+                    431001, <br> <u>Info line</u>: 0240-2367546, <br>
+                    <u>Director</u>: +91-9011078272 <br>
+                    <u>Email</u>: admin@dietms.org <br>
+                    <br>
+                </p>
+                <h2>Copyright © 2018 dietms.org</h2>
+            </details>
         </div>
     </div>
 

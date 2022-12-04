@@ -1,0 +1,65 @@
+{% extends 'home/layout.html' %}
+
+{% block title %}
+CodeShine Evaluate
+{% endblock %}
+
+{% block body %}
+<div class="container">
+    <a href="{% url 'codeshine:assignments' page_code assignment_code %}">
+        << Go Back</a>
+
+            {% if title %}
+            <h1>{{ title }}</h1>
+            {% endif %}
+</div>
+<br>
+
+
+
+{% if submission %}
+<div class="container">
+    <h2>Details</h2>
+    {% if request.user.is_teacher %}
+    <a href="{% url 'codeshine:evaluate' page_code assignment_code submission_code %}">+ Evaluate</a>
+    <br>
+    {% endif %}
+    <p>{{ submission.On }} | By <u>{{ submission.By.username|capfirst }}</u> | For <u>{{ assignment.Title|capfirst }}</u></p>
+    <div class="container render-markdown">
+        <textarea class="render-markdown">{{ submission.Assignment }}</textarea>
+    </div>
+</div>
+<br>
+{% if comments %}
+<div class="container">
+    <h2>Comments</h2>
+    {% for comment in comments%}
+    {% if comment.By.is_teacher != True %}
+    <p>{{ comment.On }} | By {{ comment.By.username|capfirst }} Sir/Madam,</p>
+    <div class="container comment-container">
+        {% if comment.Theme %}<h1 class="theme">{{ comment.Theme }}</h1>{% endif %}
+        {% if comment.Comment %}<textarea class="render-markdown">{{ comment.Comment }}</textarea>{% endif %}
+    </div>
+    {% else %}
+    <p>{{ comment.On }} | By {{ comment.By.username|capfirst }} Sir/Madam,</p>
+    <div class="container comment-container teacher">
+        {% if comment.Theme %}<h1 class="theme">{{ comment.Theme }}</h1>{% endif %}
+        {% if comment.Comment %}<textarea class="render-markdown">{{ comment.Comment }}</textarea>{% endif %}
+    </div>
+
+    {% endif %}
+    {% endfor %}
+</div>
+{% endif %}
+
+
+
+<br>
+{% else %}
+<div class="container warning-container">
+    <h1>Warning</h1>
+    <p>No Submission Details Available</p>
+</div>
+<br>
+{% endif %}
+{% endblock %}

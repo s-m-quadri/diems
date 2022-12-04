@@ -1,52 +1,69 @@
+@counter-style attempt {
+  system: numeric;
+  symbols: "0" "1" "2" "3" "4" "5" "6" "7" "8" "9";
+  prefix: "Attempt "; }
 html {
   font-family: 'Comfortaa';
   font-size: 18px;
   overflow-wrap: break-word;
   font-weight: normal;
   min-height: 100vh; }
-  html .background-image {
-    background-image: url(https://d1hbpr09pwz0sk.cloudfront.net/logo_url/deogiri-institute-of-engineering-and-management-studies-7a4aae5c);
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-size: cover;
-    background-position: center;
-    opacity: 80%;
-    position: absolute;
-    height: 100%;
-    width: 100%; }
   html body {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     margin: 0px;
-    height: 100vh;
-    overflow-y: hidden; }
+    overflow-y: scroll; }
+    @media (min-width: 800px) {
+      html body {
+        height: 100vh;
+        flex-direction: row;
+        overflow-y: hidden; } }
+    html body .background-image {
+      background-image: url(https://d1hbpr09pwz0sk.cloudfront.net/logo_url/deogiri-institute-of-engineering-and-management-studies-7a4aae5c);
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-size: cover;
+      background-position: center;
+      opacity: 80%;
+      position: fixed;
+      height: 100%;
+      width: 100%; }
   html .side-bar {
     display: flex;
-    flex-direction: column;
-    background-color: #082530;
     opacity: 85%;
-    flex-basis: 250px;
-    flex-shrink: 0;
-    flex-grow: 0;
     padding: 20px;
     color: #98d5ee;
-    overflow-y: scroll;
-    height: auto; }
+    flex: 0 0 250px;
+    flex-direction: column;
+    background-color: #082530; }
+    @media (min-width: 800px) {
+      html .side-bar {
+        height: auto;
+        overflow-y: scroll; } }
     html .side-bar h1 {
       margin: 0px;
       padding: 0px;
       font-family: 'Comfortaa';
       font-size: 54px;
       overflow-wrap: break-word;
-      font-weight: normal; }
+      font-weight: normal;
+      text-align: center; }
+      @media (min-width: 800px) {
+        html .side-bar h1 {
+          text-align: left; } }
     html .side-bar h2 {
       margin: 0px;
       padding: 0px;
+      color: #ecf7fc;
+      text-align: center;
+      line-height: 25px;
       font-family: 'Comfortaa';
       font-size: 20px;
       overflow-wrap: break-word;
-      font-weight: normal;
-      color: #ecf7fc; }
+      font-weight: normal; }
+      @media (min-width: 800px) {
+        html .side-bar h2 {
+          text-align: left; } }
     html .side-bar a {
       margin: 0px;
       color: #98d5ee;
@@ -59,33 +76,61 @@ html {
       padding: 0px;
       font-size: 18px;
       color: #ecf7fc;
+      text-align: center;
       line-height: 21px; }
+      @media (min-width: 800px) {
+        html .side-bar p {
+          text-align: left; } }
     html .side-bar u {
       color: #98d5ee;
       text-decoration: none;
       border-bottom: dotted 1px; }
     html .side-bar hr {
       border-color: #98d5ee; }
+    html .side-bar .inline {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white; }
+      @media (min-width: 800px) {
+        html .side-bar .inline {
+          justify-content: flex-start; } }
+    html .side-bar details {
+      text-align: center; }
+      html .side-bar details.for-laptop-only {
+        display: none; }
+      html .side-bar details.for-mobile-only {
+        display: block; }
+      @media (min-width: 800px) {
+        html .side-bar details {
+          text-align: left; }
+          html .side-bar details.for-laptop-only {
+            display: block; }
+          html .side-bar details.for-mobile-only {
+            display: none; } }
     html .side-bar .side-bar-foot {
       opacity: 50%; }
   html .main-content {
-    flex-shrink: 1;
-    flex-grow: 1;
-    overflow-y: scroll;
-    height: 100vh;
-    opacity: 100%; }
+    flex: 1 1 auto;
+    opacity: 100%;
+    text-align: center; }
+    @media (min-width: 800px) {
+      html .main-content {
+        overflow-y: scroll;
+        text-align: left;
+        height: 100vh; } }
     html .main-content h1 {
       margin: 10px 0px;
       color: #082530;
       font-family: 'Comfortaa';
-      font-size: 55px;
+      font-size: 45px;
       overflow-wrap: break-word;
       font-weight: normal; }
     html .main-content h2 {
       margin: 7px 0px;
       color: #1c7ea6;
       font-family: 'Comfortaa';
-      font-size: 40px;
+      font-size: 36px;
       overflow-wrap: break-word;
       font-weight: normal; }
     html .main-content h3 {
@@ -113,33 +158,13 @@ html {
       cursor: pointer; }
       html .main-content details summary::marker {
         color: #1c7ea6; }
-    html .main-content details .ol-attempt {
-      counter-reset: item;
-      list-style-type: none; }
-      html .main-content details .ol-attempt summary::before {
-        content: "Attempt " counter(item,decimal) " on " !important;
-        counter-increment: item;
-        color: #1c7ea6; }
     html .main-content details[open] summary::before {
       content: 'Hide '; }
     html .main-content details:not([open]) summary::before {
       content: 'Show '; }
-    html .main-content button,
-    html .main-content input[type="submit"] {
-      display: block;
-      background-color: #1c7ea6;
-      color: #ecf7fc;
-      outline: none;
-      border: none;
-      padding: 10px;
-      font-size: medium;
-      margin: 5px;
-      border-radius: 5px; }
-    html .main-content button:hover,
-    html .main-content input[type="submit"]:hover {
-      font-weight: 900;
-      cursor: pointer;
-      animation: pulse ease-in-out 1s; }
+    html .main-content .ol-attempt {
+      list-style: attempt;
+      padding-left: 100px; }
 @keyframes pulse {
   0% {
     background-color: #1c7ea6; }
@@ -154,63 +179,60 @@ html {
       margin: 20px;
       border: 1px solid black;
       border-collapse: collapse; }
-    html .main-content .formWrapper {
+    html .main-content form {
       display: flex;
       flex-direction: column;
       align-items: stretch;
       margin: auto;
-      width: 75%; }
-    html .main-content .fieldWrapper {
-      display: flex;
-      align-items: stretch;
-      flex-wrap: nowrap;
-      flex-direction: column;
       width: 100%; }
-      html .main-content .fieldWrapper label {
+      html .main-content form label {
+        margin-top: 2%; }
+      html .main-content form input,
+      html .main-content form button,
+      html .main-content form select {
         display: flex;
-        margin-top: 2%;
-        width: 100%; }
-      html .main-content .fieldWrapper input,
-      html .main-content .fieldWrapper button,
-      html .main-content .fieldWrapper select {
-        display: flex;
-        color: #082530;
-        border: none;
-        background-color: #ecf7fc;
-        border-radius: 5px;
-        border-bottom: #1c7ea6 solid 3px;
         padding: 10px;
+        border: #98d5ee solid 1px;
         outline: none;
         font-size: medium;
         font-weight: normal;
-        margin: 5px; }
-      html .main-content .fieldWrapper input:focus,
-      html .main-content .fieldWrapper button:focus,
-      html .main-content .fieldWrapper select:focus {
-        background-color: white;
-        font-weight: bold;
-        border-bottom-color: #082530; }
-      html .main-content .fieldWrapper input:hover,
-      html .main-content .fieldWrapper button:hover,
-      html .main-content .fieldWrapper select:hover {
-        background-color: white; }
-    html .main-content .submitWrapper {
-      display: flex;
-      flex-direction: column;
-      align-items: stretch;
-      margin-top: 2%; }
+        font-family: 'Comfortaa';
+        font-size: 20px;
+        overflow-wrap: break-word;
+        font-weight: normal;
+        margin-top: 5px; }
+      html .main-content form input:focus,
+      html .main-content form button:focus,
+      html .main-content form select:focus {
+        border: #1c7ea6 solid 1px; }
+      html .main-content form input[type="submit"] {
+        display: block;
+        text-align: center;
+        margin-top: 18px;
+        padding: 10px;
+        border: none;
+        outline: none;
+        background-color: #1c7ea6;
+        color: #ecf7fc;
+        font-family: 'Comfortaa';
+        font-size: 20px;
+        overflow-wrap: break-word;
+        font-weight: normal; }
+        html .main-content form input[type="submit"]:hover {
+          font-weight: 900;
+          cursor: pointer;
+          animation: pulse ease-in-out 1s; }
     html .main-content .container {
       display: flex;
       flex-direction: column;
-      margin: auto;
       opacity: 90%;
-      width: 90%;
       padding: 20px;
-      border-radius: 5px;
+      margin: 10px;
       background-color: #ecf7fc; }
       html .main-content .container .postWrapper {
         display: flex;
         flex-direction: row;
+        justify-content: space-evenly;
         flex-wrap: wrap;
         padding: 10px;
         align-items: stretch; }
@@ -240,12 +262,13 @@ html {
         color: #eb879c; }
     html .main-content .comment-container {
       border-left: 3px solid #33acdd;
-      margin: 10px auto;
+      border-right: 3px solid #33acdd;
       background-color: white; }
       html .main-content .comment-container:empty {
         display: none; }
       html .main-content .comment-container.teacher {
-        border-left: 3px solid #eb879c; }
+        border-left: 3px solid #eb879c;
+        border-right: 3px solid #eb879c; }
         html .main-content .comment-container.teacher h1.theme {
           color: #eb879c; }
       html .main-content .comment-container h1.theme {
@@ -271,21 +294,17 @@ html {
       border: 1px solid #33acdd;
       background-color: white;
       max-height: 500px;
-      overflow: auto;
-      margin: 10px auto; }
+      overflow: auto; }
       html .main-content .render-markdown:empty {
         display: none; }
       html .main-content .render-markdown h1 {
         color: #082530; }
     html .main-content .textarea-container {
+      flex: 1 1 auto;
       background-color: #ebd687;
-      border-radius: 5px;
-      border: 1px solid #33acdd;
+      border: 1px solid #98d5ee;
       padding: 20px;
-      overflow-wrap: break-word;
-      max-height: 500px;
-      overflow: auto;
-      margin: 10px auto; }
+      overflow-wrap: break-word; }
       html .main-content .textarea-container:empty {
         visibility: hidden;
         padding: 0px;

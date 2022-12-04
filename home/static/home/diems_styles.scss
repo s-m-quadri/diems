@@ -12,6 +12,7 @@ $warningColor: #ebd687;
 // Scale
 $borderWidth: 3px;
 $borderRadius: 5px;
+$LaptopBreakPoint: 800px;
 
 @mixin background_html($URL : url(https://d1hbpr09pwz0sk.cloudfront.net/logo_url/deogiri-institute-of-engineering-and-management-studies-7a4aae5c)) {
     background-image: $URL;
@@ -29,50 +30,77 @@ $borderRadius: 5px;
     font-weight: normal;
 }
 
+@counter-style attempt {
+    system: numeric;
+    symbols: "0" "1" "2" "3" "4" "5" "6" "7" "8" "9";
+    prefix: "Attempt ";
+}
+
+
 html {
     @include default_font;
     min-height: 100vh;
 
     // filter: sepia() opacity(70%);
-    .background-image {
-        @include background_html;
-        position: absolute;
-        height: 100%;
-        width: 100%;
-    }
+
 
     body {
         display: flex;
-        flex-direction: row;
+        flex-direction: column;
         margin: 0px;
-        height: 100vh;
-        overflow-y: hidden;
+        overflow-y: scroll;
+
+        @media (min-width: $LaptopBreakPoint) {
+            height: 100vh;
+            flex-direction: row;
+            overflow-y: hidden;
+        }
+
+        .background-image {
+            @include background_html;
+            position: fixed;
+            height: 100%;
+            width: 100%;
+        }
     }
 
     .side-bar {
         display: flex;
-        flex-direction: column;
-        background-color: $darkestColor;
         opacity: 85%;
-        flex-basis: 250px;
-        flex-shrink: 0;
-        flex-grow: 0;
         padding: 20px;
         color: $lighterColor;
-        overflow-y: scroll;
-        height: auto;
+        flex: 0 0 250px;
+        flex-direction: column;
+        background-color: $darkestColor;
+
+        @media (min-width: $LaptopBreakPoint) {
+            height: auto;
+            overflow-y: scroll;
+        }
 
         h1 {
             margin: 0px;
             padding: 0px;
             @include default_font(54px);
+            text-align: center;
+
+            @media (min-width: $LaptopBreakPoint) {
+                text-align: left;
+            }
+
         }
 
         h2 {
             margin: 0px;
             padding: 0px;
-            @include default_font(20px);
             color: $lightestColor;
+            text-align: center;
+            line-height: 25px;
+            @include default_font(20px);
+
+            @media (min-width: $LaptopBreakPoint) {
+                text-align: left;
+            }
         }
 
         a {
@@ -91,7 +119,13 @@ html {
             padding: 0px;
             font-size: 18px;
             color: $lightestColor;
+            text-align: center;
             line-height: 21px;
+
+            @media (min-width: $LaptopBreakPoint) {
+                text-align: left;
+            }
+
         }
 
         u {
@@ -104,28 +138,68 @@ html {
             border-color: $lighterColor;
         }
 
+        .inline {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            @media (min-width: $LaptopBreakPoint) {
+                justify-content: flex-start;
+            }
+
+            color: white;
+        }
+
+        details {
+            text-align: center;
+
+            &.for-laptop-only {
+                display: none;
+            }
+
+            &.for-mobile-only {
+                display: block;
+            }
+
+            @media (min-width: $LaptopBreakPoint) {
+                text-align: left;
+
+                &.for-laptop-only {
+                    display: block;
+                }
+
+                &.for-mobile-only {
+                    display: none;
+                }
+            }
+        }
+
         .side-bar-foot {
             opacity: 50%;
         }
     }
 
     .main-content {
-        flex-shrink: 1;
-        flex-grow: 1;
-        overflow-y: scroll;
-        height: 100vh;
+        flex: 1 1 auto;
         opacity: 100%;
+        text-align: center;
+
+        @media (min-width: $LaptopBreakPoint) {
+            overflow-y: scroll;
+            text-align: left;
+            height: 100vh;
+        }
 
         h1 {
             margin: 10px 0px;
             color: $darkestColor;
-            @include default_font(55px);
+            @include default_font(45px);
         }
 
         h2 {
             margin: 7px 0px;
             color: $darkerColor;
-            @include default_font(40px);
+            @include default_font(36px);
         }
 
         h3 {
@@ -163,17 +237,6 @@ html {
                 }
             }
 
-            .ol-attempt {
-                counter-reset: item;
-                list-style-type: none;
-
-                summary::before {
-                    content: 'Attempt ' counter(item, decimal) ' on ' !important;
-                    counter-increment: item;
-                    color: $darkerColor;
-                }
-            }
-
             &[open] {
                 summary::before {
                     content: 'Hide ';
@@ -187,24 +250,9 @@ html {
             }
         }
 
-        button,
-        input[type="submit"] {
-            display: block;
-            background-color: $darkerColor;
-            color: $lightestColor;
-            outline: none;
-            border: none;
-            padding: 10px;
-            font-size: medium;
-            margin: 5px;
-            border-radius: $borderRadius;
-        }
-
-        button:hover,
-        input[type="submit"]:hover {
-            font-weight: 900;
-            cursor: pointer;
-            animation: pulse ease-in-out 1s;
+        .ol-attempt {
+            list-style: attempt;
+            padding-left: 100px;
         }
 
         @keyframes pulse {
@@ -231,79 +279,69 @@ html {
             border-collapse: collapse;
         }
 
-        .formWrapper {
+        form {
             display: flex;
             flex-direction: column;
             align-items: stretch;
             margin: auto;
-            width: 75%;
-        }
-
-        .fieldWrapper {
-            display: flex;
-            align-items: stretch;
-            flex-wrap: nowrap;
-            flex-direction: column;
             width: 100%;
 
             label {
-                display: flex;
                 margin-top: 2%;
-                width: 100%;
             }
 
             input,
             button,
             select {
                 display: flex;
-                color: $darkestColor;
-                border: none;
-                background-color: $lightestColor;
-                border-radius: $borderRadius;
-                border-bottom: $darkerColor solid 3px;
                 padding: 10px;
+                border: $lighterColor solid 1px;
                 outline: none;
                 font-size: medium;
                 font-weight: normal;
-                margin: 5px;
+                @include default_font(20px);
+                margin-top: 5px;
             }
 
             input:focus,
             button:focus,
             select:focus {
-                background-color: white;
-                font-weight: bold;
-                border-bottom-color: $darkestColor;
+                border: $darkerColor solid 1px;
             }
 
-            input:hover,
-            button:hover,
-            select:hover {
-                background-color: white;
+            input[type="submit"] {
+                display: block;
+                text-align: center;
+                margin-top: 18px;
+                padding: 10px;
+                border: none;
+                outline: none;
+                background-color: $darkerColor;
+                color: $lightestColor;
+                @include default_font(20px);
+
+                &:hover {
+                    font-weight: 900;
+                    cursor: pointer;
+                    animation: pulse ease-in-out 1s;
+
+                }
 
             }
-        }
-
-        .submitWrapper {
-            display: flex;
-            flex-direction: column;
-            align-items: stretch;
-            margin-top: 2%;
         }
 
         .container {
             display: flex;
             flex-direction: column;
-            margin: auto;
             opacity: 90%;
-            width: 90%;
             padding: 20px;
-            border-radius: $borderRadius;
+            margin: 10px;
             background-color: $lightestColor;
 
             .postWrapper {
                 display: flex;
                 flex-direction: row;
+                justify-content: space-evenly;
                 flex-wrap: wrap;
                 padding: 10px;
                 align-items: stretch;
@@ -354,7 +392,7 @@ html {
 
         .comment-container {
             border-left: 3px solid $normalColor;
-            margin: 10px auto;
+            border-right: 3px solid $normalColor;
             background-color: white;
 
             &:empty {
@@ -363,6 +401,7 @@ html {
 
             &.teacher {
                 border-left: 3px solid $errorColor;
+                border-right: 3px solid $errorColor;
 
                 h1.theme {
                     color: $errorColor;
@@ -398,7 +437,6 @@ html {
             background-color: white;
             max-height: 500px;
             overflow: auto;
-            margin: 10px auto;
 
             &:empty {
                 display: none;
@@ -410,14 +448,11 @@ html {
         }
 
         .textarea-container {
+            flex: 1 1 auto;
             background-color: $warningColor;
-            border-radius: $borderRadius;
-            border: 1px solid $normalColor;
+            border: 1px solid $lighterColor;
             padding: 20px;
             overflow-wrap: break-word;
-            max-height: 500px;
-            overflow: auto;
-            margin: 10px auto;
 
             &:empty {
                 visibility: hidden;

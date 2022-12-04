@@ -30,20 +30,14 @@
 <div class="container">
     <br>
     <h1>{{ title }}</h1>
-    <div class="formWrapper">
         <form action="{{ to }}" method="post">
             {% csrf_token %}
             {% for field in form %}
-            <div class="fieldWrapper">
                 {{ field.label_tag }}
                 {{ field }}
-            </div>
             {% endfor %}
-            <div class="submitWrapper">
                 <input type="submit" value="{{ action }}">
-            </div>
         </form>
-    </div>
     <br>
 </div>
 {% endblock %}

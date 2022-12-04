@@ -29,7 +29,7 @@ Department
                 {{ assignment.Title|upper }}
             </h3>
             {{ assignment.On }}
-            <p><a href="{% url 'codeshine:assignment_index' page.Code assignment.pk %}">View</a>
+            <p><a href="{% url 'codeshine:assignments' page.Code assignment.pk %}">View</a>
                 {% if assignment.Description %}
                 | {{ assignment.Description }}
                 {% endif %}

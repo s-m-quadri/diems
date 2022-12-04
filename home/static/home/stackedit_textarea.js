@@ -43,14 +43,18 @@ function activateEditStackTextarea(element) {
     output_div = document.createElement("div");
     output_div.id = `div_output_textArea_${element.id}`;
     output_div.className = "textarea-container";
-    element.parentElement.appendChild(output_div);
+    insertAfter(output_div, element);
 
     // Provide option to editing
-    output_div.outerHTML += `
-    <a href="javascript:openEditor('${element.id}')">Edit with StackEdit</a>
-    `;
+    output_option = document.createElement("a");
+    output_option.href = `javascript:openEditor('${element.id}')`;
+    output_option.innerHTML = "Edit with StackEdit";
+    insertAfter(output_option, output_div);
 }
 
+function insertAfter(newNode, existingNode) {
+    existingNode.parentNode.insertBefore(newNode, existingNode.nextSibling);
+}
 
 function openEditor(textAreaId) {
     element = document.getElementById(textAreaId);
