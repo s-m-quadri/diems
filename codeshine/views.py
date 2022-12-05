@@ -15,13 +15,21 @@ def index(request, page_code):
     })
 
 
-def assignment_index(request, page_code, assignment_code):
+def assignment_index(request, page_code, assignment_code, error=None, warning=None, message=None):
+    class PostSubmissionForm(forms.Form):
+        fieldAssignment = forms.CharField(
+            label="Solution",
+            widget=forms.Textarea,
+            required=False,
+            initial=Assignment.objects.get(pk=assignment_code).GettingStarted_Template)
+
     assignment = Assignment.objects.get(pk=assignment_code)
     my_submissions = Submission.objects.filter(In=assignment, By=request.user)
     all_submissions = Submission.objects.filter(In=assignment)
     comments = []
     for submission in my_submissions:
         comments += [x for x in Comment.objects.filter(In=submission)]
+
     return render(request, "codeshine/index.html", {
         "title": f"Assignment - {Assignment.objects.get(pk=assignment_code).Title}",
         "assignment": assignment,
@@ -29,7 +37,11 @@ def assignment_index(request, page_code, assignment_code):
         "comments": comments,
         "all_submissions": all_submissions,
         "page_code": page_code,
-        "assignment_code": assignment_code
+        "assignment_code": assignment_code,
+        "form": PostSubmissionForm(),
+        "error": error,
+        "warning": warning,
+        "message": message,
     })
 
 
@@ -109,29 +121,30 @@ def post_assignment(request, page_code):
 
 def post_submission(request, page_code, assignment_code):
     if not request.user.is_authenticated:
-        return HttpResponseRedirect(reverse("departments:index", kwargs={"code": Page.objects.get(Code=page_code).Department.Code}))
+        return HttpResponseRedirect(reverse("accounts:login"))
+
+    return_url = reverse("codeshine:assignments", kwargs={
+        "page_code": page_code,
+        "assignment_code": assignment_code
+    })
 
     class PostSubmissionForm(forms.Form):
         fieldAssignment = forms.CharField(
             label="Solution", widget=forms.Textarea, required=False, initial=Assignment.objects.get(pk=assignment_code).GettingStarted_Template)
 
-    form_title = "Submit Assignment"
-    form_to = reverse("codeshine:submit", kwargs={
-                      "page_code": page_code, "assignment_code": assignment_code})
-    form_action = "Submit This Solution"
-
     if not request.method == "POST":
-        return render_form_generic(
-            request, form_title, form_to, form_action, PostSubmissionForm())
+        return HttpResponseRedirect(return_url)
 
     raw_form = PostSubmissionForm(request.POST)
     if not raw_form.is_valid():
-        return render_form_generic(
-            request, form_title, form_to, form_action, PostSubmissionForm(request.POST))
+        return render(request, "home/400.html", context={
+            "return_url": return_url,
+            "backup_data": PostSubmissionForm(request.POST)
+        })
 
     try:
+        # Critical Section
         form_data = raw_form.cleaned_data
-
         new_submission = Submission(
             By=request.user,
             In=Assignment.objects.get(pk=assignment_code),
@@ -139,16 +152,14 @@ def post_submission(request, page_code, assignment_code):
         )
         new_submission.save()
 
-    except Exception as massage:
-        return render_form_generic(
-            request, form_title, form_to, form_action,
-            PostSubmissionForm(request.POST),
-            "Something went wrong, please contact support team regarding exception '{}'".format(massage))
+    except Exception as exception:
+        return render(request, "home/400.html", context={
+            "exception": exception,
+            "return_url": return_url,
+            "backup_data": PostSubmissionForm(request.POST)
+        })
 
-    return HttpResponseRedirect(reverse("codeshine:assignments", kwargs={
-        "page_code": page_code,
-        "assignment_code": assignment_code
-    }))
+    return HttpResponseRedirect(return_url)
 
 
 def submissions(request, page_code, assignment_code):
@@ -184,7 +195,7 @@ def submission_index(request, page_code, assignment_code, submission_code):
         "submission_code": submission_code,
         "assignment": assignment,
         "submission": submission,
-        "comments": comments,
+        "comments": comments
     })
 
 

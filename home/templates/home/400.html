@@ -1,0 +1,68 @@
+{% extends 'home/layout.html' %}
+
+{% block title %}Bad Request{% endblock %}
+{% block body %}
+<div class="container error-container">
+    <br>
+    <h1>400 Bad Request</h1>
+    <p>There may be one of the following reasons for this to happen</p>
+    <ol>
+        <li>You did not fill the form as per instructions</li>
+        <li>There may be silly mistake</li>
+        <li>Submitted with older version of web page</li>
+    </ol>
+    <br>
+</div>
+<br>
+
+{% if backup_data %}
+<div class="container warning-container">
+    <h1>Unsaved Changes</h1>
+    <p>
+        <u>Backup Data</u>: please save the data offline as soon as possible to avoid loss of data<br>
+    <div class="container warning-container">
+        <div>{{ backup_data }}</div>
+    </div>
+    </p>
+
+    {% if return_url %}
+    <p>
+        <u>Return URL</u>: if feels comfortable, can attempt to revisit the route<br>
+    <div class="container warning-container">
+        <code>"<a href="{{ return_url }}">{{ return_url }}</a>"</code>
+    </div>
+    </p>
+    {% endif %}
+
+</div>
+<br>
+{% endif %}
+
+<div class="container message-container">
+    <h1>Troubleshoot Details</h1>
+
+    <p>
+        <u>Solution</u>: following are the generic steps. Not necessarily applicable to any problem -<br>
+    <ol>
+        <li>Check your internet connection. Try restarting PC, Tablet, mobile, internet adapter etc.</li>
+        <li>Check the URL, is it correct one?</li>
+        <li>Refresh the page by pressing <code>CTRL + R</code> or refreshing after removing all temporary files like
+            cache and cookies.</li>
+        <li>Follow the instruction as instructed in the form.</li>
+        <li>Recheck once more.</li>
+        <li>If still not resolve, contact the support team.</li>
+    </ol>
+    </p>
+
+    {% if exception %}
+    <p>
+        <u>Exception</u>: this is specially useful for developers<br>
+    <div class="container message-container">
+        <code>"{{ exception }}"</code>
+    </div>
+    </p>
+    {% endif %}
+
+</div>
+<br>
+{% endblock %}

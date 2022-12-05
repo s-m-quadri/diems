@@ -8,6 +8,7 @@ $linkColor: #135873;
 $darkestColor: #082530;
 $errorColor: #eb879c;
 $warningColor: #ebd687;
+$warningColorDark: #ac9647;
 
 // Scale
 $borderWidth: 3px;
@@ -341,19 +342,50 @@ html {
             .postWrapper {
                 display: flex;
                 flex-direction: row;
-                justify-content: space-evenly;
                 flex-wrap: wrap;
                 padding: 10px;
                 align-items: stretch;
+                justify-content: space-evenly;
+
+                @media (min-width:$LaptopBreakPoint) {
+                    justify-content: flex-start;
+                }
             }
 
             .post {
-                flex: 0 1 250px;
-                margin: 10px;
-                padding: 10px;
-                border-radius: $borderRadius;
-                border: 1px $darkerColor solid;
+                display: flex;
+                border: 1px $lighterColor solid;
                 background-color: white;
+                overflow-x: auto;
+
+                div.icon {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    flex: 1 1 0;
+                    height: auto;
+                    background-color: $normalColor;
+                    color: white;
+                }
+
+                div.title {
+                    padding: 10px;
+                    flex: 2 1 0;
+                    background-color: $normalColor;
+
+                    h3 {
+                        color: white;
+                    }
+
+                    a {
+                        color: white;
+                    }
+                }
+
+                div.description {
+                    padding: 10px;
+                    flex: 10 0 0;
+                }
             }
 
             a {
@@ -375,10 +407,10 @@ html {
         }
 
         .warning-container {
-            border: 1px solid $warningColor;
+            border: 1px solid $warningColorDark;
 
             h1 {
-                color: $warningColor;
+                color: $warningColorDark;
             }
         }
 

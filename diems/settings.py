@@ -11,6 +11,10 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
+import os
+import string
+import random
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,8 +24,15 @@ AUTH_USER_MODEL = "accounts.User"
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-with open("./secret_key.txt") as f:
-    SECRET_KEY = f.read().strip()
+if os.path.isfile("./secret_key.txt"):
+    with open("./secret_key.txt") as f:
+        SECRET_KEY = f.read().strip()
+else:
+    with open("./secret_key.txt", "w+") as f:
+        key = ''.join(random.choices(string.ascii_letters, k=32))
+        f.write(key)
+    with open("./secret_key.txt") as f:
+        SECRET_KEY = f.read().strip()
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True

@@ -33,26 +33,11 @@ CodeShine
         can submit the assignment multiple times and is expected to
         gain at least <u>{{ assignment.passing_points }} points</u>
         or at most <u>{{ assignment.max_points }} points</u>.
+        Following is the <u>instructions</u> regarding submissions admin
+        results.
     </p>
-    <p>
-        The <u>Instructions</u> and <u>Getting Started Template</u> are follows.
-        When you feel comfortable you can attempt the submit the assignment.
-        Feel free to take your time as instructed.
-    </p>
-    <p>
-        Best of luck!
-    </p>
-</div>
-<br>
-
-<div class="container">
-    <h2>Submission</h2>
-    {% if assignment.open_for_submission == True %}
-    <a href="{% url 'codeshine:submit' assignment.In.Code assignment.pk %}">+ Attempt for submission</a>
-    {% endif %}
-    <br>
-
     {% if assignment.Instructions %}
+    <p>
     <details>
         <summary>instructions</summary>
         <h3>Instructions</h3>
@@ -61,10 +46,18 @@ CodeShine
 
         </div>
     </details>
-    <br>
+    </p>
     {% endif %}
 
+    <p>
+        The <u>Getting Started Template</u> is a starting point for solving.
+        When you feel comfortable you can attempt and <u>submit</u> the assignment.
+        Feel free to take your time as instructed.
+    </p>
+
+
     {% if assignment.GettingStarted_Template %}
+    <p>
     <details>
         <summary>template</summary>
         <h3>Getting Started Template</h3>
@@ -72,12 +65,33 @@ CodeShine
             <textarea class="render-markdown">{{ assignment.GettingStarted_Template }}</textarea>
         </div>
     </details>
-    <br>
+    </p>
     {% endif %}
 
-    {% if submissions %}
+    <p>
+        Best of luck!
+    </p>
+</div>
+<br>
+
+<div class="container">
+    <h2>Attempt for submission</h2>
+    <form action="{% url 'codeshine:submit' page_code assignment_code %}" method="post">
+        {% csrf_token %}
+        {% for field in form %}
+        {{ field.label_tag }}
+        {{ field }}
+        {% endfor %}
+        <input type="submit" value="Submit">
+    </form>
+</div>
+<br>
+
+{% if submissions %}
+<div class="container">
+    <h2>History</h2>
     <details open>
-        <summary>my submission(s)</summary>
+        <summary>my submission(s) > oldest first</summary>
         {% for submission in submissions %}
         <p>
             {{ submission.On }} |
@@ -85,10 +99,10 @@ CodeShine
         </p>
         {% endfor %}
     </details>
-    <br>
-    {% endif %}
 </div>
+
 <br>
+{% endif %}
 
 {% if request.user.is_teacher %}
 <div class="container">

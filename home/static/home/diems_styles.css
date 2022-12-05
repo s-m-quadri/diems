@@ -232,17 +232,37 @@ html {
       html .main-content .container .postWrapper {
         display: flex;
         flex-direction: row;
-        justify-content: space-evenly;
         flex-wrap: wrap;
         padding: 10px;
-        align-items: stretch; }
+        align-items: stretch;
+        justify-content: space-evenly; }
+        @media (min-width: 800px) {
+          html .main-content .container .postWrapper {
+            justify-content: flex-start; } }
       html .main-content .container .post {
-        flex: 0 1 250px;
-        margin: 10px;
-        padding: 10px;
-        border-radius: 5px;
-        border: 1px #1c7ea6 solid;
-        background-color: white; }
+        display: flex;
+        border: 1px #98d5ee solid;
+        background-color: white;
+        overflow-x: auto; }
+        html .main-content .container .post div.icon {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          flex: 1 1 0;
+          height: auto;
+          background-color: #33acdd;
+          color: white; }
+        html .main-content .container .post div.title {
+          padding: 10px;
+          flex: 2 1 0;
+          background-color: #33acdd; }
+          html .main-content .container .post div.title h3 {
+            color: white; }
+          html .main-content .container .post div.title a {
+            color: white; }
+        html .main-content .container .post div.description {
+          padding: 10px;
+          flex: 10 0 0; }
       html .main-content .container a {
         text-decoration: none;
         color: #135873; }
@@ -253,9 +273,9 @@ html {
       html .main-content .normal-container h1 {
         color: #082530; }
     html .main-content .warning-container {
-      border: 1px solid #ebd687; }
+      border: 1px solid #ac9647; }
       html .main-content .warning-container h1 {
-        color: #ebd687; }
+        color: #ac9647; }
     html .main-content .error-container {
       border: 1px solid #eb879c; }
       html .main-content .error-container h1 {
