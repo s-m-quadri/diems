@@ -6,7 +6,7 @@ CodeShine
 
 {% block body %}
 <div class="container">
-    <a href="{% url 'departments:index' assignment.In.Department.Code %}">
+    <a href="{% url 'departments:specific_department' assignment.In.Department.Code %}">
         << Go Back</a>
 
             {% if title %}
@@ -17,8 +17,6 @@ CodeShine
             <p>{{ assignment.Description }}</p>
             {% endif %}
 </div>
-<br>
-
 
 
 {% if assignment %}
@@ -72,10 +70,32 @@ CodeShine
         Best of luck!
     </p>
 </div>
-<br>
 
 <div class="container">
+    <h2>Results</h2>
+    {% if max_marks %}
+        <p>Maximum Marks out of all attempts</p>
+        <h3>{{ max_marks }}/{{ assignment.max_points }}</h3>
+        <p>Status</p>
+        {% if max_marks >= assignment.passing_points %}
+        <h3>Passed</h3>
+        {% else %}
+        <h3>Failure is a part of life</h3>
+        {% endif %}
+    {% else %}
+    <p>Not Known...</p>
+    {% endif %}
+</div>
+
+{% if assignment.open_for_submission or request.user.is_teacher %}
+<div class="container">
+    {% if request.user.is_teacher %}
+    <p><a href="{% url 'codeshine:submissions' page_code assignment_code %}">> Show All Students' Submissions</a></p>
+    <p>Considering as student</p>
     <h2>Attempt for submission</h2>
+    {% else %}
+    <h2>Attempt for submission</h2>
+    {% endif %}
     <form action="{% url 'codeshine:submit' page_code assignment_code %}" method="post">
         {% csrf_token %}
         {% for field in form %}
@@ -85,7 +105,7 @@ CodeShine
         <input type="submit" value="Submit">
     </form>
 </div>
-<br>
+{% endif %}
 
 {% if submissions %}
 <div class="container">
@@ -94,31 +114,25 @@ CodeShine
         <summary>my submission(s) > oldest first</summary>
         {% for submission in submissions %}
         <p>
-            {{ submission.On }} |
-            <a href="{% url 'codeshine:submission' page_code assignment_code submission.pk %}">Show</a>
+            {{ submission.On }}
+            {% if submission.Points > 0 %}
+            {% if submission.Points >= assignment.passing_points %}
+            | <u>{{ submission.Points }}/{{ assignment.max_points }}</u>
+            {% else %}
+            | Failure is a part of life
+            {% endif%}
+            {% endif %}
+            | <a href="{% url 'codeshine:submission' page_code assignment_code submission.pk %}">Show</a>
         </p>
         {% endfor %}
     </details>
 </div>
-
-<br>
 {% endif %}
 
-{% if request.user.is_teacher %}
-<div class="container">
-    <h2>Results</h2>
-    <a href="{% url 'codeshine:submissions' page_code assignment_code %}">> Show All Submissions</a>
-    <br>
-</div>
-<br>
-{% endif %}
-
-<br>
 {% else %}
 <div class="container warning-container">
     <h1>Warning</h1>
     <p>No Assignment Details Available</p>
 </div>
-<br>
 {% endif %}
 {% endblock %}

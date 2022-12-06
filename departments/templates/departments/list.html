@@ -4,37 +4,33 @@
 Department
 {% endblock %}
 {% block body %}
-<br>
-
 {% if title %}
 <div class="container">
   <h1>{{ title }}</h1>
 </div>
-<br>
 {% endif %}
 
-{% if departments %}
 <div class="container">
-
+  {% if departments %}
   {% for department in departments %}
-  <h2>[<a href="{% url 'departments:index' department.Code %}">{{ department.Code|upper }}</a>]: {{ department.Name }}
-    Department</h2>
+  <h3>[<a href="{% url 'departments:specific_department' department.Code %}">{{ department.Code|upper }}</a>]: {{ department.Name }}
+    Department</h3>
   {% endfor %}
-</div>
-<br>
-{% else %}
-<div class="container error-container">
+  {% else %}
   <li>No Departments</li>
+  {% endif %}
+  <div class="container warning-container">
+    <h1>Add Department</h1>
+    <form action="{% url 'departments:add_department' %}" method="post">
+      {% csrf_token %}
+      {% for field in form %}
+      {{ field.label_tag }}
+      {{ field }}
+      {% endfor %}
+      <input type="submit" value="Create Department">
+    </form>
+  </div>
 </div>
-<br>
-{% endif %}
 
-{% if request.user.is_superuser %}
-<div class="container message-container">
-  <h2><a href="{% url 'departments:add_department' %}">+ Add Department</a></h2>
-</div>
-<br>
-{% endif %}
 
-<br>
 {% endblock %}

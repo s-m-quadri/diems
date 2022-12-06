@@ -9,7 +9,6 @@ Department
     <h1>{{ title }}</h1>
     {% endif %}
 </div>
-<br>
 {% if pages %}
 {% for page in pages %}
 <div class="container">
@@ -37,7 +36,9 @@ Department
         <div class="description">
             <p>
                 {% if assignment.Description %}
-                | {{ assignment.Description }}
+                <u>Description</u>: {{ assignment.Description }}
+                {% else %}
+                No Description
                 {% endif %}
             </p>
         </div>
@@ -47,23 +48,26 @@ Department
     {% endfor %}
     {% endif %}
 </div>
-<br>
 {% endfor %}
 {% else %}
 <div class="container warning-container">
     <h1>Warning</h1>
     <p>No Pages</p>
 </div>
-<br>
 {% endif %}
 
-{% if code %}
-{% if request.user.is_teacher %}
-<div class="container message-container">
-    <h2><a href="{% url 'departments:add_page' code %}">+ Add Pages</a></h2>
+{% if code and request.user.is_teacher%}
+<div class="container warning-container">
+    <h2>Add Page</h2>
+    <form action="{% url 'departments:add_page' code %}" method="post">
+        {% csrf_token %}
+        {% for field in form %}
+        {{ field.label_tag }}
+        {{ field }}
+        {% endfor %}
+        <input type="submit" value="Add Page">
+    </form>
 </div>
-<br>
-{% endif %}
 {% endif %}
 
 {% endblock %}

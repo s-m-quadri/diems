@@ -336,7 +336,7 @@ html {
             flex-direction: column;
             opacity: 90%;
             padding: 20px;
-            margin: 10px;
+            margin: 20px 10px;
             background-color: $lightestColor;
 
             .postWrapper {
@@ -364,25 +364,29 @@ html {
                     align-items: center;
                     flex: 1 1 0;
                     height: auto;
-                    background-color: $normalColor;
-                    color: white;
+                    background-color: $lighterColor;
+                    color: white
                 }
 
                 div.title {
+                    display: flex;
+                    justify-content: center;
+                    flex-direction: column;
                     padding: 10px;
                     flex: 2 1 0;
-                    background-color: $normalColor;
+                    background-color: $lighterColor;
 
                     h3 {
-                        color: white;
+                        color: $darkerColor;
                     }
 
                     a {
-                        color: white;
+                        color: $darkerColor;
                     }
                 }
 
                 div.description {
+                    text-align: left;
                     padding: 10px;
                     flex: 10 0 0;
                 }
@@ -395,6 +399,17 @@ html {
 
             a:hover {
                 text-decoration: underline;
+            }
+
+            .warning-container,
+            .normal-container,
+            .error-container,
+            .comment-container,
+            .message-container,
+            .render-markdown,
+            .textarea-container{
+                margin-left: 0px;
+                margin-right: 0px;
             }
         }
 
@@ -409,7 +424,9 @@ html {
         .warning-container {
             border: 1px solid $warningColorDark;
 
-            h1 {
+            h1,
+            h2,
+            h3 {
                 color: $warningColorDark;
             }
         }
@@ -426,6 +443,8 @@ html {
             border-left: 3px solid $normalColor;
             border-right: 3px solid $normalColor;
             background-color: white;
+            margin: 0px 0px 15px 0px;
+            padding: 15px 15px;
 
             &:empty {
                 display: none;
@@ -485,11 +504,10 @@ html {
             border: 1px solid $lighterColor;
             padding: 20px;
             overflow-wrap: break-word;
+            margin: 5px 0px;
 
             &:empty {
-                visibility: hidden;
-                padding: 0px;
-                margin: 0px;
+                background-color: silver;
             }
         }
 

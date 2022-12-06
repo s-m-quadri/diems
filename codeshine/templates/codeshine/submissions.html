@@ -8,21 +8,17 @@ CodeShine Evaluate
 <div class="container">
     <a href="{% url 'codeshine:assignments' page_code assignment_code %}">
         << Go Back</a>
-
             {% if title %}
-            <h1>{{ title }}</h1>
+            <h1>Submissions for assignment {{ title }}</h1>
             {% endif %}
 
             {% if assignment.Description %}
             <p>{{ assignment.Description }}</p>
             {% endif %}
 </div>
-<br>
-
-
 
 {% if submission_users and all_submissions and request.user.is_teacher %}
-<div class="container">
+<div class="container warning-container">
     <h2>Pending Submissions' Evaluation</h2>
     {% for user, submissions in all_submissions %}
     <details open>
@@ -33,17 +29,14 @@ CodeShine Evaluate
             <li>
                 <p>On {{ submission.On }}
                     | <a href="{% url 'codeshine:submission' page_code assignment_code submission.pk %}">Show</a>
-                    | <a href="{% url 'codeshine:evaluate' page_code assignment_code submission.pk %}">Evaluate</a>
                 </p>
             </li>
             {% endif %}
             {% endfor %}
-        </ol>
+            </ol>
     </details>
     {% endfor %}
-    <br>
 </div>
-<br>
 <div class="container">
     <h2>All Submissions</h2>
     {% for user, submissions in all_submissions %}
@@ -54,12 +47,13 @@ CodeShine Evaluate
             <li>
                 <p>{{ index }} On {{ submission.On }}
                     {% if submission.Points > 0 %}
-                    | {{ submission.Points }} out of {{ assignment.max_points }}
-                    ({% if submission.Points >= assignment.passing_points %}Passed{% else %}Failed - Try Again{% endif %})
-                    | <a href="{% url 'codeshine:submission' page_code assignment_code submission.pk %}">Show</a>
+                        | {{ submission.Points }} out of {{ assignment.max_points }}
+                        ({% if submission.Points >= assignment.passing_points %}Passed
+                        {% else %}Failure is a part of life
+                        {% endif%})
+                        | <a href="{% url 'codeshine:submission' page_code assignment_code submission.pk %}">Show</a>
                     {% else %}
                     | <a href="{% url 'codeshine:submission' page_code assignment_code submission.pk %}">Show</a>
-                    | <a href="{% url 'codeshine:evaluate' page_code assignment_code submission.pk %}">Evaluate</a>
                     {% endif %}
                 </p>
             </li>
@@ -68,12 +62,10 @@ CodeShine Evaluate
     </details>
     {% endfor %}
 </div>
-<br>
 {% else %}
 <div class="container warning-container">
     <h1>Warning</h1>
     <p>No Submission Details Available</p>
 </div>
-<br>
 {% endif %}
 {% endblock %}

@@ -227,7 +227,7 @@ html {
       flex-direction: column;
       opacity: 90%;
       padding: 20px;
-      margin: 10px;
+      margin: 20px 10px;
       background-color: #ecf7fc; }
       html .main-content .container .postWrapper {
         display: flex;
@@ -250,17 +250,21 @@ html {
           align-items: center;
           flex: 1 1 0;
           height: auto;
-          background-color: #33acdd;
+          background-color: #98d5ee;
           color: white; }
         html .main-content .container .post div.title {
+          display: flex;
+          justify-content: center;
+          flex-direction: column;
           padding: 10px;
           flex: 2 1 0;
-          background-color: #33acdd; }
+          background-color: #98d5ee; }
           html .main-content .container .post div.title h3 {
-            color: white; }
+            color: #1c7ea6; }
           html .main-content .container .post div.title a {
-            color: white; }
+            color: #1c7ea6; }
         html .main-content .container .post div.description {
+          text-align: left;
           padding: 10px;
           flex: 10 0 0; }
       html .main-content .container a {
@@ -268,13 +272,24 @@ html {
         color: #135873; }
       html .main-content .container a:hover {
         text-decoration: underline; }
+      html .main-content .container .warning-container,
+      html .main-content .container .normal-container,
+      html .main-content .container .error-container,
+      html .main-content .container .comment-container,
+      html .main-content .container .message-container,
+      html .main-content .container .render-markdown,
+      html .main-content .container .textarea-container {
+        margin-left: 0px;
+        margin-right: 0px; }
     html .main-content .normal-container {
       border: none; }
       html .main-content .normal-container h1 {
         color: #082530; }
     html .main-content .warning-container {
       border: 1px solid #ac9647; }
-      html .main-content .warning-container h1 {
+      html .main-content .warning-container h1,
+      html .main-content .warning-container h2,
+      html .main-content .warning-container h3 {
         color: #ac9647; }
     html .main-content .error-container {
       border: 1px solid #eb879c; }
@@ -283,7 +298,9 @@ html {
     html .main-content .comment-container {
       border-left: 3px solid #33acdd;
       border-right: 3px solid #33acdd;
-      background-color: white; }
+      background-color: white;
+      margin: 0px 0px 15px 0px;
+      padding: 15px 15px; }
       html .main-content .comment-container:empty {
         display: none; }
       html .main-content .comment-container.teacher {
@@ -324,10 +341,9 @@ html {
       background-color: #ebd687;
       border: 1px solid #98d5ee;
       padding: 20px;
-      overflow-wrap: break-word; }
+      overflow-wrap: break-word;
+      margin: 5px 0px; }
       html .main-content .textarea-container:empty {
-        visibility: hidden;
-        padding: 0px;
-        margin: 0px; }
+        background-color: silver; }
 
 /*# sourceMappingURL=diems_styles.css.map */

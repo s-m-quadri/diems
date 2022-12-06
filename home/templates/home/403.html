@@ -4,8 +4,34 @@
 {% block body %}
 <div class="container error-container">
     <br>
-    <h1>403 Forbidden</h1>
-    <p>Please authenticate yourself</p>
+    <h1>403 Forbidden - You don't have privileges for it</h1>
+    <p>There may be one or more of the following reasons for this to happen</p>
+    <ol>
+        <li>You are a Teacher, but trying to attempt Superuser's privileges</li>
+        <li>You are a Student, but trying to attempt Teacher's or Superuser's privileges</li>
+        <li>You are a Guest, but trying to attempt Staff's privileges</li>
+    </ol>
+    <p>
+        <u>Return URL</u>: 
+        if feels comfortable, can attempt to login or register (for specified privileges) Located on the navigation bar.
+    </p>
     <br>
+</div>
+
+<div class="container message-container">
+    <h1>Troubleshoot Details</h1>
+
+    <p>
+        <u>Solution</u>: following are the generic steps: (not necessarily applicable to all problems)<br>
+    <ol>
+        <li>Logout now, and login with account of suitable privileges.</li>
+        <li>Ask admin/support team or staff of institute for right privileges</li>
+        <li>Check your internet connection. Try restarting PC, Tablet, mobile, internet adapter etc.</li>
+        <li>Check the URL, is it correct one?</li>
+        <li>Refresh the page by pressing <code>CTRL + R</code> or refreshing after removing all temporary files like
+            cache and cookies.</li>
+        <li>If still not resolve, contact the support team.</li>
+    </ol>
+    </p>
 </div>
 {% endblock %}

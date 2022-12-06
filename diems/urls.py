@@ -23,3 +23,4 @@ urlpatterns = [
     path('departments/', include("departments.urls")),
     path('codeshine/', include("codeshine.urls")),
 ]
+handler404 = "home.views.Handler404"

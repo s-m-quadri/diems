@@ -148,3 +148,6 @@ secret_key.txt
 # [Custum] Sass File
 .sass-cache/
 *.css.map
+
+# [Custum] Static File
+staticfiles/

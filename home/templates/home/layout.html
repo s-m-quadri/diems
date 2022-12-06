@@ -37,11 +37,12 @@
             {% if request.user.is_authenticated %}
             <p>
                 <span class="inline">
-                    <a href="{% url 'departments:index' request.user.Department.Code %}">
+                    {% if request.user.is_superuser %}
+                    <a href="{% url 'departments:all_departments' %}">Manage Departments</a>
+                    {% else %}
+                    <a href="{% url 'departments:specific_department' request.user.Department.Code %}">
                         {{ request.user.Department.Name }}
                     </a>
-                    {% if request.user.is_superuser %}
-                    <a href="{% url 'departments:list_department' %}">manage</a>
                     {% endif %}
                 </span>
                 <span class="inline">
@@ -58,13 +59,12 @@
                 {% if request.user.is_teacher %}Teacher |{% endif %}
                 {% if request.user.is_student %}Student |{% endif %}
                 <a href="{% url 'accounts:logout' %}">Logout</a>
-
-
-
             </p>
             {% else %}
-            <a href="{% url 'accounts:login' %}">Enter</a>
-            | <a href="{% url 'accounts:register' %}">Register</a>
+            <span class="inline">
+                <a href="{% url 'accounts:login' %}">Enter</a>
+                &nbsp|&nbsp<a href="{% url 'accounts:register' %}">Register</a>
+            </span>
             {% endif %}
             <br>
         </div>
@@ -109,7 +109,6 @@
             <h1>Error</h1>
             <p>{{ error }}</p>
         </div>
-        <br>
         {% endif %}
 
         {% if warning %}
@@ -117,7 +116,6 @@
             <h1>Warning</h1>
             <p>{{ warning }}</p>
         </div>
-        <br>
         {% endif %}
 
         {% if message %}
@@ -125,7 +123,6 @@
             <h1>Message</h1>
             <p>{{ message }}</p>
         </div>
-        <br>
         {% endif %}
 
 

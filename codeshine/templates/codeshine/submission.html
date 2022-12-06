@@ -13,48 +13,72 @@ CodeShine Evaluate
             <h1>{{ title }}</h1>
             {% endif %}
 </div>
-<br>
-
-
 
 {% if submission %}
 <div class="container">
     <h2>Details</h2>
-    {% if request.user.is_teacher %}
-    <a href="{% url 'codeshine:evaluate' page_code assignment_code submission_code %}">+ Evaluate</a>
-    <br>
-    {% endif %}
-    <p>{{ submission.On }} | By <u>{{ submission.By.username|capfirst }}</u> | For <u>{{ assignment.Title|capfirst }}</u></p>
+    <p>{{ submission.On }} | By <u>{{ submission.By.username|capfirst }}</u>
+        | For <u>{{ assignment.Title|capfirst }}</u>
+    </p>
     <div class="container render-markdown">
         <textarea class="render-markdown">{{ submission.Assignment }}</textarea>
     </div>
+    {% if form_evaluate and request.user.is_teacher %}
+    <div class="container warning-container">
+        <h3>Evaluate</h3>
+        <form action="{% url 'codeshine:evaluate' page_code assignment_code submission_code %}" method="post">
+            {% csrf_token %}
+            {% for field in form_evaluate %}
+            {{ field.label_tag }}
+            {{ field }}
+            {% endfor %}
+            <input type="submit" value="Post Evaluation">
+        </form>
+    </div>
+    {% endif %}
 </div>
-<br>
-{% if comments %}
+
+
+
+{% if comments or request.user.is_teacher %}
 <div class="container">
     <h2>Comments</h2>
     {% for comment in comments%}
     {% if comment.By.is_teacher != True %}
-    <p>{{ comment.On }} | By {{ comment.By.username|capfirst }} Sir/Madam,</p>
+    <p>{{ comment.On }} | By Dear {{ comment.By.username|capfirst }},</p>
     <div class="container comment-container">
         {% if comment.Theme %}<h1 class="theme">{{ comment.Theme }}</h1>{% endif %}
         {% if comment.Comment %}<textarea class="render-markdown">{{ comment.Comment }}</textarea>{% endif %}
     </div>
     {% else %}
-    <p>{{ comment.On }} | By {{ comment.By.username|capfirst }} Sir/Madam,</p>
+    <p>{{ comment.On }} | By Respected {{ comment.By.username|capfirst }} Sir/Madam,</p>
     <div class="container comment-container teacher">
         {% if comment.Theme %}<h1 class="theme">{{ comment.Theme }}</h1>{% endif %}
         {% if comment.Comment %}<textarea class="render-markdown">{{ comment.Comment }}</textarea>{% endif %}
     </div>
-
     {% endif %}
     {% endfor %}
+    {% if request.user.is_teacher or assignment.open_for_comment %}
+    {% if form_comment %}
+    <div class="container warning-container">
+        <h3>Feedback/Comment</h3>
+        <form action="{% url 'codeshine:comment' page_code assignment_code submission_code %}" method="post">
+            {% csrf_token %}
+            {% for field in form_comment %}
+            {{ field.label_tag }}
+            {{ field }}
+            {% endfor %}
+            <input type="submit" value="Post Comment">
+        </form>
+    </div>
+    {% endif %}
+    {% endif %}
 </div>
 {% endif %}
 
 
 
-<br>
+
 {% else %}
 <div class="container warning-container">
     <h1>Warning</h1>
