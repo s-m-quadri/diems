@@ -362,10 +362,18 @@ html {
                     display: flex;
                     justify-content: center;
                     align-items: center;
+                    flex-direction: column;
                     flex: 1 1 0;
                     height: auto;
-                    background-color: $lighterColor;
-                    color: white
+                    background-color: $normalColor;
+                    color: white;
+
+                    a {
+                        color: white;
+                    }
+                    p{
+                        text-align: center;
+                    }
                 }
 
                 div.title {
@@ -377,10 +385,6 @@ html {
                     background-color: $lighterColor;
 
                     h3 {
-                        color: $darkerColor;
-                    }
-
-                    a {
                         color: $darkerColor;
                     }
                 }

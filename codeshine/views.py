@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404, get_list_or_404
+from django.shortcuts import render, get_object_or_404
 from django import forms
 from django.urls import reverse
 from django.http import HttpResponseRedirect
@@ -20,10 +20,9 @@ def specific_assignment(request, page_code, assignment_code):
     if not request.user.Department == page.Department:
         return render(request, "home/403.html", status=403)
 
-    assignment = get_object_or_404(Assignment, pk=assignment_code)
-    my_submissions = get_list_or_404(
-        Submission, In=assignment, By=request.user)
-    all_submissions = get_list_or_404(Submission, In=assignment)
+    assignment = get_object_or_404(Assignment, pk=assignment_code)    
+    my_submissions = Submission.objects.filter(In=assignment, By=request.user)
+    all_submissions = Submission.objects.filter(In=assignment)
 
     class PostSubmissionForm(forms.Form):
         fieldAssignment = forms.CharField(
@@ -152,7 +151,7 @@ def submissions(request, page_code, assignment_code):
         return render(request, "home/403.html", status=403)
 
     assignment = get_object_or_404(Assignment, pk=assignment_code)
-    submissions = get_list_or_404(Submission, In=assignment)
+    submissions = Submission.objects.filter(In=assignment)
 
     # Ensure user is teacher or is allowed by students
     if not request.user.is_teacher:

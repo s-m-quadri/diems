@@ -10,7 +10,7 @@ class Assignment(models.Model):
                            related_name="Assigned_By", blank=True, null=True)
     In = models.ForeignKey(to=Page, on_delete=models.CASCADE,
                            related_name="Assigned_In", blank=True, null=True)
-    On = models.DateField(auto_now=True)
+    On = models.DateTimeField(auto_now=True)
 
     Title = models.CharField(max_length=128, blank=False, default="Untitled")
     Description = models.CharField(max_length=1024, blank=True)
@@ -37,7 +37,7 @@ class Submission(models.Model):
                            related_name="Submitter", blank=True, null=True)
     In = models.ForeignKey(to=Assignment, on_delete=models.CASCADE,
                            related_name="Submitted", blank=True, null=True)
-    On = models.DateField(auto_now=True)
+    On = models.DateTimeField(auto_now=True)
 
     Assignment = models.TextField(blank=True)
     Points = models.IntegerField(blank=False, default=0)
@@ -55,7 +55,7 @@ class Comment(models.Model):
                            related_name="Commenter", blank=True, null=True)
     In = models.ForeignKey(to=Submission, on_delete=models.CASCADE,
                            related_name="Commented", blank=True, null=True)
-    On = models.DateField(auto_now=True)
+    On = models.DateTimeField(auto_now=True)
 
     Theme = models.CharField(max_length=128, blank=True)
     Comment = models.TextField(blank=True)

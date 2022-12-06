@@ -47,7 +47,7 @@ CodeShine Evaluate
             <li>
                 <p>{{ index }} On {{ submission.On }}
                     {% if submission.Points > 0 %}
-                        | {{ submission.Points }} out of {{ assignment.max_points }}
+                        | {{ submission.Points }}/{{ assignment.max_points }}
                         ({% if submission.Points >= assignment.passing_points %}Passed
                         {% else %}Failure is a part of life
                         {% endif%})
