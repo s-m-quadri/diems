@@ -251,10 +251,11 @@ html {
           flex-direction: column;
           flex: 1 1 0;
           height: auto;
-          background-color: #33acdd;
+          background-color: #98d5ee;
           color: white; }
           html .main-content .container .post div.icon a {
-            color: white; }
+            color: white;
+            text-decoration: none; }
           html .main-content .container .post div.icon p {
             text-align: center; }
         html .main-content .container .post div.title {
@@ -264,6 +265,8 @@ html {
           padding: 10px;
           flex: 2 1 0;
           background-color: #98d5ee; }
+          html .main-content .container .post div.title a {
+            text-decoration: none; }
           html .main-content .container .post div.title h3 {
             color: #1c7ea6; }
         html .main-content .container .post div.description {
@@ -348,5 +351,15 @@ html {
       margin: 5px 0px; }
       html .main-content .textarea-container:empty {
         background-color: silver; }
+    html .main-content .iframe {
+      display: flex;
+      flex-direction: column;
+      flex: 1 1 auto;
+      margin: auto;
+      overflow: auto; }
+      html .main-content .iframe iframe {
+        min-height: 480px;
+        border: none;
+        outline: none; }
 
 /*# sourceMappingURL=diems_styles.css.map */

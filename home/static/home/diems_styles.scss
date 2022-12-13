@@ -365,13 +365,15 @@ html {
                     flex-direction: column;
                     flex: 1 1 0;
                     height: auto;
-                    background-color: $normalColor;
+                    background-color: $lighterColor;
                     color: white;
 
                     a {
                         color: white;
+                        text-decoration: none;
                     }
-                    p{
+
+                    p {
                         text-align: center;
                     }
                 }
@@ -383,6 +385,10 @@ html {
                     padding: 10px;
                     flex: 2 1 0;
                     background-color: $lighterColor;
+
+                    a{
+                        text-decoration: none;
+                    }
 
                     h3 {
                         color: $darkerColor;
@@ -411,7 +417,7 @@ html {
             .comment-container,
             .message-container,
             .render-markdown,
-            .textarea-container{
+            .textarea-container {
                 margin-left: 0px;
                 margin-right: 0px;
             }
@@ -512,6 +518,21 @@ html {
 
             &:empty {
                 background-color: silver;
+            }
+        }
+
+        .iframe {
+            display: flex;
+            flex-direction: column;
+            flex: 1 1 auto;
+            margin: auto;
+            overflow: auto;
+            
+            
+            iframe {
+                min-height: 480px;
+                border: none;
+                outline: none;
             }
         }
 
