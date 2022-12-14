@@ -29,7 +29,7 @@ class Assignment(models.Model):
     display_ideal_result = models.BooleanField(blank=False, default=False)
     
     def __str__(self) -> str:
-        return f"{self.On}: {self.Title}"
+        return f"{self.Title} ({self.On.date()})"
 
 
 class Submission(models.Model):
@@ -47,7 +47,7 @@ class Submission(models.Model):
     is_ideal = models.BooleanField(blank=False, default=False)
     
     def __str__(self) -> str:
-        return f"{self.On}: {self.By}"
+        return f"{self.By} ({self.On.date()})"
 
 
 class Comment(models.Model):
@@ -62,3 +62,6 @@ class Comment(models.Model):
 
     is_verified = models.BooleanField(blank=False, default=False)
     is_ideal = models.BooleanField(blank=False, default=False)
+
+    def __str__(self) -> str:
+        return f"{self.By} ({self.On.date()})"

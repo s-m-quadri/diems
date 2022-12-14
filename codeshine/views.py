@@ -301,10 +301,10 @@ def post_evaluation(request, page_code, assignment_code, submission_code):
     if not request.user.is_teacher:
         return render(request, "home/403.html", status=403)
 
-    return_url = reverse("codeshine:submission", kwargs={
+    return_url = reverse("codeshine:submissions", kwargs={
         "page_code": page_code,
         "assignment_code": assignment_code,
-        "submission_code": submission_code
+        # "submission_code": submission_code
     })
 
     # If access via GET method
