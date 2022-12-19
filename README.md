@@ -4,7 +4,7 @@
 
 This is an open-source and free project, you can use the source code at your convenience and contribute to it. **Now, this code belongs to you!**
  
-[![Introductory Video From Youtube](https://drive.google.com/uc?export=view&id=1YaZb8HttKiFnru6IR7es4NMHbMFg8WLA)
+[![Introductory Video From Youtube](./thumbnail.png)
 ](https://www.youtube.com/watch?v=3Zsjpzn37T8)
 
   
