@@ -21,7 +21,7 @@ Department
     {% if assignments %}
     {% for assignment in assignments %}
     {% if assignment.In == page %}
-    {% if assignment.By.username.is_teacher %} 
+    {% if assignment.By.is_teacher %} 
     <p>{{ assignment.On }} | By Respected {{ assignment.By.username|capfirst }} Sir/Madam,</p>
     {% else %}
     <p>{{ assignment.On }} | By Dear {{ assignment.By.username|capfirst }},</p>
