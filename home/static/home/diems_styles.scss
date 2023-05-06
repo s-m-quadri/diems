@@ -21,7 +21,7 @@ $LaptopBreakPoint: 800px;
     background-attachment: fixed;
     background-size: cover;
     background-position: center;
-    opacity: 80%;
+    opacity: 100%;
 }
 
 @mixin default_font($SIZE: 18px) {
@@ -58,16 +58,20 @@ html {
         }
 
         .background-image {
-            @include background_html;
+            @include background_html(url("https://cdn.pixabay.com/photo/2020/05/06/06/18/blue-5136251_960_720.jpg"));
+            z-index: -999;
             position: fixed;
             height: 100%;
             width: 100%;
         }
     }
 
+    svg {
+        vertical-align: bottom;
+    }
+
     .side-bar {
         display: flex;
-        opacity: 85%;
         padding: 20px;
         color: $lighterColor;
         flex: 0 0 250px;
@@ -121,7 +125,7 @@ html {
             font-size: 18px;
             color: $lightestColor;
             text-align: center;
-            line-height: 21px;
+            line-height: 1.35em;
 
             @media (min-width: $LaptopBreakPoint) {
                 text-align: left;
@@ -150,6 +154,7 @@ html {
 
             color: white;
         }
+
 
         details {
             text-align: center;
@@ -210,7 +215,8 @@ html {
         }
 
         p {
-            margin: 5px 0px;
+            margin: 0.5em 0em;
+            line-height: 1.35em;
             @include default_font;
         }
 
@@ -228,6 +234,12 @@ html {
         img {
             max-width: 100%;
         }
+
+        // .inline-icon {
+        //     svg {
+        //         vertical-align: bottom;
+        //     }
+        // }
 
         details {
             summary {
@@ -338,6 +350,7 @@ html {
             padding: 20px;
             margin: 20px 10px;
             background-color: $lightestColor;
+            box-shadow: 0px 0px 5px $lighterColor;
 
             .postWrapper {
                 display: flex;
@@ -386,7 +399,7 @@ html {
                     flex: 2 1 0;
                     background-color: $lighterColor;
 
-                    a{
+                    a {
                         text-decoration: none;
                     }
 
@@ -425,6 +438,7 @@ html {
 
         .normal-container {
             border: none;
+            box-shadow: 0px 0px 5px $lighterColor;
 
             h1 {
                 color: $darkestColor;
@@ -433,6 +447,7 @@ html {
 
         .warning-container {
             border: 1px solid $warningColorDark;
+            box-shadow: 0px 0px 5px $lighterColor;
 
             h1,
             h2,
@@ -443,6 +458,7 @@ html {
 
         .error-container {
             border: 1px solid $errorColor;
+            box-shadow: 0px 0px 5px $lighterColor;
 
             h1 {
                 color: $errorColor;
@@ -455,6 +471,7 @@ html {
             background-color: white;
             margin: 0px 0px 15px 0px;
             padding: 15px 15px;
+            box-shadow: 0px 0px 5px $lighterColor;
 
             &:empty {
                 display: none;
@@ -463,6 +480,7 @@ html {
             &.teacher {
                 border-left: 3px solid $errorColor;
                 border-right: 3px solid $errorColor;
+
 
                 h1.theme {
                     color: $errorColor;
@@ -484,6 +502,7 @@ html {
 
         .message-container {
             border: 1px solid $normalColor;
+            box-shadow: 0px 0px 5px $lighterColor;
 
             h1,
             a {
@@ -495,6 +514,7 @@ html {
 
         .render-markdown {
             border: 1px solid $normalColor;
+            box-shadow: 0px 0px 5px $lighterColor;
             background-color: white;
             max-height: 500px;
             overflow: auto;
@@ -527,8 +547,8 @@ html {
             flex: 1 1 auto;
             margin: auto;
             overflow: auto;
-            
-            
+
+
             iframe {
                 min-height: 480px;
                 border: none;

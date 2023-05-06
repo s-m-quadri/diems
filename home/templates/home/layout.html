@@ -22,53 +22,61 @@
         <div class="side-bar-body">
             <br>
             <div class="head">
-                <h1>Deogiri Institute</h1>
+                <a href="{% url 'home:index' %}">
+                    <h1>Deogiri Institute</h1>
+                </a>
                 <h2>of Engineering and <br>Management Studies</h2>
             </div>
-            <p>
-                <span class="inline"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor"
-                        class="bi bi-house-door" viewBox="0 0 16 16">
-                        <path
-                            d="M8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4.5a.5.5 0 0 0 .5-.5v-4h2v4a.5.5 0 0 0 .5.5H14a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146ZM2.5 14V7.707l5.5-5.5 5.5 5.5V14H10v-4a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5v4H2.5Z" />
-                    </svg>
-                    &nbsp<a href="{% url 'home:index' %}">Home Page</a>
-                </span>
-            </p>
+
             <hr>
+
             {% if request.user.is_authenticated %}
             <p>
-                <span class="inline">
-                    {% if request.user.is_superuser %}
-                    <a href="{% url 'departments:all_departments' %}">Manage Departments</a>
-                    {% else %}
-                    <a href="{% url 'departments:specific_department' request.user.Department.Code %}">
-                        {{ request.user.Department.Name }}
-                    </a>
-                    {% endif %}
-                </span>
-                <span class="inline">
-                    Welcome&nbsp
-                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor"
-                        class="bi bi-person" viewBox="0 0 16 16">
-                        <path
-                            d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4Zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10Z" />
-                    </svg>
-                    &nbsp{{ request.user.username|capfirst }}
-                </span>
+                Welcome
+                <b>
+                    {% if request.user.is_student %}Dear{% endif %}
+                    {% if request.user.is_teacher %}Respected{% endif %}
+                    {{ request.user.username|capfirst }}
+                    {% if request.user.is_superuser %} Boss.{% endif %}
+                    {% if request.user.is_teacher %}Sir/Madam.{% endif %}
+                </b>
+                Following are some important links, you may find them helpful for navigation.
+                <br>
 
-                {% if request.user.is_superuser %}Superuser |{% endif %}
-                {% if request.user.is_teacher %}Teacher |{% endif %}
-                {% if request.user.is_student %}Student |{% endif %}
-                <a href="{% url 'accounts:logout' %}">Logout</a>
+                {% if request.user.is_superuser %}
+                <a href="{% url 'departments:all_departments' %}">Manage Departments</a>
+                {% else %}
+                <a href="{% url 'departments:specific_department' request.user.Department.Code %}">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-gem"
+                        viewBox="0 0 16 16">
+                        <path
+                            d="M3.1.7a.5.5 0 0 1 .4-.2h9a.5.5 0 0 1 .4.2l2.976 3.974c.149.185.156.45.01.644L8.4 15.3a.5.5 0 0 1-.8 0L.1 5.3a.5.5 0 0 1 0-.6l3-4zm11.386 3.785-1.806-2.41-.776 2.413 2.582-.003zm-3.633.004.961-2.989H4.186l.963 2.995 5.704-.006zM5.47 5.495 8 13.366l2.532-7.876-5.062.005zm-1.371-.999-.78-2.422-1.818 2.425 2.598-.003zM1.499 5.5l5.113 6.817-2.192-6.82L1.5 5.5zm7.889 6.817 5.123-6.83-2.928.002-2.195 6.828z" />
+                    </svg>
+                    {{ request.user.Department.Name }} Department Home Page
+                </a>
+                {% endif %}
+                <br>
+
+                <a href="{% url 'accounts:logout' %}">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor"
+                        class="bi bi-box-arrow-left" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd"
+                            d="M6 12.5a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v2a.5.5 0 0 1-1 0v-2A1.5 1.5 0 0 1 6.5 2h8A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 5 12.5v-2a.5.5 0 0 1 1 0v2z" />
+                        <path fill-rule="evenodd"
+                            d="M.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L1.707 7.5H10.5a.5.5 0 0 1 0 1H1.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3z" />
+                    </svg>
+                    Logout
+                </a>
+                {% else %}
+                <span class="inline">
+                    <a href="{% url 'accounts:login' %}">Enter</a>
+                    &nbsp|&nbsp<a href="{% url 'accounts:register' %}">Register</a>
+                </span>
+                {% endif %}
             </p>
-            {% else %}
-            <span class="inline">
-                <a href="{% url 'accounts:login' %}">Enter</a>
-                &nbsp|&nbsp<a href="{% url 'accounts:register' %}">Register</a>
-            </span>
-            {% endif %}
             <hr>
         </div>
+
         <div class="side-bar-foot">
             <details class="for-mobile-only">
                 <summary>Developer Section</summary>
