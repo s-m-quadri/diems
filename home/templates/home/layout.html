@@ -21,18 +21,29 @@
     <div class="side-bar">
         <div class="side-bar-body">
             <br>
+            <img src="{% static 'home/diems.png' %}" alt="Di Logo" id="di-logo">
+            <br><br>
             <div class="head">
-                <a href="{% url 'home:index' %}">
-                    <h1>Deogiri Institute</h1>
-                </a>
+                <h1>Deogiri Institute</h1>
                 <h2>of Engineering and <br>Management Studies</h2>
             </div>
-
             <hr>
+            <p>
+                <a href="{% url 'home:index' %}">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                        class="bi bi-house-door" viewBox="0 0 16 16">
+                        <path
+                            d="M8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4.5a.5.5 0 0 0 .5-.5v-4h2v4a.5.5 0 0 0 .5.5H14a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146ZM2.5 14V7.707l5.5-5.5 5.5 5.5V14H10v-4a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5v4H2.5Z" />
+                    </svg>
+                    Home Page
+                </a>
+            </p>
+
 
             {% if request.user.is_authenticated %}
             <p>
-                Welcome
+                Welcome,
+                <br>
                 <b>
                     {% if request.user.is_student %}Dear{% endif %}
                     {% if request.user.is_teacher %}Respected{% endif %}
@@ -40,25 +51,25 @@
                     {% if request.user.is_superuser %} Boss.{% endif %}
                     {% if request.user.is_teacher %}Sir/Madam.{% endif %}
                 </b>
-                Following are some important links, you may find them helpful for navigation.
+                to our experimental <b>CodeShine</b> integrated <b>Di</b> portal.
                 <br>
 
                 {% if request.user.is_superuser %}
                 <a href="{% url 'departments:all_departments' %}">Manage Departments</a>
                 {% else %}
                 <a href="{% url 'departments:specific_department' request.user.Department.Code %}">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-gem"
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-gem"
                         viewBox="0 0 16 16">
                         <path
                             d="M3.1.7a.5.5 0 0 1 .4-.2h9a.5.5 0 0 1 .4.2l2.976 3.974c.149.185.156.45.01.644L8.4 15.3a.5.5 0 0 1-.8 0L.1 5.3a.5.5 0 0 1 0-.6l3-4zm11.386 3.785-1.806-2.41-.776 2.413 2.582-.003zm-3.633.004.961-2.989H4.186l.963 2.995 5.704-.006zM5.47 5.495 8 13.366l2.532-7.876-5.062.005zm-1.371-.999-.78-2.422-1.818 2.425 2.598-.003zM1.499 5.5l5.113 6.817-2.192-6.82L1.5 5.5zm7.889 6.817 5.123-6.83-2.928.002-2.195 6.828z" />
                     </svg>
-                    {{ request.user.Department.Name }} Department Home Page
+                    {{ request.user.Department.Name }} Dept. Page
                 </a>
                 {% endif %}
                 <br>
 
                 <a href="{% url 'accounts:logout' %}">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor"
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
                         class="bi bi-box-arrow-left" viewBox="0 0 16 16">
                         <path fill-rule="evenodd"
                             d="M6 12.5a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v2a.5.5 0 0 1-1 0v-2A1.5 1.5 0 0 1 6.5 2h8A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 5 12.5v-2a.5.5 0 0 1 1 0v2z" />
@@ -68,64 +79,77 @@
                     Logout
                 </a>
                 {% else %}
-                <span class="inline">
-                    <a href="{% url 'accounts:login' %}">Enter</a>
-                    &nbsp|&nbsp<a href="{% url 'accounts:register' %}">Register</a>
-                </span>
+                <a href="{% url 'accounts:login' %}">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                        class="bi bi-person-check" viewBox="0 0 16 16">
+                        <path
+                            d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm1.679-4.493-1.335 2.226a.75.75 0 0 1-1.174.144l-.774-.773a.5.5 0 0 1 .708-.708l.547.548 1.17-1.951a.5.5 0 1 1 .858.514ZM11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0ZM8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z" />
+                        <path
+                            d="M8.256 14a4.474 4.474 0 0 1-.229-1.004H3c.001-.246.154-.986.832-1.664C4.484 10.68 5.711 10 8 10c.26 0 .507.009.74.025.226-.341.496-.65.804-.918C9.077 9.038 8.564 9 8 9c-5 0-6 3-6 4s1 1 1 1h5.256Z" />
+                    </svg>
+                    Login as member
+                </a>
+                <br>
+                <a href="{% url 'accounts:register' %}">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                        class="bi bi-person-add" viewBox="0 0 16 16">
+                        <path
+                            d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm.5-5v1h1a.5.5 0 0 1 0 1h-1v1a.5.5 0 0 1-1 0v-1h-1a.5.5 0 0 1 0-1h1v-1a.5.5 0 0 1 1 0Zm-2-6a3 3 0 1 1-6 0 3 3 0 0 1 6 0ZM8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z" />
+                        <path
+                            d="M8.256 14a4.474 4.474 0 0 1-.229-1.004H3c.001-.246.154-.986.832-1.664C4.484 10.68 5.711 10 8 10c.26 0 .507.009.74.025.226-.341.496-.65.804-.918C9.077 9.038 8.564 9 8 9c-5 0-6 3-6 4s1 1 1 1h5.256Z" />
+                    </svg>
+                    Login as new user
+                </a>
                 {% endif %}
             </p>
-            <hr>
         </div>
 
-        <div class="side-bar-foot">
-            <details class="for-mobile-only">
-                <summary>Developer Section</summary>
-                <h2><a href="https://drive.google.com/drive/folders/1BkW4UvcxOwCk9jU4R9cznBPWyNya58AU?usp=sharing">
-                        ... Goto Folder</a></h2>
-                <p>All the files during the creation of the website, for first time, as a mini-project work, in December
-                    2022, are stored in the drive folder.</p>
-                <hr>
-            </details>
+        <details>
+            <summary>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                    class="bi bi-arrows-expand" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd"
+                        d="M1 8a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13A.5.5 0 0 1 1 8ZM7.646.146a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 1.707V5.5a.5.5 0 0 1-1 0V1.707L6.354 2.854a.5.5 0 1 1-.708-.708l2-2ZM8 10a.5.5 0 0 1 .5.5v3.793l1.146-1.147a.5.5 0 0 1 .708.708l-2 2a.5.5 0 0 1-.708 0l-2-2a.5.5 0 0 1 .708-.708L7.5 14.293V10.5A.5.5 0 0 1 8 10Z" />
+                </svg>
+                More Details
+            </summary>
+            <p>
+                <b>Institution Name:</b> Deogiri Institute of Engineering and Management Studies<br>
+                <b>Address:</b> Railway Station Road, Aurangabad 431001<br>
+                <b>Contact Information:</b><br>
+                <b>Info Line:</b> 0240-2367546 <br>
+                <b>Director's Contact Number:</b> +91-9011078272 <br>
+                <b>Email Address:</b> admin@dietms.org <br>
 
-            <details class="for-laptop-only" open>
-                <summary>Developer Section</summary>
-                <h2><a href="https://drive.google.com/drive/folders/1BkW4UvcxOwCk9jU4R9cznBPWyNya58AU?usp=sharing">
-                        ... Goto Folder</a></h2>
-                <p>All the files during the creation of the website, for first time, as a mini-project work, in December
-                    2022, are stored in the drive folder.</p>
-                <hr>
-            </details>
-        </div>
+                <a href="https://github.com/s-m-quadri/diems">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                        class="bi bi-github" viewBox="0 0 16 16">
+                        <path
+                            d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z" />
+                    </svg>
+                    Source Code
+                </a>
 
-        <div class="side-bar-foot">
-            <details class="for-mobile-only">
-                <summary>
-                    Contact Us
-                </summary>
-                <p><u>Address</u>: Deogiri Institute of Engineering and Management Studies, Railway Station Road,
-                    Aurangabad
-                    431001, <br> <u>Info line</u>: 0240-2367546, <br>
-                    <u>Director</u>: +91-9011078272 <br>
-                    <u>Email</u>: admin@dietms.org <br>
-                    <br>
-                </p>
-                <h2>Copyright © 2018 dietms.org</h2>
-            </details>
+                <a href="https://drive.google.com/drive/folders/1BkW4UvcxOwCk9jU4R9cznBPWyNya58AU?usp=sharing">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                        class="bi bi-folder2-open" viewBox="0 0 16 16">
+                        <path
+                            d="M1 3.5A1.5 1.5 0 0 1 2.5 2h2.764c.958 0 1.76.56 2.311 1.184C7.985 3.648 8.48 4 9 4h4.5A1.5 1.5 0 0 1 15 5.5v.64c.57.265.94.876.856 1.546l-.64 5.124A2.5 2.5 0 0 1 12.733 15H3.266a2.5 2.5 0 0 1-2.481-2.19l-.64-5.124A1.5 1.5 0 0 1 1 6.14V3.5zM2 6h12v-.5a.5.5 0 0 0-.5-.5H9c-.964 0-1.71-.629-2.174-1.154C6.374 3.334 5.82 3 5.264 3H2.5a.5.5 0 0 0-.5.5V6zm-.367 1a.5.5 0 0 0-.496.562l.64 5.124A1.5 1.5 0 0 0 3.266 14h9.468a1.5 1.5 0 0 0 1.489-1.314l.64-5.124A.5.5 0 0 0 14.367 7H1.633z" />
+                    </svg>
+                    Source Folder
+                </a>
 
-            <details class="for-laptop-only" open>
-                <summary>
-                    Contact Us
-                </summary>
-                <p><u>Address</u>: Deogiri Institute of Engineering and Management Studies, Railway Station Road,
-                    Aurangabad
-                    431001, <br> <u>Info line</u>: 0240-2367546, <br>
-                    <u>Director</u>: +91-9011078272 <br>
-                    <u>Email</u>: admin@dietms.org <br>
-                    <br>
-                </p>
-                <h2>Copyright © 2018 dietms.org</h2>
-            </details>
-        </div>
+                <a href="https://www.dietms.org/">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                        class="bi bi-globe2" viewBox="0 0 16 16">
+                        <path
+                            d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm7.5-6.923c-.67.204-1.335.82-1.887 1.855-.143.268-.276.56-.395.872.705.157 1.472.257 2.282.287V1.077zM4.249 3.539c.142-.384.304-.744.481-1.078a6.7 6.7 0 0 1 .597-.933A7.01 7.01 0 0 0 3.051 3.05c.362.184.763.349 1.198.49zM3.509 7.5c.036-1.07.188-2.087.436-3.008a9.124 9.124 0 0 1-1.565-.667A6.964 6.964 0 0 0 1.018 7.5h2.49zm1.4-2.741a12.344 12.344 0 0 0-.4 2.741H7.5V5.091c-.91-.03-1.783-.145-2.591-.332zM8.5 5.09V7.5h2.99a12.342 12.342 0 0 0-.399-2.741c-.808.187-1.681.301-2.591.332zM4.51 8.5c.035.987.176 1.914.399 2.741A13.612 13.612 0 0 1 7.5 10.91V8.5H4.51zm3.99 0v2.409c.91.03 1.783.145 2.591.332.223-.827.364-1.754.4-2.741H8.5zm-3.282 3.696c.12.312.252.604.395.872.552 1.035 1.218 1.65 1.887 1.855V11.91c-.81.03-1.577.13-2.282.287zm.11 2.276a6.696 6.696 0 0 1-.598-.933 8.853 8.853 0 0 1-.481-1.079 8.38 8.38 0 0 0-1.198.49 7.01 7.01 0 0 0 2.276 1.522zm-1.383-2.964A13.36 13.36 0 0 1 3.508 8.5h-2.49a6.963 6.963 0 0 0 1.362 3.675c.47-.258.995-.482 1.565-.667zm6.728 2.964a7.009 7.009 0 0 0 2.275-1.521 8.376 8.376 0 0 0-1.197-.49 8.853 8.853 0 0 1-.481 1.078 6.688 6.688 0 0 1-.597.933zM8.5 11.909v3.014c.67-.204 1.335-.82 1.887-1.855.143-.268.276-.56.395-.872A12.63 12.63 0 0 0 8.5 11.91zm3.555-.401c.57.185 1.095.409 1.565.667A6.963 6.963 0 0 0 14.982 8.5h-2.49a13.36 13.36 0 0 1-.437 3.008zM14.982 7.5a6.963 6.963 0 0 0-1.362-3.675c-.47.258-.995.482-1.565.667.248.92.4 1.938.437 3.008h2.49zM11.27 2.461c.177.334.339.694.482 1.078a8.368 8.368 0 0 0 1.196-.49 7.01 7.01 0 0 0-2.275-1.52c.218.283.418.597.597.932zm-.488 1.343a7.765 7.765 0 0 0-.395-.872C9.835 1.897 9.17 1.282 8.5 1.077V4.09c.81-.03 1.577-.13 2.282-.287z" />
+                    </svg>
+                    Official Website
+                </a>
+
+            </p>
+        </details>
     </div>
 
     <div class="main-content">
