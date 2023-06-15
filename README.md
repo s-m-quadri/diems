@@ -1,28 +1,30 @@
-# **Diems - v1/stable**
+<img src="https://github.com/s-m-quadri/diems/assets/88645248/f00bf85b-da20-4f9d-b8c0-ed101732176e"></img>
 
-**CodeShine (a part of Di website)** - is an application for posting, submitting, and evaluating assignments. As a whole, '**Di**' is a shorthand for `Deogiri Institute of Engineering and Management Studies, Aurangabad 431001, Maharashtra, India`.
+<h1 align="center">CodeShine - Empowering Assignment Management</h1>
+<h3 align="center">v1.1/stable - a part of Di - <a href="https://www.youtube.com/watch?v=3Zsjpzn37T8">Watch Trailer</a></h3>
 
-This is an open-source and free project, you can use the source code at your convenience and contribute to it. **Now, this code belongs to you!**
- 
-[![Introductory Video From Youtube](./thumbnail.png)
-](https://www.youtube.com/watch?v=3Zsjpzn37T8)
-
-  
-
-This is an introductory video, for version `v1/stable`, hope you find it helpful.
+<p align="center">Welcome to CodeShine, an integral part of the dynamic Di website! This cutting-edge application, built on the robust Django framework, revolutionizes the way you handle assignments. It offers a wide range of features, ensuring a seamless experience for both students and educators.</p>
+<p align="center"><b>Key Features:</b></p>
+<ul>
+  <li><b>Assignment Submission:</b> Students can effortlessly submit their assignments through the intuitive interface, simplifying the process and saving valuable time.</li>
+  <li><b>Assignment Posting:</b> Educators can easily create and post assignments, providing clear instructions and guidelines to enhance the learning experience.</li>
+  <li><b>Assignment Evaluation:</b> Our powerful evaluation system allows instructors to efficiently assess submitted assignments, providing valuable feedback to students.</li>
+  <li><b>Markdown Chat Support:</b> For every assignment, students and educators can engage in real-time discussions, seeking clarifications and fostering collaboration using the markdown format.</li>
+</ul>
+<p align="center">CodeShine is more than just a tool; it's a community-driven project. We embrace the spirit of open-source collaboration, welcoming you to leverage the source code for your convenience and actively contribute to its development. By doing so, you play a pivotal role in shaping the future of this remarkable application.</p>
+<p align="center">Join us on this exciting journey as we empower learners and educators alike. Experience the brilliance of CodeShine, where assignments shine brighter than ever before.</p>
 
 <br/>
 
-
-# **DOCUMENTATION**
+# Documentaion
 
 [...Goto Folder](https://drive.google.com/drive/folders/1BkW4UvcxOwCk9jU4R9cznBPWyNya58AU?usp=sharing)
 
-All the files during the creation of the website, for the first time, as a mini-project work, in December 2022, are stored in the drive folder.
+All the files created during the creation of the website, for the first time, as a mini-project work, in December 2022, are stored in the drive folder.
   
 <br/>
 
-# **Getting Started**
+# Getting Started
 
 ### **:octocat: STEP 01**
 
