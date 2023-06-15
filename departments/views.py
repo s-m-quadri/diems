@@ -34,7 +34,7 @@ def specific_department(request, code):
             In=page).order_by("-pk")]
 
     return render(request, "departments/index.html", {
-        "title": f"Welcome to {department.Name} Department",
+        "title": f"{department.Name} Department",
         "pages": [x for x in pages],
         "assignments": assignments,
         "code": code,

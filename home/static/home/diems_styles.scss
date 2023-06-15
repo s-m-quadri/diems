@@ -21,13 +21,14 @@ $LaptopBreakPoint: 800px;
     background-attachment: fixed;
     background-size: cover;
     background-position: center;
-    opacity: 80%;
+    opacity: 100%;
 }
 
-@mixin default_font($SIZE: 18px) {
+@mixin default_font($SIZE: 1em) {
     font-family: 'Comfortaa';
     font-size: $SIZE;
     overflow-wrap: break-word;
+    line-height: 1.25em;
     font-weight: normal;
 }
 
@@ -37,13 +38,33 @@ $LaptopBreakPoint: 800px;
     prefix: "Attempt ";
 }
 
+@keyframes change-colors-h1 {
+    0% {
+        color: $darkerColor;
+    }
+}
+
+@keyframes change-icon-color {
+    0% {
+        color: $lighterColor;
+    }
+}
+
+::-webkit-scrollbar {
+    width: 0.5em;
+}
+ 
+// ::-webkit-scrollbar-track {
+//     background-color: $darkestColor;
+// }
+ 
+::-webkit-scrollbar-thumb {
+  background-color: $warningColorDark;
+}
 
 html {
     @include default_font;
     min-height: 100vh;
-
-    // filter: sepia() opacity(70%);
-
 
     body {
         display: flex;
@@ -58,21 +79,34 @@ html {
         }
 
         .background-image {
-            @include background_html;
+            @include background_html(url("https://cdn.pixabay.com/photo/2020/05/06/06/18/blue-5136251_960_720.jpg"));
+            z-index: -999;
             position: fixed;
             height: 100%;
             width: 100%;
         }
     }
 
+    svg {
+        vertical-align: text-bottom;
+    }
+
     .side-bar {
         display: flex;
-        opacity: 85%;
-        padding: 20px;
+        padding: 1em;
         color: $lighterColor;
-        flex: 0 0 250px;
+        flex: 0 0 16em;
         flex-direction: column;
         background-color: $darkestColor;
+
+        #di-logo {
+            text-align: center;
+            width: 10em;
+            border-radius: 1em;
+            box-shadow: 0em 0em 2em $normalColor;
+            opacity: 80%;
+        }
+
 
         @media (min-width: $LaptopBreakPoint) {
             height: auto;
@@ -82,7 +116,8 @@ html {
         h1 {
             margin: 0px;
             padding: 0px;
-            @include default_font(54px);
+            @include default_font(3.25em);
+            line-height: 1.05em;
             text-align: center;
 
             @media (min-width: $LaptopBreakPoint) {
@@ -96,8 +131,8 @@ html {
             padding: 0px;
             color: $lightestColor;
             text-align: center;
-            line-height: 25px;
-            @include default_font(20px);
+            line-height: 1.25em;
+            @include default_font(1.125em);
 
             @media (min-width: $LaptopBreakPoint) {
                 text-align: left;
@@ -106,22 +141,41 @@ html {
 
         a {
             margin: 0px;
-            color: $lighterColor;
+            color: $lightestColor;
             text-decoration: none;
-            font-size: 18px;
+            text-align: center;
+
+            display: inline-block;
+            border-radius: 3em;
+            background-color: $linkColor;
+            padding: 0.2em 0.5em;
+            margin: 0.125em 0em;
+
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+            width: 14em;
+
+            @media (min-width: $LaptopBreakPoint) {
+                text-align: left;
+            }
+
         }
 
         a:hover {
-            color: $lightestColor;
+            color: white;
+            text-decoration: underline solid;
+
         }
 
         p {
             margin: 0px;
             padding: 0px;
-            font-size: 18px;
+            @include default_font();
+            text-align: center;
             color: $lightestColor;
             text-align: center;
-            line-height: 21px;
+            line-height: 1.35em;
 
             @media (min-width: $LaptopBreakPoint) {
                 text-align: left;
@@ -136,6 +190,7 @@ html {
         }
 
         hr {
+            display: block;
             border-color: $lighterColor;
         }
 
@@ -151,8 +206,28 @@ html {
             color: white;
         }
 
+
         details {
             text-align: center;
+
+            summary {
+                cursor: pointer;
+                margin: 0px;
+                color: $lightestColor;
+                text-decoration: none;
+                text-align: center;
+                display: inline-block;
+                border-radius: 3em;
+                background-color: $warningColorDark;
+                padding: 0.2em 0.5em;
+                margin: 0.225em 0em 0.5em 0em;
+
+                width: 14em;
+
+                @media (min-width: $LaptopBreakPoint) {
+                    text-align: left;
+                }
+            }
 
             &.for-laptop-only {
                 display: none;
@@ -175,14 +250,18 @@ html {
             }
         }
 
-        .side-bar-foot {
-            opacity: 50%;
+        .side-bar-body {
+            display: block;
+            text-align: center;
+
+            @media (min-width: $LaptopBreakPoint) {
+                text-align: left;
+            }
         }
     }
 
     .main-content {
         flex: 1 1 auto;
-        opacity: 100%;
         text-align: center;
 
         @media (min-width: $LaptopBreakPoint) {
@@ -194,23 +273,32 @@ html {
         h1 {
             margin: 10px 0px;
             color: $darkestColor;
-            @include default_font(45px);
+            animation: change-colors-h1 2s ease-in-out infinite;
+
+            svg {
+                animation: change-icon-color 2s ease-in-out infinite;
+            }
+
+            padding: 0.125em 0em;
+            @include default_font(3em);
         }
 
         h2 {
             margin: 7px 0px;
             color: $darkerColor;
-            @include default_font(36px);
+            @include default_font(2em);
         }
 
         h3 {
             margin: 7px 0px;
             color: $normalColor;
-            @include default_font(30px);
+            @include default_font(1.75em);
         }
 
         p {
-            margin: 5px 0px;
+            margin: 0.5em 0em;
+            line-height: 1.35em;
+            vertical-align: baseline;
             @include default_font;
         }
 
@@ -229,18 +317,33 @@ html {
             max-width: 100%;
         }
 
+
         details {
             summary {
+                margin: 0.225em 0em 0.5em 0em;
                 cursor: pointer;
+
+                color: $darkestColor;
+                text-decoration: none;
+                text-align: center;
+                display: inline-block;
+                border-radius: 3em;
+                background-color: $warningColor;
+                padding: 0.3em 0.5em;
+                margin: 0.225em 0em 0.5em 0em;
 
                 &::marker {
                     color: $darkerColor;
                 }
+
+                @media (min-width: $LaptopBreakPoint) {
+                    text-align: left;
+                }
             }
 
             &[open] {
-                summary::before {
-                    content: 'Hide ';
+                summary{
+                    background-color: white;
                 }
             }
 
@@ -264,10 +367,6 @@ html {
             50% {
                 background-color: $warningColor;
 
-            }
-
-            100% {
-                background-color: $darkerColor;
             }
         }
 
@@ -300,7 +399,7 @@ html {
                 outline: none;
                 font-size: medium;
                 font-weight: normal;
-                @include default_font(20px);
+                @include default_font(1em);
                 margin-top: 5px;
             }
 
@@ -319,7 +418,7 @@ html {
                 outline: none;
                 background-color: $darkerColor;
                 color: $lightestColor;
-                @include default_font(20px);
+                @include default_font(1em);
 
                 &:hover {
                     font-weight: 900;
@@ -334,10 +433,10 @@ html {
         .container {
             display: flex;
             flex-direction: column;
-            opacity: 90%;
             padding: 20px;
             margin: 20px 10px;
-            background-color: $lightestColor;
+            background-color: white;
+            box-shadow: 0px 0px 5px $lighterColor;
 
             .postWrapper {
                 display: flex;
@@ -352,59 +451,13 @@ html {
                 }
             }
 
-            .post {
-                display: flex;
-                border: 1px $lighterColor solid;
-                background-color: white;
-                overflow-x: auto;
-
-                div.icon {
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    flex-direction: column;
-                    flex: 1 1 0;
-                    height: auto;
-                    background-color: $lighterColor;
-                    color: white;
-
-                    a {
-                        color: white;
-                        text-decoration: none;
-                    }
-
-                    p {
-                        text-align: center;
-                    }
-                }
-
-                div.title {
-                    display: flex;
-                    justify-content: center;
-                    flex-direction: column;
-                    padding: 10px;
-                    flex: 2 1 0;
-                    background-color: $lighterColor;
-
-                    a{
-                        text-decoration: none;
-                    }
-
-                    h3 {
-                        color: $darkerColor;
-                    }
-                }
-
-                div.description {
-                    text-align: left;
-                    padding: 10px;
-                    flex: 10 0 0;
-                }
-            }
-
             a {
                 text-decoration: none;
-                color: $linkColor;
+                color: $darkestColor;
+                display: inline-block;
+                border-radius: 3em;
+                background-color: $warningColor;
+                padding: 0.2em 0.5em;
             }
 
             a:hover {
@@ -425,26 +478,44 @@ html {
 
         .normal-container {
             border: none;
+            box-shadow: 0px 0px 5px $lighterColor;
 
             h1 {
+                animation: none;
                 color: $darkestColor;
+            }
+
+            svg {
+                animation: none;
             }
         }
 
         .warning-container {
             border: 1px solid $warningColorDark;
+            box-shadow: 0px 0px 5px $lighterColor;
+
+            svg {
+                animation: none;
+            }
 
             h1,
             h2,
             h3 {
+                animation: none;
                 color: $warningColorDark;
             }
         }
 
         .error-container {
             border: 1px solid $errorColor;
+            box-shadow: 0px 0px 5px $lighterColor;
+
+            svg {
+                animation: none;
+            }
 
             h1 {
+                animation: none;
                 color: $errorColor;
             }
         }
@@ -455,6 +526,11 @@ html {
             background-color: white;
             margin: 0px 0px 15px 0px;
             padding: 15px 15px;
+            box-shadow: 0px 0px 5px $lighterColor;
+
+            svg {
+                animation: none;
+            }
 
             &:empty {
                 display: none;
@@ -464,6 +540,7 @@ html {
                 border-left: 3px solid $errorColor;
                 border-right: 3px solid $errorColor;
 
+
                 h1.theme {
                     color: $errorColor;
                 }
@@ -472,21 +549,28 @@ html {
 
             h1.theme {
                 color: $normalColor;
-                @include default_font(36px)
+                @include default_font(2em)
             }
 
             h1,
             h2,
             h3 {
-                @include default_font(18px)
+                animation: none;
+                @include default_font(1em)
             }
         }
 
         .message-container {
             border: 1px solid $normalColor;
+            box-shadow: 0px 0px 5px $lighterColor;
+
+            svg {
+                animation: none;
+            }
 
             h1,
             a {
+                animation: none;
                 color: $normalColor;
                 text-decoration: none;
             }
@@ -495,6 +579,7 @@ html {
 
         .render-markdown {
             border: 1px solid $normalColor;
+            box-shadow: 0px 0px 5px $lighterColor;
             background-color: white;
             max-height: 500px;
             overflow: auto;
@@ -504,7 +589,12 @@ html {
             }
 
             h1 {
+                animation: none;
                 color: $darkestColor;
+            }
+
+            svg {
+                animation: none;
             }
         }
 
@@ -516,8 +606,16 @@ html {
             overflow-wrap: break-word;
             margin: 5px 0px;
 
+            h1 {
+                animation: none;
+            }
+
             &:empty {
                 background-color: silver;
+            }
+
+            svg {
+                animation: none;
             }
         }
 
@@ -527,8 +625,8 @@ html {
             flex: 1 1 auto;
             margin: auto;
             overflow: auto;
-            
-            
+
+
             iframe {
                 min-height: 480px;
                 border: none;

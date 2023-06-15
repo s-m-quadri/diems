@@ -6,26 +6,54 @@ CodeShine - Submission Details
 
 {% block body %}
 <div class="container">
-    <a href="{% url 'codeshine:assignments' page_code assignment_code %}">
-        << Go Back</a>
-
-            {% if title %}
-            <h1>{{ title }}</h1>
-            {% endif %}
-</div>
-
-{% if submission %}
-<div class="container">
-    <h2>Details</h2>
-    <p>{{ submission.On }} | By <u>{{ submission.By.username|capfirst }}</u>
-        | For <u>{{ assignment.Title|capfirst }}</u>
+    <p>
+        <a href="{% url 'departments:specific_department' assignment.In.Department.Code %}">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                class="bi bi-arrow-left-circle" viewBox="0 0 16 16">
+                <path fill-rule="evenodd"
+                    d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-4.5-.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z" />
+            </svg>
+            Back to department </a>
     </p>
+
+    {% if title %}
+    <h1>
+        <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="currentColor" class="bi bi-journal-check"
+            viewBox="0 0 16 16">
+            <path fill-rule="evenodd"
+                d="M10.854 6.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 8.793l2.646-2.647a.5.5 0 0 1 .708 0z" />
+            <path
+                d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2z" />
+            <path
+                d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1z" />
+        </svg>
+        {{ title }}
+    </h1>
+    {% endif %}
+    {% if submission %}
+    <p>
+        This is the solution submitted on <u>{{ submission.On }}</u> by <u>{{ submission.By.username|capfirst }}</u> for
+        the assignment titled <u>{{ assignment.Title|capfirst }}</u>.
+    </p>
+
     <div class="container render-markdown">
         <textarea class="render-markdown">{{ submission.Assignment }}</textarea>
     </div>
+    {% endif %}
+
     {% if form_evaluate and request.user.is_teacher %}
     <div class="container warning-container">
-        <h3>Evaluate</h3>
+        <h3>
+            <svg xmlns="http://www.w3.org/2000/svg" width="42" height="42" fill="currentColor" class="bi bi-patch-check"
+                viewBox="0 0 16 16">
+                <path fill-rule="evenodd"
+                    d="M10.354 6.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7 8.793l2.646-2.647a.5.5 0 0 1 .708 0z" />
+                <path
+                    d="m10.273 2.513-.921-.944.715-.698.622.637.89-.011a2.89 2.89 0 0 1 2.924 2.924l-.01.89.636.622a2.89 2.89 0 0 1 0 4.134l-.637.622.011.89a2.89 2.89 0 0 1-2.924 2.924l-.89-.01-.622.636a2.89 2.89 0 0 1-4.134 0l-.622-.637-.89.011a2.89 2.89 0 0 1-2.924-2.924l.01-.89-.636-.622a2.89 2.89 0 0 1 0-4.134l.637-.622-.011-.89a2.89 2.89 0 0 1 2.924-2.924l.89.01.622-.636a2.89 2.89 0 0 1 4.134 0l-.715.698a1.89 1.89 0 0 0-2.704 0l-.92.944-1.32-.016a1.89 1.89 0 0 0-1.911 1.912l.016 1.318-.944.921a1.89 1.89 0 0 0 0 2.704l.944.92-.016 1.32a1.89 1.89 0 0 0 1.912 1.911l1.318-.016.921.944a1.89 1.89 0 0 0 2.704 0l.92-.944 1.32.016a1.89 1.89 0 0 0 1.911-1.912l-.016-1.318.944-.921a1.89 1.89 0 0 0 0-2.704l-.944-.92.016-1.32a1.89 1.89 0 0 0-1.912-1.911l-1.318.016z" />
+            </svg>
+            Evaluate
+        </h3>
+
         <form action="{% url 'codeshine:evaluate' page_code assignment_code submission_code %}" method="post">
             {% csrf_token %}
             {% for field in form_evaluate %}
@@ -38,11 +66,25 @@ CodeShine - Submission Details
     {% endif %}
 </div>
 
+{% if submission %}
+
+
+
 
 
 {% if comments or request.user.is_teacher %}
 <div class="container">
-    <h2>Comments</h2>
+    <h2>
+        <svg xmlns="http://www.w3.org/2000/svg" width="42" height="42" fill="currentColor" class="bi bi-chat-left-text"
+            viewBox="0 0 16 16">
+            <path
+                d="M14 1a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H4.414A2 2 0 0 0 3 11.586l-2 2V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12.793a.5.5 0 0 0 .854.353l2.853-2.853A1 1 0 0 1 4.414 12H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z" />
+            <path
+                d="M3 3.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM3 6a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9A.5.5 0 0 1 3 6zm0 2.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z" />
+        </svg>
+        Comments
+    </h2>
+
     {% for comment in comments%}
     {% if comment.By.is_teacher != True %}
     <p>{{ comment.On }} | By Dear {{ comment.By.username|capfirst }},</p>
@@ -51,7 +93,15 @@ CodeShine - Submission Details
         {% if comment.Comment %}<textarea class="render-markdown">{{ comment.Comment }}</textarea>{% endif %}
     </div>
     {% else %}
-    <p>{{ comment.On }} | By Respected {{ comment.By.username|capfirst }} Sir/Madam,</p>
+    <p>
+        {{ comment.On }}
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-person"
+            viewBox="0 0 16 16">
+            <path
+                d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4Zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10Z" />
+        </svg>
+        By Respected {{ comment.By.username|capfirst }} Sir/Madam,
+    </p>
     <div class="container comment-container teacher">
         {% if comment.Theme %}<h1 class="theme">{{ comment.Theme }}</h1>{% endif %}
         {% if comment.Comment %}<textarea class="render-markdown">{{ comment.Comment }}</textarea>{% endif %}
@@ -61,7 +111,14 @@ CodeShine - Submission Details
     {% if request.user.is_teacher or assignment.open_for_comment %}
     {% if form_comment %}
     <div class="container warning-container">
-        <h3>Feedback/Comment</h3>
+        <h3>
+            <svg xmlns="http://www.w3.org/2000/svg" width="42" height="42" fill="currentColor" class="bi bi-plus-lg"
+                viewBox="0 0 16 16">
+                <path fill-rule="evenodd"
+                    d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z" />
+            </svg>
+            Post
+        </h3>
         <form action="{% url 'codeshine:comment' page_code assignment_code submission_code %}" method="post">
             {% csrf_token %}
             {% for field in form_comment %}

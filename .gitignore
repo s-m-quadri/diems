@@ -149,4 +149,4 @@ secret_key.txt
 .sass-cache/
 
 # [Custum] Static File
-staticfiles/
+static/

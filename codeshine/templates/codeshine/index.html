@@ -6,96 +6,148 @@ CodeShine - Assignment
 
 {% block body %}
 <div class="container">
-    <a href="{% url 'departments:specific_department' assignment.In.Department.Code %}">
-        << Go Back</a>
+    <p>
+        <a href="{% url 'departments:specific_department' assignment.In.Department.Code %}">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                class="bi bi-arrow-left-circle" viewBox="0 0 16 16">
+                <path fill-rule="evenodd"
+                    d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-4.5-.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z" />
+            </svg>
+            Back to department
+        </a>
+    </p>
 
-            {% if title %}
-            <h1>{{ title }}</h1>
-            {% endif %}
+    {% if title %}
+    <h1>
+        <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="currentColor" class="bi bi-journal-bookmark-fill" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M6 1h6v7a.5.5 0 0 1-.757.429L9 7.083 6.757 8.43A.5.5 0 0 1 6 8V1z"/>
+            <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2z"/>
+            <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1z"/>
+          </svg>
+        {{ title }}
+    </h1>
+    {% endif %}
 
-            {% if assignment.Description %}
-            <p>{{ assignment.Description }}</p>
-            {% endif %}
+    {% if assignment.Description %}
+    <p>Description: {{ assignment.Description }}</p>
+    {% endif %}
+
+    {% if assignment %}
+    <p>
+        Welcome to your assignment titled <strong>{{ title }}</strong>! We're excited to see what you can accomplish and
+        help you improve your skills and knowledge. Remember, this isn't just a challenge, it's a chance to learn and
+        grow. You can submit the assignment multiple times, and we'll consider your highest score for grading.
+        Additionally, you can ask questions to the faculty and request reevaluation for each submission.
+    </p>
+    <p>
+        The assignment was posted by <strong>{{ assignment.By.username|capfirst }}</strong> in page <strong>
+            {{ assignment.In.Name }}</strong> on <strong>{{ assignment.On }}</strong>. To help you get started, we've
+        provided some templates that you can use for your submission. Be sure to read the instructions carefully, and if
+        you have any questions or concerns, feel free to ask in the comments section.
+    </p>
+    <p>
+        Your assignment is worth between <strong>{{ assignment.passing_points }}</strong> and <strong>
+            {{ assignment.max_points }}</strong> points. We encourage you to challenge yourself and aim for the highest
+        possible score, but remember that the most important thing is to learn and grow. We're here to help you succeed,
+        so don't hesitate to reach out to us if you need any assistance.
+    </p>
+    <p>
+        We believe in you and your abilities, and we're looking forward to seeing what you can accomplish. Good luck,
+        and have fun!
+    </p>
+
+    {% endif %}
 </div>
 
 
 {% if assignment %}
+
+{% if assignment.Instructions %}
 <div class="container">
-    <h2>Details</h2>
+    <h2>
+        <svg xmlns="http://www.w3.org/2000/svg" width="42" height="42" fill="currentColor" class="bi bi-clipboard-pulse"
+            viewBox="0 0 16 16">
+            <path fill-rule="evenodd"
+                d="M10 1.5a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-1Zm-5 0A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5v1A1.5 1.5 0 0 1 9.5 4h-3A1.5 1.5 0 0 1 5 2.5v-1Zm-2 0h1v1H3a1 1 0 0 0-1 1V14a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V3.5a1 1 0 0 0-1-1h-1v-1h1a2 2 0 0 1 2 2V14a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V3.5a2 2 0 0 1 2-2Zm6.979 3.856a.5.5 0 0 0-.968.04L7.92 10.49l-.94-3.135a.5.5 0 0 0-.895-.133L4.232 10H3.5a.5.5 0 0 0 0 1h1a.5.5 0 0 0 .416-.223l1.41-2.115 1.195 3.982a.5.5 0 0 0 .968-.04L9.58 7.51l.94 3.135A.5.5 0 0 0 11 11h1.5a.5.5 0 0 0 0-1h-1.128L9.979 5.356Z" />
+        </svg>
+        Instructions
+    </h2>
+    <div class="container render-markdown">
+        <textarea class="render-markdown">{{ assignment.Instructions }}</textarea>
+    </div>
+</div>
+{% endif %}
+
+
+{% if assignment.GettingStarted_Template %}
+<div class="container">
+    <h2>
+        <svg xmlns="http://www.w3.org/2000/svg" width="42" height="42" fill="currentColor" class="bi bi-clipboard"
+            viewBox="0 0 16 16">
+            <path
+                d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z" />
+            <path
+                d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z" />
+        </svg>
+        Getting Started Template
+    </h2>
+
     <p>
-        This is an assignment titled <u>{{ title }}</u>,
-        posted by <u>{{ assignment.By.username|capfirst }}</u> Sir/Madam,
-        in page <u>{{ assignment.In.Name }}</u>,
-        on <u>{{ assignment.On }}</u>.
-        Anyone from <u>{{ assignment.In.Department.Name }}</u> department
-        can submit the assignment multiple times and is expected to
-        gain at least <u>{{ assignment.passing_points }} points</u>
-        or at most <u>{{ assignment.max_points }} points</u>.
-        Following is the <u>instructions</u> regarding submissions admin
-        results.
+        To <b>help</b> you with this assignment, we've provided a <b>template</b> that you can use as a
+        <b>starting point</b>. The template may include <b>pre-written code</b>, <b>comments</b>, or other helpful
+        elements that can save you <b>time and effort</b>.
     </p>
-    {% if assignment.Instructions %}
+    <p>
+        However, please note that you're also free to write your own code <b>from scratch</b> if you prefer. The
+        assignment instructions should specify whether using the provided template is <b>required or optional</b>.
+    </p>
+
     <p>
     <details>
-        <summary>instructions</summary>
-        <h3>Instructions</h3>
-        <div class="container render-markdown">
-            <textarea class="render-markdown">{{ assignment.Instructions }}</textarea>
+        <summary>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                class="bi bi-arrows-expand" viewBox="0 0 16 16">
+                <path fill-rule="evenodd"
+                    d="M1 8a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13A.5.5 0 0 1 1 8ZM7.646.146a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 1.707V5.5a.5.5 0 0 1-1 0V1.707L6.354 2.854a.5.5 0 1 1-.708-.708l2-2ZM8 10a.5.5 0 0 1 .5.5v3.793l1.146-1.147a.5.5 0 0 1 .708.708l-2 2a.5.5 0 0 1-.708 0l-2-2a.5.5 0 0 1 .708-.708L7.5 14.293V10.5A.5.5 0 0 1 8 10Z" />
+            </svg>
+            Template
+        </summary>
 
-        </div>
-    </details>
-    </p>
-    {% endif %}
-
-    <p>
-        The <u>Getting Started Template</u> is a starting point for solving.
-        When you feel comfortable you can attempt and <u>submit</u> the assignment.
-        Feel free to take your time as instructed.
-    </p>
-
-
-    {% if assignment.GettingStarted_Template %}
-    <p>
-    <details>
-        <summary>template</summary>
-        <h3>Getting Started Template</h3>
         <div class="container render-markdown">
             <textarea class="render-markdown">{{ assignment.GettingStarted_Template }}</textarea>
         </div>
     </details>
     </p>
-    {% endif %}
-
-    <p>
-        Best of luck!
-    </p>
 </div>
-
-<div class="container">
-    <h2>Results</h2>
-    {% if max_marks %}
-        <p>Maximum Marks out of all attempts</p>
-        <h3>{{ max_marks }}/{{ assignment.max_points }}</h3>
-        <p>Status</p>
-        {% if max_marks >= assignment.passing_points %}
-        <h3>Passed</h3>
-        {% else %}
-        <h3>Failure is a part of life</h3>
-        {% endif %}
-    {% else %}
-    <p>Not Known...</p>
-    {% endif %}
-</div>
+{% endif %}
 
 {% if assignment.open_for_submission or request.user.is_teacher %}
 <div class="container">
-    {% if request.user.is_teacher %}
-    <p><a href="{% url 'codeshine:submissions' page_code assignment_code %}">> Show All Students' Submissions</a></p>
-    <p>Considering as student</p>
-    <h2>Attempt for submission</h2>
-    {% else %}
-    <h2>Attempt for submission</h2>
-    {% endif %}
+    <h2>
+        <svg xmlns="http://www.w3.org/2000/svg" width="42" height="42" fill="currentColor" class="bi bi-clipboard-plus"
+            viewBox="0 0 16 16">
+            <path fill-rule="evenodd"
+                d="M8 7a.5.5 0 0 1 .5.5V9H10a.5.5 0 0 1 0 1H8.5v1.5a.5.5 0 0 1-1 0V10H6a.5.5 0 0 1 0-1h1.5V7.5A.5.5 0 0 1 8 7z" />
+            <path
+                d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z" />
+            <path
+                d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z" />
+        </svg>
+        Submit
+    </h2>
+    <p>
+        To <strong>submit</strong> your assignment, fill out the <strong>submission field</strong> in the form provided
+        on the assignment page. The submission field may already contain a copy of the <strong>assignment
+            template</strong> as a starting point, which you can modify or remove as needed to complete the assignment
+        to the best of your ability.
+    </p>
+    <p>
+        Please note that you can submit the assignment <strong>multiple times</strong> if needed, and the system will
+        keep track of all of your submissions. After your submission has been <strong>evaluated</strong>, the
+        <strong>highest score</strong> you've earned across all submissions will be recorded as your final grade for the
+        assignment.
+    </p>
+
     <form action="{% url 'codeshine:submit' page_code assignment_code %}" method="post">
         {% csrf_token %}
         {% for field in form %}
@@ -107,26 +159,88 @@ CodeShine - Assignment
 </div>
 {% endif %}
 
+
+
 {% if submissions %}
+
 <div class="container">
-    <h2>History</h2>
-    <details open>
-        <summary>my submission(s) > oldest first</summary>
-        {% for submission in submissions %}
-        <p>
-            {{ submission.On }}
-            {% if submission.Points > 0 %}
-            {% if submission.Points >= assignment.passing_points %}
-            | <u>{{ submission.Points }}/{{ assignment.max_points }}</u>
-            {% else %}
-            | Failure is a part of life
-            {% endif%}
-            {% endif %}
-            | <a href="{% url 'codeshine:submission' page_code assignment_code submission.pk %}">Show</a>
-        </p>
-        {% endfor %}
-    </details>
+    <h2>
+        <svg xmlns="http://www.w3.org/2000/svg" width="42" height="42" fill="currentColor" class="bi bi-clipboard-data"
+            viewBox="0 0 16 16">
+            <path
+                d="M4 11a1 1 0 1 1 2 0v1a1 1 0 1 1-2 0v-1zm6-4a1 1 0 1 1 2 0v5a1 1 0 1 1-2 0V7zM7 9a1 1 0 0 1 2 0v3a1 1 0 1 1-2 0V9z" />
+            <path
+                d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z" />
+            <path
+                d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z" />
+        </svg>
+        Results
+    </h2>
+    {% if max_marks %}
+    <p>Maximum Marks out of all attempts</p>
+    <h3>{{ max_marks }}/{{ assignment.max_points }}</h3>
+    <p>Status</p>
+    {% if max_marks >= assignment.passing_points %}
+    <h3>Passed</h3>
+    {% else %}
+    <h3>Failure is a part of life</h3>
+    {% endif %}
+    {% endif %}
+    <p>
+        Your submissions will be evaluated based on the assignment's criteria, such as correctness, efficiency, and
+        readability. If your submission does not meet the required standards, <b>don't give up!</b> You'll receive
+        feedback on your work, which you can use to improve your code and resubmit. Remember, the goal is not just to
+        pass, but to learn and grow as a developer.
+    </p>
+    <p>
+        You can view the results of each submission, including feedback and comments from the teacher, by accessing your
+        submission history. Take advantage of this feedback to <b>ask questions, clarify doubts, and seek help</b> in
+        areas where you need improvement. Don't hesitate to reach out to the teacher for support and guidance.
+    </p>
+
+    <p>All Attempts</p>
+    {% for submission in submissions %}
+    <p>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-clipboard-check"
+            viewBox="0 0 16 16">
+            <path fill-rule="evenodd"
+                d="M10.854 7.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 9.793l2.646-2.647a.5.5 0 0 1 .708 0z" />
+            <path
+                d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z" />
+            <path
+                d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z" />
+        </svg>
+        {{ submission.On }}
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-patch-check"
+            viewBox="0 0 16 16">
+            <path fill-rule="evenodd"
+                d="M10.354 6.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7 8.793l2.646-2.647a.5.5 0 0 1 .708 0z" />
+            <path
+                d="m10.273 2.513-.921-.944.715-.698.622.637.89-.011a2.89 2.89 0 0 1 2.924 2.924l-.01.89.636.622a2.89 2.89 0 0 1 0 4.134l-.637.622.011.89a2.89 2.89 0 0 1-2.924 2.924l-.89-.01-.622.636a2.89 2.89 0 0 1-4.134 0l-.622-.637-.89.011a2.89 2.89 0 0 1-2.924-2.924l.01-.89-.636-.622a2.89 2.89 0 0 1 0-4.134l.637-.622-.011-.89a2.89 2.89 0 0 1 2.924-2.924l.89.01.622-.636a2.89 2.89 0 0 1 4.134 0l-.715.698a1.89 1.89 0 0 0-2.704 0l-.92.944-1.32-.016a1.89 1.89 0 0 0-1.911 1.912l.016 1.318-.944.921a1.89 1.89 0 0 0 0 2.704l.944.92-.016 1.32a1.89 1.89 0 0 0 1.912 1.911l1.318-.016.921.944a1.89 1.89 0 0 0 2.704 0l.92-.944 1.32.016a1.89 1.89 0 0 0 1.911-1.912l-.016-1.318.944-.921a1.89 1.89 0 0 0 0-2.704l-.944-.92.016-1.32a1.89 1.89 0 0 0-1.912-1.911l-1.318.016z" />
+        </svg>
+        {% if submission.Points > 0 %}
+        {% if submission.Points >= assignment.passing_points %}
+        <u>{{ submission.Points }}/{{ assignment.max_points }}</u>
+        {% else %}
+        Failure is a part of life
+        {% endif%}
+        {% else %}
+        Pending
+        {% endif %}
+        <a href="{% url 'codeshine:submission' page_code assignment_code submission.pk %}">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-eye"
+                viewBox="0 0 16 16">
+                <path
+                    d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z" />
+                <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z" />
+            </svg>
+            Show
+        </a>
+    </p>
+    {% endfor %}
+
 </div>
+
 {% endif %}
 
 {% else %}
@@ -135,4 +249,5 @@ CodeShine - Assignment
     <p>No Assignment Details Available</p>
 </div>
 {% endif %}
+
 {% endblock %}
